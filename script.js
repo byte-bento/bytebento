@@ -1,10 +1,20 @@
-const API_KEY = 'YOUR_NEWSAPI_KEY'; // Replace with your NewsAPI key
+const PROXY_URL = 'https://bytebento-proxy.tough-bed6922.workers.dev';
 const newsContainer = document.getElementById('news-container');
 
 async function fetchNews() {
   try {
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?category=technology&language=en&pageSize=12&apiKey=${API_KEY}`);
+    console.log('Fetching from proxy:', PROXY_URL);
+
+    const response = await fetch(PROXY_URL);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
+    console.log('Response from proxy:', data);
+
+    // ✅ We now trust that data.articles is legit
     displayNews(data.articles);
   } catch (error) {
     newsContainer.innerHTML = '<p>Failed to load news articles.</p>';
