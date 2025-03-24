@@ -3,16 +3,9 @@ const PROXY_URL = 'https://bytebento-proxy.tough-bed6922.workers.dev';
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
 
-  // Set last updated timestamp
-  const timestamp = new Date().toLocaleString();
-  const stampEl = document.getElementById('last-updated');
-  if (stampEl) {
-    stampEl.textContent = `🕒 Last updated: ${timestamp}`;
-  }
-
-  // Fetch and display news
   async function fetchNews() {
     try {
+      newsContainer.innerHTML = '<p>Loading fresh articles...</p>';
       console.log('Fetching from proxy:', PROXY_URL);
 
       const response = await fetch(PROXY_URL);
@@ -25,6 +18,13 @@ window.onload = () => {
       console.log('Response from proxy:', data);
 
       displayNews(data.articles);
+
+      // ⏰ Update timestamp after fetch
+      const stampEl = document.getElementById('last-updated');
+      if (stampEl) {
+        stampEl.textContent = `🕒 Last updated: ${new Date().toLocaleString()}`;
+      }
+
     } catch (error) {
       newsContainer.innerHTML = '<p>Failed to load news articles.</p>';
       console.error('Error fetching news:', error);
@@ -44,7 +44,7 @@ window.onload = () => {
     });
   }
 
-  // 🟦 Add event listener for Refresh News button
+  // 🔄 Refresh button listener
   const refreshBtn = document.getElementById('refresh-btn');
   if (refreshBtn) {
     refreshBtn.addEventListener('click', () => {
@@ -52,5 +52,6 @@ window.onload = () => {
     });
   }
 
+  // 🔃 Initial load
   fetchNews();
 };
