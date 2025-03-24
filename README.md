@@ -42,6 +42,16 @@ This project is a lightweight tech news aggregator built with HTML, CSS, and Jav
 
 ---
 
+🍱 Favicon Attribution
+
+The favicon was generated using the 🍱 emoji via [favicon.io](https://favicon.io/emoji-favicons/).  
+Emoji graphic from [Twemoji](https://github.com/twitter/twemoji) by Twitter, Inc and other contributors.  
+Licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+---
+
 📬 License
 
 MIT License. Go build something awesome with it.
+
+---
