@@ -44,5 +44,13 @@ window.onload = () => {
     });
   }
 
+  // 🟦 Add event listener for Refresh News button
+  const refreshBtn = document.getElementById('refresh-btn');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', () => {
+      fetchNews();
+    });
+  }
+
   fetchNews();
 };
