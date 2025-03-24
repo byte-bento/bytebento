@@ -40,10 +40,7 @@ footer {
 }
 
 .timestamp {
-  text-align: center;
-  font-size: 0.9em;
-  color: #777;
-  margin: 10px auto 20px;
-  max-width: 1200px;
-  padding: 0 20px;
+  font-size: 0.85em;
+  color: #ccc;
+  margin: 10px 0 0;
 }
