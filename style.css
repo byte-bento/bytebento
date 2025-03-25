@@ -208,3 +208,44 @@ footer {
 #featured-tech a:hover {
   text-decoration: underline;
 }
+
+/* Light mode (default) */
+:root {
+  --bg: #f4f4f4;
+  --text: #222;
+  --card: #fff;
+  --accent: #007BFF;
+  --header-bg: #333;
+  --header-text: #fff;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --text: #eee;
+    --card: #1e1e1e;
+    --accent: #0a84ff;
+    --header-bg: #1a1a1a;
+    --header-text: #f5f5f5;
+  }
+}
+
+/* Apply variables */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+header, footer {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+}
+
+article {
+  background-color: var(--card);
+}
+
+a {
+  color: var(--accent);
+}
