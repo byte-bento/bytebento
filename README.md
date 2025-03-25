@@ -1,6 +1,8 @@
 # ByteBento 🍱
 
-Curated, byte-sized tech news delivered fresh—daily.
+Byte-Sized Tech News, Bento-Boxed for You!
+
+Curated tech news in bite-sized form. Packed daily with headlines, updates, and byte-worthy finds — all bento-boxed in a clean, simple layout.
 
 This project is a lightweight tech news aggregator built with HTML, CSS, and JavaScript, deployed via [Cloudflare Pages](https://pages.cloudflare.com/), and powered by [NewsAPI](https://newsapi.org/).
 
