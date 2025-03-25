@@ -198,3 +198,9 @@ body.dark-mode {
   margin: 8px 0 0;
   font-size: 1rem;
 }
+
+.sponsored {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
