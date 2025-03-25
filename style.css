@@ -229,6 +229,11 @@ body.dark-mode {
   --header-text: #eee;
 }
 
+body.dark-mode article p {
+  color: #ddd;
+}
+
+
 /* Apply theme variables */
 body {
   background-color: var(--bg);
