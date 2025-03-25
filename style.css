@@ -258,3 +258,47 @@ a {
 .theme-toggle {
   margin-top: 10px;
 }
+
+#saved-articles {
+  padding: 30px 20px;
+  background-color: #f8f8f8;
+  border-top: 2px solid #ddd;
+}
+
+#saved-articles h2 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+#saved-container article {
+  background-color: var(--card);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  transition: transform 0.2s ease;
+}
+
+#saved-container article:hover {
+  transform: translateY(-3px);
+}
+
+#saved-container h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+#saved-container a {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+#saved-container a:hover {
+  text-decoration: underline;
+}
+
+#saved-container p {
+  font-size: 0.95rem;
+  color: var(--text);
+}
