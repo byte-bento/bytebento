@@ -52,6 +52,26 @@ window.onload = () => {
     });
   }
 
-  // 🔃 Initial load
+  // 🌗 Dark mode toggle logic
+  const themeSwitch = document.getElementById('theme-switch');
+  if (themeSwitch) {
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      themeSwitch.checked = true;
+    }
+
+    themeSwitch.addEventListener('change', () => {
+      if (themeSwitch.checked) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  }
+
+  // 🔃 Initial news load
   fetchNews();
 };

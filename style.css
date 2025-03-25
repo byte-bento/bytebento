@@ -249,3 +249,25 @@ article {
 a {
   color: var(--accent);
 }
+
+/* Default Light Theme */
+body {
+  background-color: #f4f4f4;
+  color: #000;
+}
+
+/* Dark Theme Styles */
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+body.dark-mode header,
+body.dark-mode footer {
+  background-color: #111;
+  color: #eee;
+}
+
+.theme-toggle {
+  margin-top: 10px;
+}
