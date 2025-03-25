@@ -36,10 +36,11 @@ window.onload = () => {
     articles.forEach(article => {
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
-        <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-        <img src="${article.urlToImage || ''}" alt="${article.title}" />
-        <p>${article.description || ''}</p>
-      `;
+      <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
+      <img src="${article.urlToImage || ''}" alt="${article.title}" />
+      <p>${article.description || ''}</p>
+      <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="${article.description || ''}">⭐ Read Later</button>
+    `;
       newsContainer.appendChild(newsItem);
     });
   }
