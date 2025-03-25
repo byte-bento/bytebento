@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ByteBento: Byte-Sized Tech News, Bento-Boxed for You</title>
+  <title>ByteBento - Your Daily Tech News</title>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Curated tech news in bite-sized form. Packed daily with headlines, updates, and byte-worthy finds — all bento-boxed in a clean, simple layout.">
-  
-  <!-- Open Graph (for Facebook, LinkedIn, etc.) -->
-  <meta property="og:title" content="ByteBento: Byte-Sized Tech News, Bento-Boxed for You" />
-  <meta property="og:description" content="Curated tech news in bite-sized form. Packed daily with headlines, updates, and byte-worthy finds — all bento-boxed in a clean, simple layout." />
+  <meta name="description" content="ByteBento delivers curated, byte-sized tech news daily. Fresh headlines, clean UI, and a dash of bento-powered charm.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ByteBento - Your Daily Tech News" />
+  <meta property="og:description" content="Curated, byte-sized tech news delivered fresh—daily. Stay in the loop with the latest from across the tech world." />
   <meta property="og:image" content="https://bytebento.com/og-image.png" />
   <meta property="og:url" content="https://bytebento.com" />
   <meta property="og:type" content="website" />
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ByteBento: Byte-Sized Tech News, Bento-Boxed for You" />
-  <meta name="twitter:description" content="Curated tech news in bite-sized form. Packed daily with headlines, updates, and byte-worthy finds — all bento-boxed in a clean, simple layout." />
+  <meta name="twitter:title" content="ByteBento - Your Daily Tech News" />
+  <meta name="twitter:description" content="Curated, byte-sized tech news delivered fresh—daily." />
   <meta name="twitter:image" content="https://bytebento.com/og-image.png" />
-  
+
   <link rel="stylesheet" href="style.css" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -31,36 +31,35 @@
   <header>
     <h1>ByteBento</h1>
     <p>Byte-sized tech news, bento-boxed for you.</p>
-  
+
     <div class="theme-toggle">
       <label>
         <input type="checkbox" id="theme-switch" />
         🌓 Toggle Dark Mode
       </label>
     </div>
-  
+
     <p id="last-updated" class="timestamp"></p>
   </header>
+
   <div class="refresh-container">
-    <button id="refresh-btn">🔄 Refresh News</button>
+    <button id="refresh-btn">🔄 Refresh Articles</button>
   </div>
+
   <main id="news-container">
     <!-- News articles will be injected here -->
   </main>
 
-  <section id="featured-tech">
-    <h2>Featured Tech</h2>
-    <ul>
-      <li><a href="https://www.amazon.com/dp/B0C8J3F3NJ?tag=your-affiliate-id" target="_blank">Raspberry Pi 5 – Powerful, Compact, and Fun</a></li>
-      <li><a href="https://www.amazon.com/dp/B07YFGQ28F?tag=your-affiliate-id" target="_blank">Anker USB-C Hub – Expand Your Setup</a></li>
-      <li><a href="https://www.amazon.com/dp/B07X8V5YKR?tag=your-affiliate-id" target="_blank">MX Keys – A Typing Experience Worth Upgrading</a></li>
-    </ul>
-  </section> 
-  
+  <!-- 📌 Saved Articles Section -->
+  <section id="saved-articles">
+    <h2>📌 Saved Articles</h2>
+    <div id="saved-container"></div>
+  </section>
+
   <footer>
     <p>&copy; 2025 ByteBento</p>
   </footer>
 
-  <script src="script.js"></script> 
+  <script src="script.js"></script>
 </body>
 </html>
