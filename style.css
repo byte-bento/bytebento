@@ -116,6 +116,9 @@ article p {
   background-color: var(--card);
   border-top: 2px solid #ddd;
   margin-top: 40px;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #featured-tech h2 {
@@ -150,6 +153,9 @@ article p {
   border-top: 2px dashed #bbb;
   font-size: 0.95rem;
   color: #666;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Light Theme */
@@ -180,9 +186,12 @@ body.dark-mode {
 .sponsored {
   background-color: var(--header-bg);
   color: var(--header-text);
-  padding: 20px;
-  margin-top: 30px;
+  padding: 24px;
+  margin-top: 40px;
   border-top: 2px solid #333;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .sponsored h2 {
@@ -197,10 +206,4 @@ body.dark-mode {
 .sponsored p {
   margin: 8px 0 0;
   font-size: 1rem;
-}
-
-.sponsored {
-  max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
 }
