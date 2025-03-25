@@ -175,3 +175,26 @@ body.dark-mode {
 .theme-toggle {
   margin-top: 10px;
 }
+
+/* 🧠 Sponsored Section Styling */
+.sponsored {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  padding: 20px;
+  margin-top: 30px;
+  border-top: 2px solid #333;
+}
+
+.sponsored h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: var(--header-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sponsored p {
+  margin: 8px 0 0;
+  font-size: 1rem;
+}
