@@ -52,7 +52,7 @@ window.onload = () => {
     });
   }
 
-  // 🌗 Dark mode toggle logic
+  // 🌓 Dark mode toggle logic
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
     // Load saved theme
@@ -71,6 +71,12 @@ window.onload = () => {
       }
     });
   }
+
+  // ⏰ Auto-refresh news every 10 minutes
+  setInterval(() => {
+    console.log("⏰ Auto-refreshing news...");
+    fetchNews();
+  }, 10 * 60 * 1000); // 10 minutes
 
   // 🔃 Initial news load
   fetchNews();
