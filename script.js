@@ -43,6 +43,51 @@ window.onload = () => {
       `;
       newsContainer.appendChild(newsItem);
     });
+
+    // Attach click listeners to save buttons
+    const saveButtons = document.querySelectorAll('.save-btn');
+    saveButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const article = {
+          url: btn.getAttribute('data-url'),
+          title: btn.getAttribute('data-title'),
+          description: btn.getAttribute('data-description')
+        };
+
+        // Get saved articles
+        let saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+
+        // Prevent duplicates
+        if (!saved.some(a => a.url === article.url)) {
+          saved.push(article);
+          localStorage.setItem('savedArticles', JSON.stringify(saved));
+          alert('✅ Saved for later!');
+          displaySavedArticles(); // 🧠 REFRESH the Saved Articles display
+        } else {
+          alert('🔁 Already saved!');
+        }
+      });
+    });
+  }
+
+  function displaySavedArticles() {
+    const savedContainer = document.getElementById('saved-container');
+    const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+
+    if (!saved.length) {
+      savedContainer.innerHTML = '<p>No saved articles yet.</p>';
+      return;
+    }
+
+    savedContainer.innerHTML = '';
+    saved.forEach(article => {
+      const articleDiv = document.createElement('article');
+      articleDiv.innerHTML = `
+        <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+        <p>${article.description || ''}</p>
+      `;
+      savedContainer.appendChild(articleDiv);
+    });
   }
 
   // 🔄 Refresh button listener
@@ -56,7 +101,6 @@ window.onload = () => {
   // 🌓 Dark mode toggle logic
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
-    // Load saved theme
     if (localStorage.getItem('theme') === 'dark') {
       document.body.classList.add('dark-mode');
       themeSwitch.checked = true;
@@ -73,32 +117,13 @@ window.onload = () => {
     });
   }
 
-  // 💾 Save to Read Later
-  document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('save-btn')) {
-      const url = e.target.getAttribute('data-url');
-      const title = e.target.getAttribute('data-title');
-      const description = e.target.getAttribute('data-description');
-
-      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-
-      // Avoid duplicates
-      if (!saved.find(article => article.url === url)) {
-        saved.push({ url, title, description });
-        localStorage.setItem('savedArticles', JSON.stringify(saved));
-        alert('Saved for later!');
-      } else {
-        alert('Already saved!');
-      }
-    }
-  });
-
   // ⏰ Auto-refresh news every 10 minutes
   setInterval(() => {
     console.log("⏰ Auto-refreshing news...");
     fetchNews();
   }, 10 * 60 * 1000); // 10 minutes
 
-  // 🔃 Initial news load
+  // 🔃 Initial load
   fetchNews();
+  displaySavedArticles(); // Load saved articles on first visit
 };
