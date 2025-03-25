@@ -177,3 +177,34 @@ footer {
   background-color: #005fa3;
   transform: translateY(-1px);
 }
+
+#featured-tech {
+  padding: 20px;
+  background-color: #f0f0f0;
+  margin-top: 40px;
+  border-top: 2px solid #ddd;
+}
+
+#featured-tech h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+#featured-tech ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#featured-tech li {
+  margin-bottom: 10px;
+}
+
+#featured-tech a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+#featured-tech a:hover {
+  text-decoration: underline;
+}
