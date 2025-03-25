@@ -202,3 +202,22 @@ body.dark-mode {
   font-size: 1rem;
   color: var(--text);
 }
+
+.bmc-container {
+  margin-top: 10px;
+}
+
+.bmc-container a {
+  background-color: #ffdd00;
+  color: #000;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.bmc-container a:hover {
+  background-color: #f5c400;
+}
