@@ -1,4 +1,4 @@
-const PROXY_URL = 'https://bytebento-proxy.tough-bed6922.workers.dev';
+const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -6,16 +6,16 @@ window.onload = () => {
   async function fetchNews() {
     try {
       newsContainer.innerHTML = '<p>Loading fresh articles...</p>';
-      console.log('Fetching from proxy:', PROXY_URL);
+      console.log('Fetching from Techmeme Worker:', PROXY_URL);
 
       const response = await fetch(PROXY_URL);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
-      console.log('Response from proxy:', data);
+      console.log('Response from Worker:', data);
+
+      if (!data.articles || data.articles.length === 0) {
+        newsContainer.innerHTML = '<p>No articles found at the moment. 🕵️‍♀️</p>';
+        return;
+      }
 
       displayNews(data.articles);
 
@@ -28,7 +28,6 @@ window.onload = () => {
       console.error('Error fetching news:', error);
 
       let message = 'Failed to load news articles.';
-
       if (error.message.includes('rateLimited')) {
         message = '🚫 Rate limit reached. News updates will resume soon!';
       }
@@ -43,21 +42,22 @@ window.onload = () => {
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
         <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-        <img src="${article.urlToImage || ''}" alt="${article.title}" />
-        <p>${article.description || ''}</p>
-        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="${article.description || ''}">⭐ Read Later</button>
+        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
       `;
       newsContainer.appendChild(newsItem);
     });
 
-    document.querySelectorAll('.save-btn').forEach(btn => {
+    // ⭐ Handle save buttons
+    const saveButtons = document.querySelectorAll('.save-btn');
+    saveButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const url = btn.getAttribute('data-url');
         const title = btn.getAttribute('data-title');
         const description = btn.getAttribute('data-description');
 
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-        if (!saved.some(article => article.url === url)) {
+        const exists = saved.some(article => article.url === url);
+        if (!exists) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           alert('Article saved!');
@@ -86,15 +86,13 @@ window.onload = () => {
     });
   }
 
-  // 🔄 Refresh button listener
+  // 🔄 Refresh button
   const refreshBtn = document.getElementById('refresh-btn');
   if (refreshBtn) {
-    refreshBtn.addEventListener('click', () => {
-      fetchNews();
-    });
+    refreshBtn.addEventListener('click', fetchNews);
   }
 
-  // 🌓 Dark mode toggle logic
+  // 🌓 Dark mode toggle
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
     if (localStorage.getItem('theme') === 'dark') {
@@ -103,52 +101,15 @@ window.onload = () => {
     }
 
     themeSwitch.addEventListener('change', () => {
-      if (themeSwitch.checked) {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light');
-      }
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('theme', themeSwitch.checked ? 'dark' : 'light');
     });
   }
 
-  // 🧹 Clear Saved Articles
-  const clearBtn = document.getElementById('clear-saved');
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      if (confirm("Are you sure you want to clear all saved articles?")) {
-        localStorage.removeItem('savedArticles');
-        renderSavedArticles();
-      }
-    });
-  }
+  // ⏰ Auto-refresh every 10 min
+  setInterval(fetchNews, 10 * 60 * 1000);
 
-  // 💾 Export Saved Articles
-  const exportBtn = document.getElementById('export-saved');
-  if (exportBtn) {
-    exportBtn.addEventListener('click', () => {
-      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-      const blob = new Blob([JSON.stringify(saved, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = "saved-articles.json";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    });
-  }
-
-  // ⏰ Auto-refresh news every 10 minutes
-  setInterval(() => {
-    console.log("⏰ Auto-refreshing news...");
-    fetchNews();
-  }, 10 * 60 * 1000);
-
-  // 📌 Toggle Saved Articles
+  // 📌 Saved article toggles
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
   const toggleIcon = document.getElementById('toggle-icon');
@@ -160,7 +121,7 @@ window.onload = () => {
     });
   }
 
-  // 🔃 Initial load
+  // 🔃 Kick things off
   fetchNews();
   renderSavedArticles();
 };
