@@ -41,9 +41,10 @@ window.onload = () => {
     articles.forEach(article => {
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
-        <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
-      `;
+      <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
+      ${article.thumbnail ? `<img src="${article.thumbnail}" alt="${article.title}" />` : ''}
+      <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
+    `;    
       newsContainer.appendChild(newsItem);
     });
 
