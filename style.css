@@ -98,16 +98,54 @@ article p {
   margin-top: 40px;
   background-color: var(--card);
   border-top: 2px solid #ddd;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #saved-articles h2 {
   margin-top: 0;
   font-size: 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #saved-container article {
-  margin-bottom: 20px;
   background-color: var(--card);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+#saved-container article h3 {
+  font-size: 1rem;
+  margin: 0 0 6px;
+}
+
+#saved-container article p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Collapsible logic */
+#saved-container.collapsed {
+  display: none;
+}
+
+#toggle-saved {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 12px;
+}
+
+#toggle-saved:hover {
+  text-decoration: underline;
 }
 
 /* Affiliate Links Section */
@@ -190,6 +228,9 @@ body.dark-mode {
   margin-top: 40px;
   border-top: 2px dashed #bbb;
   text-align: center;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #ad-section h2 {
@@ -203,6 +244,7 @@ body.dark-mode {
   color: var(--text);
 }
 
+/* Buy Me a Coffee */
 .bmc-container {
   margin-top: 10px;
 }
@@ -220,47 +262,4 @@ body.dark-mode {
 
 .bmc-container a:hover {
   background-color: #f5c400;
-}
-
-/* Collapsible toggle button */
-#toggle-saved {
-  background: none;
-  border: none;
-  color: inherit;
-  font: inherit;
-  font-size: 1.4rem;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0;
-}
-
-#toggle-saved:hover {
-  text-decoration: underline;
-}
-
-/* Collapsed state */
-#saved-container.collapsed {
-  display: none;
-}
-
-/* Slimmer saved cards */
-#saved-container article {
-  background-color: var(--card);
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 12px 16px;
-  margin-bottom: 16px;
-}
-
-#saved-container article h3 {
-  font-size: 1rem;
-  margin: 0 0 6px;
-}
-
-#saved-container article p {
-  font-size: 0.85rem;
-  margin: 0;
 }
