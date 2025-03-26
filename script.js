@@ -44,49 +44,42 @@ window.onload = () => {
       newsContainer.appendChild(newsItem);
     });
 
-    // Attach click listeners to save buttons
+    // ⭐ Handle save buttons
     const saveButtons = document.querySelectorAll('.save-btn');
     saveButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        const article = {
-          url: btn.getAttribute('data-url'),
-          title: btn.getAttribute('data-title'),
-          description: btn.getAttribute('data-description')
-        };
+        const url = btn.getAttribute('data-url');
+        const title = btn.getAttribute('data-title');
+        const description = btn.getAttribute('data-description');
 
-        // Get saved articles
-        let saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-
-        // Prevent duplicates
-        if (!saved.some(a => a.url === article.url)) {
-          saved.push(article);
+        const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+        const exists = saved.some(article => article.url === url);
+        if (!exists) {
+          saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
-          alert('✅ Saved for later!');
-          displaySavedArticles(); // 🧠 REFRESH the Saved Articles display
+          alert('Article saved!');
+          renderSavedArticles(); // Update list
         } else {
-          alert('🔁 Already saved!');
+          alert('Already saved!');
         }
       });
     });
   }
 
-  function displaySavedArticles() {
+  function renderSavedArticles() {
     const savedContainer = document.getElementById('saved-container');
+    if (!savedContainer) return;
+
     const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-
-    if (!saved.length) {
-      savedContainer.innerHTML = '<p>No saved articles yet.</p>';
-      return;
-    }
-
     savedContainer.innerHTML = '';
+
     saved.forEach(article => {
-      const articleDiv = document.createElement('article');
-      articleDiv.innerHTML = `
+      const item = document.createElement('article');
+      item.innerHTML = `
         <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
         <p>${article.description || ''}</p>
       `;
-      savedContainer.appendChild(articleDiv);
+      savedContainer.appendChild(item);
     });
   }
 
@@ -101,6 +94,7 @@ window.onload = () => {
   // 🌓 Dark mode toggle logic
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
+    // Load saved theme
     if (localStorage.getItem('theme') === 'dark') {
       document.body.classList.add('dark-mode');
       themeSwitch.checked = true;
@@ -123,7 +117,19 @@ window.onload = () => {
     fetchNews();
   }, 10 * 60 * 1000); // 10 minutes
 
-  // 🔃 Initial load
+  // 📌 Toggle Saved Articles
+  const toggleBtn = document.getElementById('toggle-saved');
+  const savedContainer = document.getElementById('saved-container');
+  const toggleIcon = document.getElementById('toggle-icon');
+
+  if (toggleBtn && savedContainer) {
+    toggleBtn.addEventListener('click', () => {
+      savedContainer.classList.toggle('collapsed');
+      toggleIcon.textContent = savedContainer.classList.contains('collapsed') ? '▼' : '▲';
+    });
+  }
+
+  // 🔃 Initial news load + saved articles
   fetchNews();
-  displaySavedArticles(); // Load saved articles on first visit
+  renderSavedArticles();
 };
