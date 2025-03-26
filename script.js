@@ -9,14 +9,19 @@ window.onload = () => {
       console.log('Fetching from proxy:', PROXY_URL);
 
       const response = await fetch(PROXY_URL);
+      const data = await response.json();
+
+      // Check for NewsAPI rate limit error in response body
+      if (data.status === 'error' && data.code === 'rateLimited') {
+        newsContainer.innerHTML = '<p>🚫 Rate limit reached. News updates will resume soon!</p>';
+        return;
+      }
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
       console.log('Response from proxy:', data);
-
       displayNews(data.articles);
 
       // ⏰ Update timestamp after fetch
@@ -27,16 +32,9 @@ window.onload = () => {
 
     } catch (error) {
       console.error('Error fetching news:', error);
-    
       let message = 'Failed to load news articles.';
-    
-      // Check if it's a NewsAPI rate limit issue based on known message
-      if (error.message.includes('rateLimited')) {
-        message = '🚫 Rate limit reached. News updates will resume soon!';
-      }
-    
       newsContainer.innerHTML = `<p>${message}</p>`;
-    }     
+    }
   }
 
   function displayNews(articles) {
@@ -66,7 +64,7 @@ window.onload = () => {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           alert('Article saved!');
-          renderSavedArticles(); // Update list
+          renderSavedArticles(); // Update saved articles display
         } else {
           alert('Already saved!');
         }
@@ -102,12 +100,10 @@ window.onload = () => {
   // 🌓 Dark mode toggle logic
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
-    // Load saved theme
     if (localStorage.getItem('theme') === 'dark') {
       document.body.classList.add('dark-mode');
       themeSwitch.checked = true;
     }
-
     themeSwitch.addEventListener('change', () => {
       if (themeSwitch.checked) {
         document.body.classList.add('dark-mode');
@@ -125,11 +121,10 @@ window.onload = () => {
     fetchNews();
   }, 10 * 60 * 1000); // 10 minutes
 
-  // 📌 Toggle Saved Articles
+  // 📌 Toggle Saved Articles (Collapsible)
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
   const toggleIcon = document.getElementById('toggle-icon');
-
   if (toggleBtn && savedContainer) {
     toggleBtn.addEventListener('click', () => {
       savedContainer.classList.toggle('collapsed');
@@ -137,7 +132,7 @@ window.onload = () => {
     });
   }
 
-  // 🔃 Initial news load + saved articles
+  // 🔃 Initial load: fetch news and render saved articles
   fetchNews();
   renderSavedArticles();
 };
