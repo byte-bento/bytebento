@@ -26,9 +26,17 @@ window.onload = () => {
       }
 
     } catch (error) {
-      newsContainer.innerHTML = '<p>Failed to load news articles.</p>';
       console.error('Error fetching news:', error);
-    }
+    
+      let message = 'Failed to load news articles.';
+    
+      // Check if it's a NewsAPI rate limit issue based on known message
+      if (error.message.includes('rateLimited')) {
+        message = '🚫 Rate limit reached. News updates will resume soon!';
+      }
+    
+      newsContainer.innerHTML = `<p>${message}</p>`;
+    }     
   }
 
   function displayNews(articles) {
