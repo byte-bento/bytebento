@@ -9,22 +9,16 @@ window.onload = () => {
       console.log('Fetching from proxy:', PROXY_URL);
 
       const response = await fetch(PROXY_URL);
-      const data = await response.json();
-
-      // Check for NewsAPI rate limit error in response body
-      if (data.status === 'error' && data.code === 'rateLimited') {
-        newsContainer.innerHTML = '<p>🚫 Rate limit reached. News updates will resume soon!</p>';
-        return;
-      }
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+      const data = await response.json();
       console.log('Response from proxy:', data);
+
       displayNews(data.articles);
 
-      // ⏰ Update timestamp after fetch
       const stampEl = document.getElementById('last-updated');
       if (stampEl) {
         stampEl.textContent = `🕒 Last updated: ${new Date().toLocaleString()}`;
@@ -32,7 +26,13 @@ window.onload = () => {
 
     } catch (error) {
       console.error('Error fetching news:', error);
+
       let message = 'Failed to load news articles.';
+
+      if (error.message.includes('rateLimited')) {
+        message = '🚫 Rate limit reached. News updates will resume soon!';
+      }
+
       newsContainer.innerHTML = `<p>${message}</p>`;
     }
   }
@@ -50,21 +50,18 @@ window.onload = () => {
       newsContainer.appendChild(newsItem);
     });
 
-    // ⭐ Handle save buttons
-    const saveButtons = document.querySelectorAll('.save-btn');
-    saveButtons.forEach(btn => {
+    document.querySelectorAll('.save-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const url = btn.getAttribute('data-url');
         const title = btn.getAttribute('data-title');
         const description = btn.getAttribute('data-description');
 
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-        const exists = saved.some(article => article.url === url);
-        if (!exists) {
+        if (!saved.some(article => article.url === url)) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           alert('Article saved!');
-          renderSavedArticles(); // Update saved articles display
+          renderSavedArticles();
         } else {
           alert('Already saved!');
         }
@@ -104,6 +101,7 @@ window.onload = () => {
       document.body.classList.add('dark-mode');
       themeSwitch.checked = true;
     }
+
     themeSwitch.addEventListener('change', () => {
       if (themeSwitch.checked) {
         document.body.classList.add('dark-mode');
@@ -115,16 +113,46 @@ window.onload = () => {
     });
   }
 
+  // 🧹 Clear Saved Articles
+  const clearBtn = document.getElementById('clear-saved');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (confirm("Are you sure you want to clear all saved articles?")) {
+        localStorage.removeItem('savedArticles');
+        renderSavedArticles();
+      }
+    });
+  }
+
+  // 💾 Export Saved Articles
+  const exportBtn = document.getElementById('export-saved');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+      const blob = new Blob([JSON.stringify(saved, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = "saved-articles.json";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+  }
+
   // ⏰ Auto-refresh news every 10 minutes
   setInterval(() => {
     console.log("⏰ Auto-refreshing news...");
     fetchNews();
-  }, 10 * 60 * 1000); // 10 minutes
+  }, 10 * 60 * 1000);
 
-  // 📌 Toggle Saved Articles (Collapsible)
+  // 📌 Toggle Saved Articles
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
   const toggleIcon = document.getElementById('toggle-icon');
+
   if (toggleBtn && savedContainer) {
     toggleBtn.addEventListener('click', () => {
       savedContainer.classList.toggle('collapsed');
@@ -132,7 +160,7 @@ window.onload = () => {
     });
   }
 
-  // 🔃 Initial load: fetch news and render saved articles
+  // 🔃 Initial load
   fetchNews();
   renderSavedArticles();
 };
