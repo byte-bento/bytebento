@@ -39,12 +39,17 @@ window.onload = () => {
   function displayNews(articles) {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
+      const { title, url, thumbnail, source, date } = article;
+
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
-      <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-      ${article.thumbnail ? `<img src="${article.thumbnail}" alt="${article.title}" />` : ''}
-      <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
-    `;    
+        <h2><a href="${url}" target="_blank">${title}</a></h2>
+        ${thumbnail ? `<img src="${thumbnail}" alt="Preview image for ${title}" />` : ''}
+        ${source || date ? `<p class="meta">
+          ${source ? `<strong>${source}</strong>` : ''}${source && date ? ' · ' : ''}${date ? new Date(date).toLocaleDateString() : ''}
+        </p>` : ''}
+        <button class="save-btn" data-url="${url}" data-title="${title}" data-description="">⭐ Read Later</button>
+      `;
       newsContainer.appendChild(newsItem);
     });
 
