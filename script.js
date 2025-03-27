@@ -1,5 +1,5 @@
 const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = './assets/fallback.jpg';
+const FALLBACK_IMAGE = 'assets/fallback.jpg';
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -14,7 +14,7 @@ window.onload = () => {
       console.log('Response from Worker:', data);
 
       if (!data.articles || data.articles.length === 0) {
-        newsContainer.innerHTML = '<p>No articles found at the moment. 🕵️‍♀️</p>';
+        newsContainer.innerHTML = '<p>⚠️ No articles found. Please check back soon.</p>';
         return;
       }
 
@@ -27,11 +27,7 @@ window.onload = () => {
 
     } catch (error) {
       console.error('Error fetching news:', error);
-      let message = 'Failed to load news articles.';
-      if (error.message.includes('rateLimited')) {
-        message = '🚫 Rate limit reached. News updates will resume soon!';
-      }
-      newsContainer.innerHTML = `<p>${message}</p>`;
+      newsContainer.innerHTML = `<p>❌ Failed to load news articles.</p>`;
     }
   }
 
@@ -39,35 +35,37 @@ window.onload = () => {
     return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
   }
 
-  function extractDateFromTechmemeUrl(url) {
-    const match = url.match(/techmeme\.com\/(\d{6})\//);
-    if (match && match[1]) {
-      const dateStr = match[1];
-      const year = `20${dateStr.slice(0, 2)}`;
-      const month = dateStr.slice(2, 4);
-      const day = dateStr.slice(4, 6);
-      const date = new Date(`${year}-${month}-${day}`);
-      return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-    }
-    return null;
-  }
-
   function displayNews(articles) {
     newsContainer.innerHTML = '';
-    articles.forEach(article => {
-      const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
-      const date = extractDateFromTechmemeUrl(article.url);
-      const [titleWithoutAuthor, authorSource] = article.title.split('(');
-      const readableSource = authorSource ? authorSource.replace(')', '') : '';
+    articles.forEach((article, index) => {
+      try {
+        const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
 
-      const newsItem = document.createElement('article');
-      newsItem.innerHTML = `
-        <h2><a href="${article.url}" target="_blank">${titleWithoutAuthor.trim()}</a></h2>
-        <p class="meta-info">${readableSource}${date ? ` • ${date}` : ''}</p>
-        <img src="${imageUrl}" alt="Article image" />
-        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
-      `;
-      newsContainer.appendChild(newsItem);
+        let source = 'Unknown Source';
+        let timestamp = '';
+
+        const sourceMatch = article.title.match(/\(([^)]+)\)$/);
+        if (sourceMatch) {
+          source = sourceMatch[1];
+        }
+
+        if (article.publishedAt) {
+          const date = new Date(article.publishedAt);
+          timestamp = date.toLocaleString();
+        }
+
+        const newsItem = document.createElement('article');
+        newsItem.innerHTML = `
+          <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
+          <img src="${imageUrl}" alt="Article image" />
+          <p><strong>Source:</strong> ${source}</p>
+          ${timestamp ? `<p><strong>Published:</strong> ${timestamp}</p>` : ''}
+          <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
+        `;
+        newsContainer.appendChild(newsItem);
+      } catch (error) {
+        console.warn(`Skipping article at index ${index} due to error:`, error, article);
+      }
     });
 
     const saveButtons = document.querySelectorAll('.save-btn');
@@ -116,6 +114,7 @@ window.onload = () => {
       document.body.classList.add('dark-mode');
       themeSwitch.checked = true;
     }
+
     themeSwitch.addEventListener('change', () => {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('theme', themeSwitch.checked ? 'dark' : 'light');
