@@ -1,5 +1,5 @@
 const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = './assets/fallback.jpg';
+const FALLBACK_IMAGE = 'assets/fallback.jpg';
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -27,7 +27,11 @@ window.onload = () => {
 
     } catch (error) {
       console.error('Error fetching news:', error);
-      newsContainer.innerHTML = `<p>❌ Error loading news. Please try again later.</p>`;
+      let message = 'Failed to load news articles.';
+      if (error.message.includes('rateLimited')) {
+        message = '🚫 Rate limit reached. News updates will resume soon!';
+      }
+      newsContainer.innerHTML = `<p>${message}</p>`;
     }
   }
 
@@ -35,50 +39,42 @@ window.onload = () => {
     return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
   }
 
-  function formatDate(timestamp) {
-    try {
-      const date = new Date(timestamp);
-      return date.toLocaleString();
-    } catch {
-      return '';
-    }
+  function extractSourceFromTitle(title) {
+    const match = title.match(/\(([^)]+)\)$/);
+    return match ? match[1] : null;
   }
 
-  function cleanHeadline(title) {
-    return title.replace(/\s*\(([^)]+\/[^)]+)\)$/, '');
-  }
-
-  function extractSource(title) {
-    const match = title.match(/\(([^)]+\/[^)]+)\)$/);
-    return match ? match[1] : '';
+  function cleanTitle(title) {
+    return title.replace(/\s*\([^)]+\)$/, '');
   }
 
   function displayNews(articles) {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
       const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
-      const title = cleanHeadline(article.title || '');
-      const source = extractSource(article.title || '');
-      const time = article.publishedAt ? formatDate(article.publishedAt) : '';
+      const source = extractSourceFromTitle(article.title);
+      const clean = cleanTitle(article.title);
 
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
-        <h2><a href="${article.url}" target="_blank">${title}</a></h2>
+        <h2><a href="${article.url}" target="_blank">${clean}</a></h2>
         <img src="${imageUrl}" alt="Article image" />
         ${source ? `<p><strong>Source:</strong> ${source}</p>` : ''}
-        ${time ? `<p><strong>Published:</strong> ${time}</p>` : ''}
-        <button class="save-btn" data-url="${article.url}" data-title="${title}" data-description="">⭐ Read Later</button>
+        <button class="save-btn" data-url="${article.url}" data-title="${clean}" data-description="">⭐ Read Later</button>
       `;
       newsContainer.appendChild(newsItem);
     });
 
-    document.querySelectorAll('.save-btn').forEach(btn => {
+    const saveButtons = document.querySelectorAll('.save-btn');
+    saveButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const url = btn.getAttribute('data-url');
         const title = btn.getAttribute('data-title');
         const description = btn.getAttribute('data-description');
+
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-        if (!saved.some(article => article.url === url)) {
+        const exists = saved.some(article => article.url === url);
+        if (!exists) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           alert('Article saved!');
