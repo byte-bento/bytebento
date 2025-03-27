@@ -1,5 +1,5 @@
 const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = 'assets/fallback.jpg';
+const FALLBACK_IMAGE = './assets/fallback.jpg';
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -14,7 +14,7 @@ window.onload = () => {
       console.log('Response from Worker:', data);
 
       if (!data.articles || data.articles.length === 0) {
-        newsContainer.innerHTML = '<p>⚠️ No articles found. Please check back soon.</p>';
+        newsContainer.innerHTML = '<p>No articles found at the moment. 🕵️‍♀️</p>';
         return;
       }
 
@@ -27,7 +27,7 @@ window.onload = () => {
 
     } catch (error) {
       console.error('Error fetching news:', error);
-      newsContainer.innerHTML = `<p>❌ Failed to load news articles.</p>`;
+      newsContainer.innerHTML = `<p>❌ Error loading news. Please try again later.</p>`;
     }
   }
 
@@ -35,49 +35,50 @@ window.onload = () => {
     return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
   }
 
+  function formatDate(timestamp) {
+    try {
+      const date = new Date(timestamp);
+      return date.toLocaleString();
+    } catch {
+      return '';
+    }
+  }
+
+  function cleanHeadline(title) {
+    return title.replace(/\s*\(([^)]+\/[^)]+)\)$/, '');
+  }
+
+  function extractSource(title) {
+    const match = title.match(/\(([^)]+\/[^)]+)\)$/);
+    return match ? match[1] : '';
+  }
+
   function displayNews(articles) {
     newsContainer.innerHTML = '';
-    articles.forEach((article, index) => {
-      try {
-        const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
+    articles.forEach(article => {
+      const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
+      const title = cleanHeadline(article.title || '');
+      const source = extractSource(article.title || '');
+      const time = article.publishedAt ? formatDate(article.publishedAt) : '';
 
-        let source = 'Unknown Source';
-        let timestamp = '';
-
-        const sourceMatch = article.title.match(/\(([^)]+)\)$/);
-        if (sourceMatch) {
-          source = sourceMatch[1];
-        }
-
-        if (article.publishedAt) {
-          const date = new Date(article.publishedAt);
-          timestamp = date.toLocaleString();
-        }
-
-        const newsItem = document.createElement('article');
-        newsItem.innerHTML = `
-          <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-          <img src="${imageUrl}" alt="Article image" />
-          <p><strong>Source:</strong> ${source}</p>
-          ${timestamp ? `<p><strong>Published:</strong> ${timestamp}</p>` : ''}
-          <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
-        `;
-        newsContainer.appendChild(newsItem);
-      } catch (error) {
-        console.warn(`Skipping article at index ${index} due to error:`, error, article);
-      }
+      const newsItem = document.createElement('article');
+      newsItem.innerHTML = `
+        <h2><a href="${article.url}" target="_blank">${title}</a></h2>
+        <img src="${imageUrl}" alt="Article image" />
+        ${source ? `<p><strong>Source:</strong> ${source}</p>` : ''}
+        ${time ? `<p><strong>Published:</strong> ${time}</p>` : ''}
+        <button class="save-btn" data-url="${article.url}" data-title="${title}" data-description="">⭐ Read Later</button>
+      `;
+      newsContainer.appendChild(newsItem);
     });
 
-    const saveButtons = document.querySelectorAll('.save-btn');
-    saveButtons.forEach(btn => {
+    document.querySelectorAll('.save-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const url = btn.getAttribute('data-url');
         const title = btn.getAttribute('data-title');
         const description = btn.getAttribute('data-description');
-
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-        const exists = saved.some(article => article.url === url);
-        if (!exists) {
+        if (!saved.some(article => article.url === url)) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           alert('Article saved!');
@@ -114,7 +115,6 @@ window.onload = () => {
       document.body.classList.add('dark-mode');
       themeSwitch.checked = true;
     }
-
     themeSwitch.addEventListener('change', () => {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('theme', themeSwitch.checked ? 'dark' : 'light');
