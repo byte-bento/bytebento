@@ -1,4 +1,5 @@
 const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
+const FALLBACK_IMAGE = 'https://www.bytebento.com/fallback.jpg'; // Replace with your own hosted fallback image URL
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -26,35 +27,31 @@ window.onload = () => {
 
     } catch (error) {
       console.error('Error fetching news:', error);
-
       let message = 'Failed to load news articles.';
       if (error.message.includes('rateLimited')) {
         message = '🚫 Rate limit reached. News updates will resume soon!';
       }
-
       newsContainer.innerHTML = `<p>${message}</p>`;
     }
+  }
+
+  function isValidImage(url) {
+    return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
   }
 
   function displayNews(articles) {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
-      const validImage = article.urlToImage && article.urlToImage.startsWith('http');
-      const imageHTML = validImage
-        ? `<img src="${article.urlToImage}" alt="${article.title}" />`
-        : ''; // Optional: use a fallback image if you'd like
-
+      const imageUrl = isValidImage(article.urlToImage) ? article.urlToImage : FALLBACK_IMAGE;
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
         <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-        ${imageHTML}
-        <p>${article.description || ''}</p>
-        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="${article.description || ''}">⭐ Read Later</button>
+        <img src="${imageUrl}" alt="${article.title}" />
+        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
       `;
       newsContainer.appendChild(newsItem);
     });
 
-    // ⭐ Handle save buttons
     const saveButtons = document.querySelectorAll('.save-btn');
     saveButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -93,34 +90,25 @@ window.onload = () => {
     });
   }
 
-  // 🔄 Refresh button
-  const refreshBtn = document.getElementById('refresh-btn');
-  if (refreshBtn) {
-    refreshBtn.addEventListener('click', fetchNews);
-  }
+  document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
-  // 🌓 Dark mode toggle
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
     if (localStorage.getItem('theme') === 'dark') {
       document.body.classList.add('dark-mode');
       themeSwitch.checked = true;
     }
-
     themeSwitch.addEventListener('change', () => {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('theme', themeSwitch.checked ? 'dark' : 'light');
     });
   }
 
-  // ⏰ Auto-refresh every 10 min
   setInterval(fetchNews, 10 * 60 * 1000);
 
-  // 📌 Toggle Saved Articles
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
   const toggleIcon = document.getElementById('toggle-icon');
-
   if (toggleBtn && savedContainer) {
     toggleBtn.addEventListener('click', () => {
       savedContainer.classList.toggle('collapsed');
@@ -128,7 +116,6 @@ window.onload = () => {
     });
   }
 
-  // 🔃 Kick things off
   fetchNews();
   renderSavedArticles();
 };
