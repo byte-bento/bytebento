@@ -36,14 +36,18 @@ window.onload = () => {
   }
 
   function isValidImage(url) {
-    return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
+    return typeof url === 'string' && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
   }
 
   function displayNews(articles) {
     newsContainer.innerHTML = '';
+  
     articles.forEach(article => {
-      const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
-
+      const rawThumb = article.thumbnail;
+      const imageUrl = isValidImage(rawThumb) ? rawThumb : FALLBACK_IMAGE;
+  
+      console.log("Image selected:", imageUrl);
+  
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
         <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
@@ -52,6 +56,7 @@ window.onload = () => {
       `;
       newsContainer.appendChild(newsItem);
     });
+  }  
 
     const saveButtons = document.querySelectorAll('.save-btn');
     saveButtons.forEach(btn => {
@@ -119,4 +124,4 @@ window.onload = () => {
 
   fetchNews();
   renderSavedArticles();
-};
+
