@@ -1,5 +1,5 @@
 const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = './assets/fallback.jpg'; // relative path to fallback image
+const FALLBACK_IMAGE = './assets/fallback.jpg';
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -39,14 +39,31 @@ window.onload = () => {
     return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
   }
 
+  function extractDateFromTechmemeUrl(url) {
+    const match = url.match(/techmeme\.com\/(\d{6})\//);
+    if (match && match[1]) {
+      const dateStr = match[1];
+      const year = `20${dateStr.slice(0, 2)}`;
+      const month = dateStr.slice(2, 4);
+      const day = dateStr.slice(4, 6);
+      const date = new Date(`${year}-${month}-${day}`);
+      return date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+    return null;
+  }
+
   function displayNews(articles) {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
       const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
+      const date = extractDateFromTechmemeUrl(article.url);
+      const [titleWithoutAuthor, authorSource] = article.title.split('(');
+      const readableSource = authorSource ? authorSource.replace(')', '') : '';
 
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
-        <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
+        <h2><a href="${article.url}" target="_blank">${titleWithoutAuthor.trim()}</a></h2>
+        <p class="meta-info">${readableSource}${date ? ` • ${date}` : ''}</p>
         <img src="${imageUrl}" alt="Article image" />
         <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
       `;
@@ -105,7 +122,7 @@ window.onload = () => {
     });
   }
 
-  setInterval(fetchNews, 10 * 60 * 1000); // Refresh every 10 minutes
+  setInterval(fetchNews, 10 * 60 * 1000);
 
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
@@ -117,7 +134,6 @@ window.onload = () => {
     });
   }
 
-  // 🔃 Initial load
   fetchNews();
   renderSavedArticles();
 };
