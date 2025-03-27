@@ -1,5 +1,5 @@
 const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = 'assets/fallback.jpg';
+const FALLBACK_IMAGE = 'assets/fallback.jpg'; // Make sure this path is correct relative to index.html
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -36,18 +36,14 @@ window.onload = () => {
   }
 
   function isValidImage(url) {
-    return typeof url === 'string' && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
+    return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
   }
 
   function displayNews(articles) {
     newsContainer.innerHTML = '';
-  
     articles.forEach(article => {
-      const rawThumb = article.thumbnail;
-      const imageUrl = isValidImage(rawThumb) ? rawThumb : FALLBACK_IMAGE;
-  
-      console.log("Image selected:", imageUrl);
-  
+      const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
+
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
         <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
@@ -56,7 +52,6 @@ window.onload = () => {
       `;
       newsContainer.appendChild(newsItem);
     });
-  }  
 
     const saveButtons = document.querySelectorAll('.save-btn');
     saveButtons.forEach(btn => {
@@ -110,7 +105,7 @@ window.onload = () => {
     });
   }
 
-  setInterval(fetchNews, 10 * 60 * 1000);
+  setInterval(fetchNews, 10 * 60 * 1000); // every 10 minutes
 
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
@@ -124,4 +119,4 @@ window.onload = () => {
 
   fetchNews();
   renderSavedArticles();
-
+};
