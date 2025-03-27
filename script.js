@@ -1,5 +1,5 @@
 const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = 'assets/fallback.jpg'; // Make sure this path is correct relative to index.html
+const FALLBACK_IMAGE = './assets/fallback.jpg'; // relative path to fallback image
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -105,7 +105,7 @@ window.onload = () => {
     });
   }
 
-  setInterval(fetchNews, 10 * 60 * 1000); // every 10 minutes
+  setInterval(fetchNews, 10 * 60 * 1000); // Refresh every 10 minutes
 
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
@@ -117,6 +117,7 @@ window.onload = () => {
     });
   }
 
+  // 🔃 Initial load
   fetchNews();
   renderSavedArticles();
 };
