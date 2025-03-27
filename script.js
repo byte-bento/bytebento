@@ -1,5 +1,5 @@
 const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = 'https://www.bytebento.com/fallback.jpg'; // Replace with your hosted fallback image
+const FALLBACK_IMAGE = 'assets/fallback.jpg';
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -35,15 +35,19 @@ window.onload = () => {
     }
   }
 
+  function isValidImage(url) {
+    return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
+  }
+
   function displayNews(articles) {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
-      const imageUrl = FALLBACK_IMAGE; // Use fallback image only for now
+      const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
 
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
         <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-        <img src="${imageUrl}" alt="${article.title}" />
+        <img src="${imageUrl}" alt="Article image" />
         <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
       `;
       newsContainer.appendChild(newsItem);
