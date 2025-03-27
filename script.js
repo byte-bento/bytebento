@@ -39,16 +39,17 @@ window.onload = () => {
   function displayNews(articles) {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
-      const { title, url, thumbnail, source, date } = article;
+      const validImage = article.urlToImage && article.urlToImage.startsWith('http');
+      const imageHTML = validImage
+        ? `<img src="${article.urlToImage}" alt="${article.title}" />`
+        : ''; // Optional: use a fallback image if you'd like
 
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
-        <h2><a href="${url}" target="_blank">${title}</a></h2>
-        ${thumbnail ? `<img src="${thumbnail}" alt="Preview image for ${title}" />` : ''}
-        ${source || date ? `<p class="meta">
-          ${source ? `<strong>${source}</strong>` : ''}${source && date ? ' · ' : ''}${date ? new Date(date).toLocaleDateString() : ''}
-        </p>` : ''}
-        <button class="save-btn" data-url="${url}" data-title="${title}" data-description="">⭐ Read Later</button>
+        <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
+        ${imageHTML}
+        <p>${article.description || ''}</p>
+        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="${article.description || ''}">⭐ Read Later</button>
       `;
       newsContainer.appendChild(newsItem);
     });
@@ -115,7 +116,7 @@ window.onload = () => {
   // ⏰ Auto-refresh every 10 min
   setInterval(fetchNews, 10 * 60 * 1000);
 
-  // 📌 Saved article toggles
+  // 📌 Toggle Saved Articles
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
   const toggleIcon = document.getElementById('toggle-icon');
