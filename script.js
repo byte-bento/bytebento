@@ -1,5 +1,7 @@
 const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = 'assets/fallback.jpg';
+const FALLBACK_IMAGE = './assets/fallback.jpg';
+
+console.log("ByteBento script.js loaded – version with clean title + source under image");
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -40,12 +42,12 @@ window.onload = () => {
   }
 
   function extractSourceFromTitle(title) {
-    const match = title.match(/\(([^)]+)\)$/);
-    return match ? match[1] : null;
+    const match = title.match(/\(([^()]+\/[^()]+)\)$/);
+    return match ? match[1] : '';
   }
 
   function cleanTitle(title) {
-    return title.replace(/\s*\([^)]+\)$/, '');
+    return title.replace(/\s*\([^()]+\/[^()]+\)\s*$/, '').trim();
   }
 
   function displayNews(articles) {
