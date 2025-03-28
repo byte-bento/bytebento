@@ -1,6 +1,8 @@
-const TECHMEME_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const VERGE_URL = 'https://bytebento-verge-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = '/assets/fallback.jpg'; // Make sure this path matches your project
+const SOURCES = [
+  'https://bytebento-techmeme-worker.tough-bed6922.workers.dev',
+  'https://bytebento-verge-worker.tough-bed6922.workers.dev'
+];
+const FALLBACK_IMAGE = '/assets/fallback.jpg'; // Make sure this exists
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -8,23 +10,25 @@ window.onload = () => {
   async function fetchNews() {
     try {
       newsContainer.innerHTML = '<p>Loading fresh articles...</p>';
-      console.log('Fetching from Techmeme:', TECHMEME_URL);
-      console.log('Fetching from The Verge:', VERGE_URL);
+      console.log('🔄 Fetching from sources...');
 
-      const [techmemeRes, vergeRes] = await Promise.all([
-        fetch(TECHMEME_URL).then(res => res.json()),
-        fetch(VERGE_URL).then(res => res.json())
-      ]);
+      const responses = await Promise.all(
+        SOURCES.map(url => fetch(url).then(res => res.json()).catch(() => null))
+      );
 
-      const articles = [...(techmemeRes.articles || []), ...(vergeRes.articles || [])];
+      const allArticles = responses
+        .filter(res => res && res.status === 'ok')
+        .flatMap(res => res.articles || []);
 
-      if (articles.length === 0) {
+      if (allArticles.length === 0) {
         newsContainer.innerHTML = '<p>No articles found at the moment. 🕵️‍♀️</p>';
         return;
       }
 
-      articles.sort((a, b) => new Date(b.date) - new Date(a.date)); // newest first
-      displayNews(articles);
+      // Sort by date (if available)
+      allArticles.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+      displayNews(allArticles);
 
       const stampEl = document.getElementById('last-updated');
       if (stampEl) {
@@ -33,7 +37,7 @@ window.onload = () => {
 
     } catch (error) {
       console.error('Error fetching news:', error);
-      newsContainer.innerHTML = `<p>🚫 Failed to load news articles.</p>`;
+      newsContainer.innerHTML = `<p>🚫 Failed to load news articles. Please try again soon.</p>`;
     }
   }
 
@@ -45,15 +49,16 @@ window.onload = () => {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
       const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
-      const formattedDate = article.date ? new Date(article.date).toLocaleString() : '';
-      const cleanTitle = article.title.replace(/[-|–—]\s*(Techmeme|The Verge)$/i, '').trim();
 
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
-        <h2><a href="${article.url}" target="_blank">${cleanTitle}</a></h2>
+        <h2><a href="${article.url}" target="_blank">${cleanTitle(article.title)}</a></h2>
         <img src="${imageUrl}" alt="Article image" />
-        <p class="meta">📍 ${article.source || 'Unknown Source'} ${formattedDate ? `| ⏰ ${formattedDate}` : ''}</p>
-        <button class="save-btn" data-url="${article.url}" data-title="${cleanTitle}" data-description="">⭐ Read Later</button>
+        <p class="source-line">
+          ${article.source ? `<strong>Source:</strong> ${article.source}` : ''}
+          ${article.date ? ` | <strong>Date:</strong> ${new Date(article.date).toLocaleString()}` : ''}
+        </p>
+        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
       `;
       newsContainer.appendChild(newsItem);
     });
@@ -66,7 +71,8 @@ window.onload = () => {
         const description = btn.getAttribute('data-description');
 
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-        if (!saved.some(article => article.url === url)) {
+        const exists = saved.some(article => article.url === url);
+        if (!exists) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           alert('Article saved!');
@@ -76,6 +82,10 @@ window.onload = () => {
         }
       });
     });
+  }
+
+  function cleanTitle(title) {
+    return title.replace(/\s*[\(\[]?(Techmeme|The Verge)[\)\]]?$/, '').trim();
   }
 
   function renderSavedArticles() {
@@ -95,10 +105,8 @@ window.onload = () => {
     });
   }
 
-  // Refresh button
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
-  // Dark mode toggle
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
     if (localStorage.getItem('theme') === 'dark') {
@@ -111,7 +119,8 @@ window.onload = () => {
     });
   }
 
-  // Toggle Saved Articles
+  setInterval(fetchNews, 10 * 60 * 1000);
+
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
   const toggleIcon = document.getElementById('toggle-icon');
@@ -122,10 +131,6 @@ window.onload = () => {
     });
   }
 
-  // Auto-refresh every 10 min
-  setInterval(fetchNews, 10 * 60 * 1000);
-
-  // Start things up
   fetchNews();
   renderSavedArticles();
 };
