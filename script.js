@@ -1,57 +1,52 @@
 const ENDPOINTS = [
   "https://bytebento-techmeme-worker.tough-bed6922.workers.dev",
   "https://bytebento-verge-worker.tough-bed6922.workers.dev",
-  "https://dawn-forest-65f6.tough-bed6922.workers.dev" // Ars Technica
+  "https://bytebento-ars-worker.tough-bed6922.workers.dev"
 ];
 
-const FALLBACK_IMAGE = "./assets/fallback.jpg";
+const FALLBACK_IMAGE = "assets/fallback.jpg";
 
 window.onload = () => {
   const newsContainer = document.getElementById("news-container");
 
   async function fetchNews() {
-    try {
-      newsContainer.innerHTML = "<p>Loading fresh articles...</p>";
-      console.log("🚀 Fetching from sources...");
+    console.log("📰 Fetching from sources...");
 
+    try {
       const allArticles = [];
 
       for (const url of ENDPOINTS) {
-        console.log(`🌐 Trying to fetch from: ${url}`);
+        console.log(`➡️ Fetching from: ${url}`);
         try {
           const res = await fetch(url);
           const data = await res.json();
-          console.log(`✅ Got response from ${url}:`, data);
+          console.log(`✅ Success from ${url}:`, data);
 
           if (data.status === "ok" && Array.isArray(data.articles)) {
             allArticles.push(...data.articles);
           } else {
-            console.warn(`⚠️ Invalid article structure from ${url}:`, data);
+            console.warn(`⚠️ Unexpected response format from ${url}:`, data);
           }
-        } catch (innerErr) {
-          console.error(`❌ Fetch failed for ${url}:`, innerErr);
+        } catch (err) {
+          console.error(`❌ Error fetching from ${url}:`, err);
         }
       }
 
-      console.log("📦 Total articles:", allArticles.length);
       if (allArticles.length === 0) {
-        newsContainer.innerHTML =
-          "<p>No articles found at the moment. 🕵️‍♀️</p>";
+        newsContainer.innerHTML = "<p>No articles found. 🕵️‍♀️</p>";
         return;
       }
 
-      const sorted = allArticles.sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
-      );
-      displayNews(sorted);
+      allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+      displayNews(allArticles);
 
       const stampEl = document.getElementById("last-updated");
       if (stampEl) {
         stampEl.textContent = `🕒 Last updated: ${new Date().toLocaleString()}`;
       }
-    } catch (error) {
-      console.error("💥 Error in fetchNews():", error);
-      newsContainer.innerHTML = `<p>🚨 Failed to load news articles.</p>`;
+    } catch (err) {
+      console.error("Error fetching news:", err);
+      newsContainer.innerHTML = "<p>Failed to load news articles.</p>";
     }
   }
 
@@ -62,21 +57,16 @@ window.onload = () => {
   function displayNews(articles) {
     newsContainer.innerHTML = "";
     articles.forEach((article) => {
-      const imageUrl = isValidImage(article.thumbnail)
-        ? article.thumbnail
-        : FALLBACK_IMAGE;
-
-      const formattedDate = article.date
-        ? new Date(article.date).toLocaleString()
-        : "";
+      const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
+      const dateString = article.date ? new Date(article.date).toLocaleString() : "";
 
       const newsItem = document.createElement("article");
       newsItem.innerHTML = `
         <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
         <img src="${imageUrl}" alt="Article image" />
-        <p><strong>📍 ${article.source || "Unknown"}</strong> ${
-        formattedDate ? ` | ⏱ ${formattedDate}` : ""
-      }</p>
+        <p><strong>📍 ${article.source || "Unknown"} ${
+        dateString ? `| ⏰ ${dateString}` : ""
+      }</strong></p>
         <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
       `;
       newsContainer.appendChild(newsItem);
@@ -90,7 +80,7 @@ window.onload = () => {
         const description = btn.getAttribute("data-description");
 
         const saved = JSON.parse(localStorage.getItem("savedArticles") || "[]");
-        const exists = saved.some((article) => article.url === url);
+        const exists = saved.some((a) => a.url === url);
         if (!exists) {
           saved.push({ title, url, description });
           localStorage.setItem("savedArticles", JSON.stringify(saved));
@@ -142,9 +132,7 @@ window.onload = () => {
   if (toggleBtn && savedContainer) {
     toggleBtn.addEventListener("click", () => {
       savedContainer.classList.toggle("collapsed");
-      toggleIcon.textContent = savedContainer.classList.contains("collapsed")
-        ? "▼"
-        : "▲";
+      toggleIcon.textContent = savedContainer.classList.contains("collapsed") ? "▼" : "▲";
     });
   }
 
