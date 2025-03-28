@@ -1,10 +1,10 @@
 const ENDPOINTS = [
-  "https://bytebento-techmeme-worker.tough-bed6922.workers.dev",
-  "https://bytebento-verge-worker.tough-bed6922.workers.dev",
-  "https://dawn-forest-65f6.tough-bed6922.workers.dev" // Ars Technica
+  'https://bytebento-techmeme-worker.tough-bed6922.workers.dev',
+  'https://bytebento-verge-worker.tough-bed6922.workers.dev',
+  'https://dawn-forest-65f6.tough-bed6922.workers.dev', // Ars Technica
 ];
 
-const FALLBACK_IMAGE = './assets/fallback.jpg';
+const FALLBACK_IMAGE = '/assets/fallback.jpg';
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -12,32 +12,32 @@ window.onload = () => {
   async function fetchNews() {
     try {
       newsContainer.innerHTML = '<p>Loading fresh articles...</p>';
-      console.log("ByteBento script.js loaded – source logging version");
+      console.log("🧠 ByteBento script.js loaded – deep source logging version");
 
       const allArticles = [];
 
       for (const url of ENDPOINTS) {
-        console.log(`Fetching from: ${url}`);
+        console.log(`🌐 Fetching from: ${url}`);
         const res = await fetch(url);
         const data = await res.json();
+        console.log(`📦 Response from ${url}:`, data);
 
         if (data.status === 'ok' && Array.isArray(data.articles)) {
           allArticles.push(...data.articles);
         } else {
-          console.warn(`⚠️ Unexpected response from ${url}:`, data);
+          console.warn(`⚠️ Unexpected response structure from ${url}:`, data);
         }
       }
 
-      const sorted = allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+      console.log("✅ Total articles fetched:", allArticles.length);
+      console.log("📚 Sources detected:", allArticles.map(a => a.source));
 
-      // 🔍 Log sources for debugging
-      console.log("🧠 Articles and their sources:", sorted.map(a => a.source));
-
-      if (sorted.length === 0) {
+      if (allArticles.length === 0) {
         newsContainer.innerHTML = `<p>🚫 No articles found.</p>`;
         return;
       }
 
+      const sorted = allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
       displayNews(sorted);
 
       const stampEl = document.getElementById('last-updated');
@@ -45,7 +45,7 @@ window.onload = () => {
         stampEl.textContent = `🕒 Last updated: ${new Date().toLocaleString()}`;
       }
     } catch (err) {
-      console.error("Error fetching news:", err);
+      console.error("❌ Error fetching news:", err);
       newsContainer.innerHTML = `<p>🚨 Failed to load news articles.</p>`;
     }
   }
@@ -56,17 +56,17 @@ window.onload = () => {
 
   function displayNews(articles) {
     newsContainer.innerHTML = '';
-
     articles.forEach(article => {
       const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
-      const dateFormatted = article.date ? new Date(article.date).toLocaleString() : '';
-      const source = article.source || 'Unknown';
+
+      const date = article.date ? new Date(article.date).toLocaleString() : '';
+      const meta = `${article.source || ''}${date ? ' • ' + date : ''}`;
 
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
         <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
         <img src="${imageUrl}" alt="Article image" />
-        <p><span class="source-label">📍 ${source}</span> | <span class="date-label">⏰ ${dateFormatted}</span></p>
+        <p class="meta">${meta}</p>
         <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
       `;
       newsContainer.appendChild(newsItem);
