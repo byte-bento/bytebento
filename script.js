@@ -1,25 +1,30 @@
-const PROXY_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
-const FALLBACK_IMAGE = './assets/fallback.jpg'; // Relative path to fallback image
+const TECHMEME_URL = 'https://bytebento-techmeme-worker.tough-bed6922.workers.dev';
+const VERGE_URL = 'https://bytebento-verge-worker.tough-bed6922.workers.dev';
+const FALLBACK_IMAGE = '/assets/fallback.jpg'; // Make sure this path matches your project
 
 window.onload = () => {
-  console.log('ByteBento script.js loaded – version with clean title + source under image');
   const newsContainer = document.getElementById('news-container');
 
   async function fetchNews() {
     try {
       newsContainer.innerHTML = '<p>Loading fresh articles...</p>';
-      console.log('Fetching from Techmeme Worker:', PROXY_URL);
+      console.log('Fetching from Techmeme:', TECHMEME_URL);
+      console.log('Fetching from The Verge:', VERGE_URL);
 
-      const response = await fetch(PROXY_URL);
-      const data = await response.json();
-      console.log('Response from Worker:', data);
+      const [techmemeRes, vergeRes] = await Promise.all([
+        fetch(TECHMEME_URL).then(res => res.json()),
+        fetch(VERGE_URL).then(res => res.json())
+      ]);
 
-      if (!data.articles || data.articles.length === 0) {
+      const articles = [...(techmemeRes.articles || []), ...(vergeRes.articles || [])];
+
+      if (articles.length === 0) {
         newsContainer.innerHTML = '<p>No articles found at the moment. 🕵️‍♀️</p>';
         return;
       }
 
-      displayNews(data.articles);
+      articles.sort((a, b) => new Date(b.date) - new Date(a.date)); // newest first
+      displayNews(articles);
 
       const stampEl = document.getElementById('last-updated');
       if (stampEl) {
@@ -28,7 +33,7 @@ window.onload = () => {
 
     } catch (error) {
       console.error('Error fetching news:', error);
-      newsContainer.innerHTML = `<p>⚠️ Failed to load news articles. Check console for details.</p>`;
+      newsContainer.innerHTML = `<p>🚫 Failed to load news articles.</p>`;
     }
   }
 
@@ -40,18 +45,21 @@ window.onload = () => {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
       const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
+      const formattedDate = article.date ? new Date(article.date).toLocaleString() : '';
+      const cleanTitle = article.title.replace(/[-|–—]\s*(Techmeme|The Verge)$/i, '').trim();
 
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
-        <h2><a href="${article.url}" target="_blank">${cleanTitle(article.title)}</a></h2>
+        <h2><a href="${article.url}" target="_blank">${cleanTitle}</a></h2>
         <img src="${imageUrl}" alt="Article image" />
-        <p><strong>Source:</strong> ${article.source || 'Unknown'}</p>
-        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
+        <p class="meta">📍 ${article.source || 'Unknown Source'} ${formattedDate ? `| ⏰ ${formattedDate}` : ''}</p>
+        <button class="save-btn" data-url="${article.url}" data-title="${cleanTitle}" data-description="">⭐ Read Later</button>
       `;
       newsContainer.appendChild(newsItem);
     });
 
-    document.querySelectorAll('.save-btn').forEach(btn => {
+    const saveButtons = document.querySelectorAll('.save-btn');
+    saveButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const url = btn.getAttribute('data-url');
         const title = btn.getAttribute('data-title');
@@ -68,11 +76,6 @@ window.onload = () => {
         }
       });
     });
-  }
-
-  function cleanTitle(title) {
-    const match = title.match(/^(.*?)\s+\(([^)]+)\)$/);
-    return match ? match[1] : title;
   }
 
   function renderSavedArticles() {
@@ -95,33 +98,6 @@ window.onload = () => {
   // Refresh button
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
-  // Export Saved Articles
-  document.getElementById('export-saved')?.addEventListener('click', () => {
-    const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-    if (saved.length === 0) {
-      alert('No saved articles to export.');
-      return;
-    }
-
-    const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `saved-articles-${new Date().toISOString()}.json`;
-    a.click();
-
-    URL.revokeObjectURL(url);
-  });
-
-  // Clear All Saved Articles
-  document.getElementById('clear-saved')?.addEventListener('click', () => {
-    if (confirm('Are you sure you want to clear all saved articles?')) {
-      localStorage.removeItem('savedArticles');
-      renderSavedArticles();
-    }
-  });
-
   // Dark mode toggle
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
@@ -135,7 +111,7 @@ window.onload = () => {
     });
   }
 
-  // Toggle Saved section
+  // Toggle Saved Articles
   const toggleBtn = document.getElementById('toggle-saved');
   const savedContainer = document.getElementById('saved-container');
   const toggleIcon = document.getElementById('toggle-icon');
@@ -146,7 +122,10 @@ window.onload = () => {
     });
   }
 
-  // Kick things off
+  // Auto-refresh every 10 min
+  setInterval(fetchNews, 10 * 60 * 1000);
+
+  // Start things up
   fetchNews();
   renderSavedArticles();
 };
