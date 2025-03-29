@@ -10,12 +10,15 @@ const SOURCES = [
   {
     name: "Hacker News",
     url: "https://bytebento-hn-worker.tough-bed6922.workers.dev",
-  }
+  },
+  {
+    name: "Product Hunt",
+    url: "https://bytebento-ph-worker.tough-bed6922.workers.dev",
+  },
 ];
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
-  const FALLBACK_IMAGE = 'assets/fallback.jpg';
 
   async function fetchNews() {
     console.info("📰 Fetching from sources...");
@@ -47,6 +50,7 @@ window.onload = () => {
         return;
       }
 
+      // Sort newest first
       allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
       displayNews(allArticles);
 
@@ -60,14 +64,9 @@ window.onload = () => {
     }
   }
 
-  function isValidImage(url) {
-    return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
-  }
-
   function displayNews(articles) {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
-      const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
       const timestamp = article.date ? new Date(article.date).toLocaleString() : '';
       const source = article.source || 'Unknown';
 
@@ -80,27 +79,18 @@ window.onload = () => {
       newsContainer.appendChild(newsItem);
     });
 
-    attachSaveListeners();
-  }
-
-  function attachSaveListeners() {
     const saveButtons = document.querySelectorAll('.save-btn');
     saveButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const url = btn.getAttribute('data-url');
         const title = btn.getAttribute('data-title');
         const description = btn.getAttribute('data-description');
-  
+
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
         if (!saved.some(article => article.url === url)) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           renderSavedArticles();
-  
-          // ✅ Re-add confirmation popup
-          alert('⭐ Article saved to Read Later!');
-        } else {
-          alert('📌 Already saved!');
         }
       });
     });
@@ -113,11 +103,6 @@ window.onload = () => {
     const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
     savedContainer.innerHTML = '';
 
-    if (saved.length === 0) {
-      savedContainer.innerHTML = '<p>No saved articles yet.</p>';
-      return;
-    }
-
     saved.forEach(article => {
       const item = document.createElement('article');
       item.innerHTML = `
@@ -128,35 +113,8 @@ window.onload = () => {
     });
   }
 
+  // Buttons
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
-
-  const exportBtn = document.getElementById('export-saved');
-  if (exportBtn) {
-    exportBtn.addEventListener('click', () => {
-      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-      if (saved.length === 0) {
-        alert('No saved articles to export.');
-        return;
-      }
-      const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'saved-articles.json';
-      link.click();
-      URL.revokeObjectURL(url);
-    });
-  }
-
-  const clearBtn = document.getElementById('clear-saved');
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear all saved articles?')) {
-        localStorage.removeItem('savedArticles');
-        renderSavedArticles();
-      }
-    });
-  }
 
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
@@ -180,7 +138,33 @@ window.onload = () => {
     });
   }
 
+  const exportBtn = document.getElementById('export-saved');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+      if (saved.length === 0) return;
+      const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'saved-articles.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  const clearBtn = document.getElementById('clear-saved');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Clear all saved articles?')) {
+        localStorage.removeItem('savedArticles');
+        renderSavedArticles();
+      }
+    });
+  }
+
+  // Kick it off
+  setInterval(fetchNews, 10 * 60 * 1000);
   fetchNews();
   renderSavedArticles();
-  setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 min
 };
