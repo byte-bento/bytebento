@@ -17,6 +17,8 @@ const SOURCES = [
   },
 ];
 
+const FALLBACK_IMAGE = 'assets/fallback.jpg';
+
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
 
@@ -91,6 +93,9 @@ window.onload = () => {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           renderSavedArticles();
+          alert('⭐ Article saved to Read Later!');
+        } else {
+          alert('🔖 Already saved!');
         }
       });
     });
@@ -113,7 +118,6 @@ window.onload = () => {
     });
   }
 
-  // Buttons
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
   const themeSwitch = document.getElementById('theme-switch');
@@ -138,11 +142,15 @@ window.onload = () => {
     });
   }
 
+  // 🔁 Export Saved Articles
   const exportBtn = document.getElementById('export-saved');
   if (exportBtn) {
     exportBtn.addEventListener('click', () => {
       const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-      if (saved.length === 0) return;
+      if (saved.length === 0) {
+        alert('No saved articles to export.');
+        return;
+      }
       const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -153,18 +161,18 @@ window.onload = () => {
     });
   }
 
+  // 🗑️ Clear Saved Articles
   const clearBtn = document.getElementById('clear-saved');
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
-      if (confirm('Clear all saved articles?')) {
+      if (confirm('Are you sure you want to clear all saved articles?')) {
         localStorage.removeItem('savedArticles');
         renderSavedArticles();
       }
     });
   }
 
-  // Kick it off
-  setInterval(fetchNews, 10 * 60 * 1000);
+  setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 min
   fetchNews();
   renderSavedArticles();
 };
