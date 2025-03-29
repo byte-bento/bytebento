@@ -5,10 +5,7 @@ const SOURCES = [
     name: "Techmeme",
     url: "https://bytebento-techmeme-worker.tough-bed6922.workers.dev",
   },
-  {
-    name: "The Verge",
-    url: "https://bytebento-verge-worker.tough-bed6922.workers.dev",
-  },
+  
   {
     name: "Ars Technica",
     url: "https://bytebento-ars-worker.tough-bed6922.workers.dev",
