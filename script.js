@@ -12,8 +12,6 @@ const SOURCES = [
 const FALLBACK_IMAGE = 'assets/fallback.jpg';
 
 window.onload = () => {
-  console.log("✅ window.onload triggered");
-
   const newsContainer = document.getElementById('news-container');
 
   async function fetchNews() {
@@ -81,7 +79,6 @@ window.onload = () => {
     const saveButtons = document.querySelectorAll('.save-btn');
     saveButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        alert('Read Later button clicked!');
         const url = btn.getAttribute('data-url');
         const title = btn.getAttribute('data-title');
         const description = btn.getAttribute('data-description');
@@ -90,10 +87,7 @@ window.onload = () => {
         if (!saved.some(article => article.url === url)) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
-          alert('Article saved!');
           renderSavedArticles();
-        } else {
-          alert('Already saved!');
         }
       });
     });
@@ -116,24 +110,21 @@ window.onload = () => {
     });
   }
 
-  // 🧪 Test if buttons exist
+  // Clear Saved Articles
   const clearBtn = document.getElementById('clear-saved');
-  const exportBtn = document.getElementById('export-saved');
-
-  console.log("🔍 clearBtn:", clearBtn);
-  console.log("🔍 exportBtn:", exportBtn);
-
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
-      alert('Clear Saved button clicked!');
-      localStorage.removeItem('savedArticles');
-      renderSavedArticles();
+      if (confirm('Are you sure you want to clear all saved articles?')) {
+        localStorage.removeItem('savedArticles');
+        renderSavedArticles();
+      }
     });
   }
 
+  // Export Saved Articles
+  const exportBtn = document.getElementById('export-saved');
   if (exportBtn) {
     exportBtn.addEventListener('click', () => {
-      alert('Export Saved button clicked!');
       const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
       if (saved.length === 0) {
         alert('No saved articles to export.');
@@ -171,7 +162,9 @@ window.onload = () => {
     });
   }
 
-  setInterval(fetchNews, 10 * 60 * 1000);
+  document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
+
+  setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 min
   fetchNews();
   renderSavedArticles();
 };
