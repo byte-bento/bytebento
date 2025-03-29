@@ -3,12 +3,13 @@ const SOURCES = [
     name: "Techmeme",
     url: "https://bytebento-techmeme-worker.tough-bed6922.workers.dev",
   },
-  
   {
     name: "Ars Technica",
     url: "https://bytebento-ars-worker.tough-bed6922.workers.dev",
-  },
+  }
 ];
+
+const FALLBACK_IMAGE = 'assets/fallback.jpg';
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -26,10 +27,7 @@ window.onload = () => {
             if (json.status === 'ok') {
               console.log(`✅ ${source.name} returned ${json.articles.length} articles`);
               console.log(`${source.name} articles:`, json.articles);
-              return json.articles.map(article => ({
-                ...article,
-                source: source.name
-              }));
+              return json.articles;
             } else {
               throw new Error(json.message || 'Unknown error');
             }
@@ -60,9 +58,14 @@ window.onload = () => {
     }
   }
 
+  function isValidImage(url) {
+    return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
+  }
+
   function displayNews(articles) {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
+      const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
       const timestamp = article.date ? new Date(article.date).toLocaleString() : '';
       const source = article.source || 'Unknown';
 
@@ -136,7 +139,37 @@ window.onload = () => {
     });
   }
 
-  setInterval(fetchNews, 10 * 60 * 1000); // auto-refresh every 10 minutes
+  // 🔁 Export Saved Articles
+  const exportBtn = document.getElementById('export-saved');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+      if (saved.length === 0) {
+        alert('No saved articles to export.');
+        return;
+      }
+      const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'saved-articles.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  // 🗑️ Clear Saved Articles
+  const clearBtn = document.getElementById('clear-saved');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all saved articles?')) {
+        localStorage.removeItem('savedArticles');
+        renderSavedArticles();
+      }
+    });
+  }
+
+  setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 min
   fetchNews();
   renderSavedArticles();
 };
