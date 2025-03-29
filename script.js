@@ -6,6 +6,10 @@ const SOURCES = [
   {
     name: "Ars Technica",
     url: "https://bytebento-ars-worker.tough-bed6922.workers.dev",
+  },
+  {
+    name: "Hacker News",
+    url: "https://bytebento-hn-worker.tough-bed6922.workers.dev",
   }
 ];
 
