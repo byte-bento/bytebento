@@ -1,25 +1,21 @@
-console.log("🚀 ByteBento script loaded!");
-
 const SOURCES = [
   {
     name: "Techmeme",
     url: "https://bytebento-techmeme-worker.tough-bed6922.workers.dev",
   },
-
+  
   {
     name: "Ars Technica",
     url: "https://bytebento-ars-worker.tough-bed6922.workers.dev",
   },
 ];
 
-const FALLBACK_IMAGE = 'assets/fallback.jpg';
-
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
 
   async function fetchNews() {
     console.info("📰 Fetching from sources...");
-    newsContainer.innerHTML = '<p>Loading the latest tech news...</p>';
+    newsContainer.innerHTML = '<p>Loading fresh articles...</p>';
 
     try {
       const results = await Promise.all(
@@ -30,7 +26,10 @@ window.onload = () => {
             if (json.status === 'ok') {
               console.log(`✅ ${source.name} returned ${json.articles.length} articles`);
               console.log(`${source.name} articles:`, json.articles);
-              return json.articles;
+              return json.articles.map(article => ({
+                ...article,
+                source: source.name
+              }));
             } else {
               throw new Error(json.message || 'Unknown error');
             }
@@ -61,21 +60,15 @@ window.onload = () => {
     }
   }
 
-  function isValidImage(url) {
-    return url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
-  }
-
   function displayNews(articles) {
     newsContainer.innerHTML = '';
     articles.forEach(article => {
-      const imageUrl = isValidImage(article.thumbnail) ? article.thumbnail : FALLBACK_IMAGE;
       const timestamp = article.date ? new Date(article.date).toLocaleString() : '';
       const source = article.source || 'Unknown';
 
       const newsItem = document.createElement('article');
       newsItem.innerHTML = `
         <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-        <img src="${imageUrl}" alt="Article image" />
         <p><strong>📍 ${source}</strong> | 🕒 ${timestamp}</p>
         <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
       `;

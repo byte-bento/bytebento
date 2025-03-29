@@ -17,7 +17,7 @@ header, footer {
 main {
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
@@ -25,6 +25,7 @@ main {
 article {
   background-color: var(--card);
   padding: 20px;
+  border-left: 6px solid var(--accent);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -37,7 +38,7 @@ article:hover {
 
 article h2 {
   font-size: 1.1rem;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 article a {
@@ -49,17 +50,11 @@ article a:hover {
   text-decoration: underline;
 }
 
-article img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 10px 0;
-}
-
 article p {
-  font-size: 0.95rem;
-  line-height: 1.4;
+  font-size: 0.92rem;
+  line-height: 1.5;
   color: var(--text);
+  margin: 8px 0 0;
 }
 
 /* Timestamp + Refresh Button */
@@ -114,6 +109,7 @@ article p {
 #saved-container article {
   background-color: var(--card);
   border-radius: 8px;
+  border-left: 4px solid var(--accent);
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   padding: 12px 16px;
   margin-bottom: 16px;
@@ -198,7 +194,7 @@ article p {
 
 /* Light Theme */
 :root {
-  --bg: #f4f4f4;
+  --bg: #f9f9f9;
   --text: #222;
   --card: #fff;
   --accent: #0077cc;
