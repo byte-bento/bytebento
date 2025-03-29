@@ -86,15 +86,17 @@ window.onload = () => {
         const url = btn.getAttribute('data-url');
         const title = btn.getAttribute('data-title');
         const description = btn.getAttribute('data-description');
-
+  
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
         if (!saved.some(article => article.url === url)) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
-          alert('Article saved!');
           renderSavedArticles();
+  
+          // ✅ Re-add confirmation popup
+          alert('⭐ Article saved to Read Later!');
         } else {
-          alert('Already saved!');
+          alert('📌 Already saved!');
         }
       });
     });
