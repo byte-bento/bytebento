@@ -9,10 +9,9 @@ const SOURCES = [
   }
 ];
 
-const FALLBACK_IMAGE = 'assets/fallback.jpg';
-
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
+  const FALLBACK_IMAGE = 'assets/fallback.jpg';
 
   async function fetchNews() {
     console.info("📰 Fetching from sources...");
@@ -26,6 +25,7 @@ window.onload = () => {
             const json = await res.json();
             if (json.status === 'ok') {
               console.log(`✅ ${source.name} returned ${json.articles.length} articles`);
+              console.log(`${source.name} articles:`, json.articles);
               return json.articles;
             } else {
               throw new Error(json.message || 'Unknown error');
@@ -76,6 +76,10 @@ window.onload = () => {
       newsContainer.appendChild(newsItem);
     });
 
+    attachSaveListeners();
+  }
+
+  function attachSaveListeners() {
     const saveButtons = document.querySelectorAll('.save-btn');
     saveButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -87,7 +91,10 @@ window.onload = () => {
         if (!saved.some(article => article.url === url)) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
+          alert('Article saved!');
           renderSavedArticles();
+        } else {
+          alert('Already saved!');
         }
       });
     });
@@ -100,6 +107,11 @@ window.onload = () => {
     const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
     savedContainer.innerHTML = '';
 
+    if (saved.length === 0) {
+      savedContainer.innerHTML = '<p>No saved articles yet.</p>';
+      return;
+    }
+
     saved.forEach(article => {
       const item = document.createElement('article');
       item.innerHTML = `
@@ -110,18 +122,8 @@ window.onload = () => {
     });
   }
 
-  // Clear Saved Articles
-  const clearBtn = document.getElementById('clear-saved');
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear all saved articles?')) {
-        localStorage.removeItem('savedArticles');
-        renderSavedArticles();
-      }
-    });
-  }
+  document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
-  // Export Saved Articles
   const exportBtn = document.getElementById('export-saved');
   if (exportBtn) {
     exportBtn.addEventListener('click', () => {
@@ -137,6 +139,16 @@ window.onload = () => {
       link.download = 'saved-articles.json';
       link.click();
       URL.revokeObjectURL(url);
+    });
+  }
+
+  const clearBtn = document.getElementById('clear-saved');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all saved articles?')) {
+        localStorage.removeItem('savedArticles');
+        renderSavedArticles();
+      }
     });
   }
 
@@ -162,9 +174,7 @@ window.onload = () => {
     });
   }
 
-  document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
-
-  setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 min
   fetchNews();
   renderSavedArticles();
+  setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 min
 };
