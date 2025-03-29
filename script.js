@@ -1,3 +1,5 @@
+console.log("🚀 ByteBento script loaded!");
+
 const SOURCES = [
   {
     name: "Techmeme",
@@ -20,7 +22,7 @@ window.onload = () => {
 
   async function fetchNews() {
     console.info("📰 Fetching from sources...");
-    newsContainer.innerHTML = '<p>Loading fresh articles...</p>';
+    newsContainer.innerHTML = '<p>Loading the latest tech news...</p>';
 
     try {
       const results = await Promise.all(
