@@ -146,37 +146,64 @@ article p {
 
 /* Affiliate Links Section */
 #featured-tech {
-  padding: 24px;
+  padding: 40px 24px;
   background-color: var(--card);
   border-top: 2px solid #ddd;
-  margin-top: 40px;
-  max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 60px auto 40px;
+  max-width: 1100px;
 }
 
 #featured-tech h2 {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+}
+
+.tech-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.tech-card {
+  background-color: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  border-left: 6px solid var(--accent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.tech-card h3 {
   margin-top: 0;
+  font-size: 1.2rem;
 }
 
-#featured-tech ul {
-  list-style: none;
-  padding-left: 0;
+.tech-card p {
+  font-size: 0.95rem;
+  margin: 10px 0;
+  color: var(--text);
 }
 
-#featured-tech li {
-  margin-bottom: 10px;
+.tech-card .stars {
+  font-size: 1rem;
+  margin-bottom: 12px;
 }
 
-#featured-tech a {
+.tech-card a {
+  font-weight: bold;
   color: var(--accent);
   text-decoration: none;
 }
 
-#featured-tech a:hover {
+.tech-card a:hover {
   text-decoration: underline;
 }
+
 
 /* Ad Placeholder */
 #ad-spot {
