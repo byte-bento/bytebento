@@ -184,4 +184,14 @@ window.onload = () => {
   setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 minutes
   fetchNews();
   renderSavedArticles();
+
+  // 📈 Track affiliate link clicks
+  document.querySelectorAll('a.affiliate-link').forEach(link => {
+    link.addEventListener('click', () => {
+      gtag('event', 'click', {
+        event_category: 'Affiliate',
+        event_label: link.href,
+      });
+    });
+  });
 };
