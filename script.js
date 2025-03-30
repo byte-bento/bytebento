@@ -14,10 +14,8 @@ const SOURCES = [
   {
     name: "Product Hunt",
     url: "https://bytebento-ph-worker.tough-bed6922.workers.dev",
-  },
+  }
 ];
-
-const FALLBACK_IMAGE = 'assets/fallback.jpg';
 
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
@@ -34,7 +32,6 @@ window.onload = () => {
             const json = await res.json();
             if (json.status === 'ok') {
               console.log(`✅ ${source.name} returned ${json.articles.length} articles`);
-              console.log(`${source.name} articles:`, json.articles);
               return json.articles;
             } else {
               throw new Error(json.message || 'Unknown error');
@@ -55,6 +52,7 @@ window.onload = () => {
       // Sort newest first
       allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
       displayNews(allArticles);
+      setupFilterButtons(allArticles);
 
       const stampEl = document.getElementById('last-updated');
       if (stampEl) {
@@ -92,11 +90,22 @@ window.onload = () => {
         if (!saved.some(article => article.url === url)) {
           saved.push({ title, url, description });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
+          alert('Article saved to read later!');
           renderSavedArticles();
-          alert('⭐ Article saved to Read Later!');
         } else {
-          alert('🔖 Already saved!');
+          alert('Already saved!');
         }
+      });
+    });
+  }
+
+  function setupFilterButtons(allArticles) {
+    const filterButtons = document.querySelectorAll('#filter-buttons button');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const source = btn.getAttribute('data-source');
+        const filtered = source === 'All' ? allArticles : allArticles.filter(a => a.source === source);
+        displayNews(filtered);
       });
     });
   }
@@ -142,7 +151,7 @@ window.onload = () => {
     });
   }
 
-  // 🔁 Export Saved Articles
+  // Export Saved Articles
   const exportBtn = document.getElementById('export-saved');
   if (exportBtn) {
     exportBtn.addEventListener('click', () => {
@@ -161,7 +170,7 @@ window.onload = () => {
     });
   }
 
-  // 🗑️ Clear Saved Articles
+  // Clear Saved Articles
   const clearBtn = document.getElementById('clear-saved');
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
@@ -172,7 +181,7 @@ window.onload = () => {
     });
   }
 
-  setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 min
+  setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 minutes
   fetchNews();
   renderSavedArticles();
 };
