@@ -146,30 +146,32 @@ article p {
 
 /* Featured Tech Picks Section */
 #featured-tech {
-  padding: 40px 32px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 60px auto;
   background-color: var(--card);
   border-top: 2px solid #ddd;
-  margin: 60px auto;
-  max-width: 1000px;
+  box-sizing: border-box;
 }
 
 #featured-tech h2 {
   font-size: 1.6rem;
   margin-bottom: 24px;
+  padding-left: 6px;
 }
 
 /* Grid Layout */
 .tech-grid {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 /* Tech Product Card */
 .tech-card {
   background-color: var(--card);
   border-radius: 12px;
-  padding: 18px 16px;
+  padding: 20px;
   border-left: 5px solid var(--accent);
   box-shadow: 0 3px 10px rgba(0,0,0,0.07);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -180,7 +182,6 @@ article p {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
-/* Headings and Text */
 .tech-card h3 {
   margin-top: 0;
   font-size: 1.15rem;
@@ -192,14 +193,12 @@ article p {
   margin: 10px 0;
 }
 
-/* Star Ratings */
-.tech-card .stars {
+.tech-card .rating {
   font-size: 1rem;
   color: #f5c518;
   margin: 6px 0 10px;
 }
 
-/* Purchase Link */
 .tech-card a {
   color: var(--accent);
   text-decoration: none;
@@ -213,7 +212,6 @@ article p {
   text-decoration: underline;
 }
 
-/* Compact OS Links */
 .variant-links {
   list-style: none;
   padding-left: 0;
@@ -231,10 +229,6 @@ article p {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-}
-
-.variant-links li a:hover {
-  text-decoration: underline;
 }
 
 /* Icons */
