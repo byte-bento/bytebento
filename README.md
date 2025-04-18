@@ -27,6 +27,6 @@ I wanted a distraction-free way to check tech news headlines from multiple trust
 - Scheduled auto-refresh logic
 
 ## 📁 Repo Structure
-/workers → Cloudflare Worker scripts
+<pre>/workers → Cloudflare Worker scripts
 /src → Static site content
-/scripts → Utility tools (RSS parsing, filtering, etc.)
+/scripts → Utility tools (RSS parsing, filtering, etc.)</pre>
