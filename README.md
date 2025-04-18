@@ -1,5 +1,14 @@
 # ByteBento 🍱
 
+![Project Type](https://img.shields.io/badge/type-project-blue)
+![Platform](https://img.shields.io/badge/platform-Cloudflare%20Workers-black)
+![Hosting](https://img.shields.io/badge/hosting-Cloudflare-orange)
+![Focus](https://img.shields.io/badge/focus-tech%20news-9cf)
+![Interface](https://img.shields.io/badge/interface-frontend--only-lightgrey)
+![Architecture](https://img.shields.io/badge/architecture-serverless-orange)
+![Difficulty](https://img.shields.io/badge/difficulty-self--taught-success)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+
 A real-time tech news dashboard powered by Cloudflare Workers. ByteBento aggregates headlines from top tech sources, filters them by publisher, and lets users save articles to read later - all with a fast, minimalist interface.
 
 ## 🌐 Live Site
@@ -9,11 +18,16 @@ A real-time tech news dashboard powered by Cloudflare Workers. ByteBento aggrega
 I wanted a distraction-free way to check tech news headlines from multiple trusted sources in one place - and I used it as a learning project to explore Cloudflare Workers, fetch APIs, and structure readable UIs.
 
 ## 🛠 Tech Stack
-- **Cloudflare Workers** – for serverless API fetching and routing
-- **JavaScript (vanilla)** – no frameworks, just focused DOM handling
-- **HTML/CSS** – custom styles, dark mode support, and flexible layout
-- **LocalStorage** – to save “read later” articles with export support
+
+🌀 **Hosted entirely via Cloudflare Workers** – combines serverless API logic and static content delivery in a single deployment.
+
+- **Cloudflare Workers** – serverless API fetching, routing, and frontend delivery  
+- **JavaScript (vanilla)** – no frameworks, just focused DOM handling  
+- **HTML/CSS** – custom styles, dark mode support, and flexible layout  
+- **LocalStorage** – save “read later” articles with export functionality  
 - **GitHub** – version control and issue tracking
+
+📌 No frameworks. No build step. Just clean, readable JavaScript and Cloudflare magic.
 
 ## ✨ Features
 - Source filtering (e.g. Ars Technica, Hacker News, Techmeme)
