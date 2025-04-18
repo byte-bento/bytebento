@@ -30,3 +30,9 @@ I wanted a distraction-free way to check tech news headlines from multiple trust
 <pre>/workers → Cloudflare Worker scripts
 /src → Static site content
 /scripts → Utility tools (RSS parsing, filtering, etc.)</pre>
+
+## 🧠 What I Learned
+- Cloudflare Workers architecture + routing
+- CORS debugging and failover handling
+- Building readable, minimalist interfaces with pure JS
+- Async design and user-friendly save/export patterns
