@@ -1,6 +1,6 @@
 # ByteBento 🍱
 
-A real-time tech news dashboard powered by Cloudflare Workers. ByteBento aggregates headlines from top tech sources, filters them by publisher, and lets users save articles to read later — all with a fast, minimalist interface.
+A real-time tech news dashboard powered by Cloudflare Workers. ByteBento aggregates headlines from top tech sources, filters them by publisher, and lets users save articles to read later - all with a fast, minimalist interface.
 
 ## 🌐 Live Site
 [https://bytebento.com](https://bytebento.com)
