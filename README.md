@@ -1,59 +1,32 @@
 # ByteBento 🍱
 
-Byte-Sized Tech News, Bento-Boxed for You!
+A real-time tech news dashboard powered by Cloudflare Workers. ByteBento aggregates headlines from top tech sources, filters them by publisher, and lets users save articles to read later — all with a fast, minimalist interface.
 
-Curated tech news in bite-sized form. Packed daily with headlines, updates, and byte-worthy finds — all bento-boxed in a clean, simple layout.
+## 🌐 Live Site
+[https://bytebento.com](https://bytebento.com)
 
-This project is a lightweight tech news aggregator built with HTML, CSS, and JavaScript, deployed via [Cloudflare Pages](https://pages.cloudflare.com/), and powered by [NewsAPI](https://newsapi.org/).
+## 🔍 Why I Built It
+I wanted a distraction-free way to check tech news headlines from multiple trusted sources in one place - and I used it as a learning project to explore Cloudflare Workers, fetch APIs, and structure readable UIs.
 
----
+## 🛠 Tech Stack
+- **Cloudflare Workers** – for serverless API fetching and routing
+- **JavaScript (vanilla)** – no frameworks, just focused DOM handling
+- **HTML/CSS** – custom styles, dark mode support, and flexible layout
+- **LocalStorage** – to save “read later” articles with export support
+- **GitHub** – version control and issue tracking
 
-🚀 Features
+## ✨ Features
+- Source filtering (e.g. Ars Technica, Hacker News, Techmeme)
+- Read Later list with export/download option
+- Responsive layout and dark mode styling
+- CORS handling, error fallback, and graceful degradation
 
-- Fetches real-time tech headlines from NewsAPI
-- Clean, responsive layout
-- Built with the JAMstack: JavaScript, APIs, Markup
-- Free & fast hosting via Cloudflare Pages
+## 🚧 In Progress
+- Adding more news sources
+- RSS parsing and thumbnail cleanup
+- Scheduled auto-refresh logic
 
----
-
-📦 Tech Stack
-
-- HTML / CSS / JavaScript (vanilla)
-- NewsAPI for news content
-- Cloudflare Pages for deployment
-
----
-
-🔧 Setup
-
-1. Clone the repo: 
-
-   `git clone https://github.com/byte-bento/bytebento-site.git`
-2. Add your NewsAPI key in script.js:
-
-   `const API_KEY = 'YOUR_NEWSAPI_KEY';`
-3. Open `index.html` in your browser or deploy to Cloudflare Pages.
-
----
-
-😑 Monetization Plans
-
-- Google AdSense (pending approval)
-- Tech affiliate links for featured products/gadgets (coming soon)
-
----
-
-🍱 Favicon Attribution
-
-The favicon was generated using the 🍱 emoji via [favicon.io](https://favicon.io/emoji-favicons/).  
-Emoji graphic from [Twemoji](https://github.com/twitter/twemoji) by Twitter, Inc and other contributors.  
-Licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-
----
-
-📬 License
-
-MIT License. Go build something awesome with it.
-
----
+## 📁 Repo Structure
+/workers → Cloudflare Worker scripts
+/src → Static site content
+/scripts → Utility tools (RSS parsing, filtering, etc.)
