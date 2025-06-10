@@ -431,7 +431,7 @@ body.dark-mode {
   color: #fff;
 }
 
-/* ── Focus Mode: Minimal List with Colored Source ── */
+/* ── Focus Mode: Minimal List with Adjusted Spacing ── */
 body.focus-mode main {
   display: block !important;
 }
@@ -443,11 +443,11 @@ body.focus-mode article {
   box-shadow: none !important;
   border-left: none !important;
   padding: 4px 16px !important;
-  margin: 0 !important;
+  margin: 0 0 16px !important;    /* 16px below each block */
 }
 
 body.focus-mode h2 {
-  margin: 0 0 4px !important;
+  margin: 0 0 2px !important;      /* 2px below headline */
   font-size: 1rem !important;
 }
 
@@ -459,29 +459,26 @@ body.focus-mode h2 a {
 body.focus-mode .info-source {
   display: block !important;
   font-weight: 500 !important;
+  margin: 0 0 2px !important;      /* 2px below source */
 }
 
 body.focus-mode .info-time {
   display: block !important;
   font-weight: 300 !important;
   color: #666 !important;
-  background: transparent !important;
-  margin: 2px 0 8px !important;
+  margin: 0 0 0 !important;        /* no extra bottom margin */
 }
 
 /* Apply source-specific text colors */
 body.focus-mode p.source-techmeme .info-source {
   color: #4b5563 !important;
 }
-
 body.focus-mode p.source-arstechnica .info-source {
   color: #c1121f !important;
 }
-
 body.focus-mode p.source-hackernews .info-source {
   color: #f97316 !important;
 }
-
 body.focus-mode p.source-producthunt .info-source {
   color: #3b82f6 !important;
 }
