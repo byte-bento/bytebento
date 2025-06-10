@@ -8,7 +8,8 @@ body {
 }
 
 /* ── Metadata Reset ── */
-/* Clear any stray backgrounds on .info-* and reset p margins in Focus Mode */
+/* Ensure info-source & info-time never get a background,
+   and remove default paragraph top‐margin in Focus Mode */
 .info-source,
 .info-time {
   background-color: transparent !important;
@@ -402,7 +403,91 @@ body.dark-mode {
   background-color: #4b5563;
   color: #fff;
 }
+
 .filter-container button.source-arstechnica {
   border-color: #c1121f;
   color: #c1121f;
+}
+.filter-container button.source-arstechnica:hover {
+  background-color: #c1121f;
+  color: #fff;
+}
+
+.filter-container button.source-hackernews {
+  border-color: #f97316;
+  color: #f97316;
+}
+.filter-container button.source-hackernews:hover {
+  background-color: #f97316;
+  color: #fff;
+}
+
+.filter-container button.source-producthunt {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+.filter-container button.source-producthunt:hover {
+  background-color: #3b82f6;
+  color: #fff;
+}
+
+/* ── Focus Mode: Minimal List with Colored Source ── */
+body.focus-mode main {
+  display: block !important;
+}
+
+body.focus-mode article {
+  display: flex !important;
+  flex-direction: column !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-left: none !important;
+  padding: 4px 16px !important;
+  margin: 0 !important;
+}
+
+body.focus-mode h2 {
+  margin: 0 0 4px !important;
+  font-size: 1rem !important;
+}
+
+body.focus-mode h2 a {
+  color: var(--accent) !important;
+  text-decoration: none !important;
+}
+
+body.focus-mode .info-source {
+  display: block !important;
+  font-weight: 500 !important;
+}
+
+body.focus-mode .info-time {
+  display: block !important;
+  font-weight: 300 !important;
+  color: #666 !important;
+  background: transparent !important;
+  margin: 2px 0 8px !important;
+}
+
+/* Apply source-specific text colors */
+body.focus-mode p.source-techmeme .info-source {
+  color: #4b5563 !important;
+}
+
+body.focus-mode p.source-arstechnica .info-source {
+  color: #c1121f !important;
+}
+
+body.focus-mode p.source-hackernews .info-source {
+  color: #f97316 !important;
+}
+
+body.focus-mode p.source-producthunt .info-source {
+  color: #3b82f6 !important;
+}
+
+/* Hide the badges & Read Later buttons */
+body.focus-mode .source-badge,
+body.focus-mode .save-btn {
+  display: none !important;
 }
