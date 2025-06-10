@@ -376,20 +376,18 @@ body.dark-mode {
   width: fit-content;
 }
 
-.source-techmeme {
-  background-color: #4b5563; /* steel gray */
+/* Only badges get the badge background */
+.source-badge.source-techmeme {
+  background-color: #4b5563;
 }
-
-.source-arstechnica {
-  background-color: #c1121f; /* fire red */
+.source-badge.source-arstechnica {
+  background-color: #c1121f;
 }
-
-.source-hackernews {
-  background-color: #f97316; /* vibrant orange */
+.source-badge.source-hackernews {
+  background-color: #f97316;
 }
-
-.source-producthunt {
-  background-color: #3b82f6; /* vibrant blue */
+.source-badge.source-producthunt {
+  background-color: #3b82f6;
 }
 
 /* 🎨 Source-specific filter button colors */
