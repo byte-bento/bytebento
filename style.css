@@ -428,13 +428,6 @@ body.focus-mode .save-btn {
   display: none !important;
 }
 
-/* ── Extended Focus Mode ── */
-body.focus-mode #news-container article p,
-body.focus-mode #news-container .source-badge,
-body.focus-mode #news-container .save-btn {
-  display: none !important;
-}
-
 body.focus-mode #news-container article {
   background: transparent !important;
   box-shadow: none !important;
@@ -485,4 +478,43 @@ body.focus-mode article p {
 body.focus-mode .source-badge,
 body.focus-mode .save-btn {
   display: none !important;
+}
+
+/* ── Focus Mode: Text-List View ── */
+
+body.focus-mode main {
+  display: block !important;     /* Stack vertically */
+}
+
+body.focus-mode article {
+  display: flex !important;      /* Inline row */
+  align-items: baseline !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-left: none !important;
+  padding: 4px 0 !important;
+  margin: 0 !important;
+}
+
+body.focus-mode article h2 {
+  display: inline !important;
+  margin: 0 !important;
+  font-size: 1rem !important;
+}
+
+body.focus-mode article h2 a {
+  text-decoration: none !important;
+  color: var(--accent) !important;
+}
+
+body.focus-mode article p {
+  display: inline !important;    /* Show source & timestamp */
+  margin: 0 0 0 8px !important;
+  font-size: 0.9rem !important;
+  color: var(--text) !important;
+}
+
+body.focus-mode .source-badge,
+body.focus-mode .save-btn {
+  display: none !important;      /* Only hide badges & buttons */
 }
