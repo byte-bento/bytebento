@@ -92,6 +92,10 @@ window.onload = () => {
         <strong class="info-source">${source}</strong>
         <span class="info-time">${timestamp}</span>
       `;
+      // give the <p> the same source-class so we can color it
+      if (sourceClass) {
+      info.classList.add(sourceClass);
+      }
 
       const saveBtn = document.createElement('button');
       saveBtn.classList.add('save-btn');

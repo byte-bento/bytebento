@@ -538,18 +538,18 @@ body.focus-mode .info-time {
   margin-top: 4px;        /* small gap under source */
 }
 
-/* Source‐specific coloring via existing classes */
-body.focus-mode .source-techmeme + .info-source {
-  color: #4b5563;
+/* ── Focus Mode: source-colored metadata ── */
+body.focus-mode p.source-techmeme .info-source {
+  color: #4b5563 !important;
 }
-body.focus-mode .source-arstechnica + .info-source {
-  color: #c1121f;
+body.focus-mode p.source-arstechnica .info-source {
+  color: #c1121f !important;
 }
-body.focus-mode .source-hackernews + .info-source {
-  color: #f97316;
+body.focus-mode p.source-hackernews .info-source {
+  color: #f97316 !important;
 }
-body.focus-mode .source-producthunt + .info-source {
-  color: #3b82f6;
+body.focus-mode p.source-producthunt .info-source {
+  color: #3b82f6 !important;
 }
 
 /* Add a bit of left padding so it’s not flush at the edge */
