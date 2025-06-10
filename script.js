@@ -49,7 +49,6 @@ window.onload = () => {
         return;
       }
 
-      // Sort newest first
       allArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
       displayNews(allArticles);
       setupFilterButtons(allArticles);
@@ -64,81 +63,89 @@ window.onload = () => {
     }
   }
 
-function displayNews(articles) {
-  newsContainer.innerHTML = '';
-  articles.forEach(article => {
-    const timestamp = article.date ? new Date(article.date).toLocaleString() : '';
-    const source = article.source || 'Unknown';
+  function displayNews(articles) {
+    newsContainer.innerHTML = '';
+    articles.forEach(article => {
+      const timestamp = article.date ? new Date(article.date).toLocaleString() : '';
+      const source = article.source || 'Unknown';
 
-    const newsItem = document.createElement('article');
+      const newsItem = document.createElement('article');
 
-    // Create title
-    const title = document.createElement('h2');
-    title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
+      const title = document.createElement('h2');
+      title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
 
-    // Create badge
-    const badge = document.createElement('span');
-    badge.classList.add('source-badge');
-    badge.textContent = source;
+      const badge = document.createElement('span');
+      badge.classList.add('source-badge');
+      badge.textContent = source;
 
-    // Assign color class based on source
-    const sourceClass = {
-      'Techmeme': 'source-techmeme',
-      'Ars Technica': 'source-arstechnica',
-      'Hacker News': 'source-hackernews',
-      'Product Hunt': 'source-producthunt'
-    }[source];
+      const sourceClass = {
+        'Techmeme': 'source-techmeme',
+        'Ars Technica': 'source-arstechnica',
+        'Hacker News': 'source-hackernews',
+        'Product Hunt': 'source-producthunt'
+      }[source];
 
-    if (sourceClass) badge.classList.add(sourceClass);
+      if (sourceClass) badge.classList.add(sourceClass);
 
-    // Create info (source + timestamp)
-    const info = document.createElement('p');
-    info.innerHTML = `<strong>📍 ${source}</strong> | 🕒 ${timestamp}`;
+      const info = document.createElement('p');
+      info.innerHTML = `<strong>📍 ${source}</strong> | 🕒 ${timestamp}`;
 
-    // Create save button
-    const saveBtn = document.createElement('button');
-    saveBtn.classList.add('save-btn');
-    saveBtn.setAttribute('data-url', article.url);
-    saveBtn.setAttribute('data-title', article.title);
-    saveBtn.setAttribute('data-description', '');
-    saveBtn.textContent = '⭐ Read Later';
+      const saveBtn = document.createElement('button');
+      saveBtn.classList.add('save-btn');
+      saveBtn.setAttribute('data-url', article.url);
+      saveBtn.setAttribute('data-title', article.title);
+      saveBtn.setAttribute('data-description', '');
+      saveBtn.textContent = '⭐ Read Later';
 
-    // Append all elements
-    newsItem.appendChild(title);
-    newsItem.appendChild(badge);      // ⬅️ Insert badge below title
-    newsItem.appendChild(info);
-    newsItem.appendChild(saveBtn);
-    newsContainer.appendChild(newsItem);
-  });
-
-  const saveButtons = document.querySelectorAll('.save-btn');
-  saveButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const url = btn.getAttribute('data-url');
-      const title = btn.getAttribute('data-title');
-      const description = btn.getAttribute('data-description');
-
-      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-      if (!saved.some(article => article.url === url)) {
-        saved.push({ title, url, description });
-        localStorage.setItem('savedArticles', JSON.stringify(saved));
-        alert('Article saved to read later!');
-        renderSavedArticles();
-      } else {
-        alert('Already saved!');
-      }
+      newsItem.appendChild(title);
+      newsItem.appendChild(badge);
+      newsItem.appendChild(info);
+      newsItem.appendChild(saveBtn);
+      newsContainer.appendChild(newsItem);
     });
-  });
-}
+
+    const saveButtons = document.querySelectorAll('.save-btn');
+    saveButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-url');
+        const title = btn.getAttribute('data-title');
+        const description = btn.getAttribute('data-description');
+
+        const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+        if (!saved.some(article => article.url === url)) {
+          saved.push({ title, url, description });
+          localStorage.setItem('savedArticles', JSON.stringify(saved));
+          alert('Article saved to read later!');
+          renderSavedArticles();
+        } else {
+          alert('Already saved!');
+        }
+      });
+    });
+  }
 
   function setupFilterButtons(allArticles) {
     const filterButtons = document.querySelectorAll('#filter-buttons button');
     filterButtons.forEach(btn => {
+      const source = btn.getAttribute('data-source');
+      const filtered = source === 'All' ? allArticles : allArticles.filter(a => a.source === source);
+
       btn.addEventListener('click', () => {
-        const source = btn.getAttribute('data-source');
-        const filtered = source === 'All' ? allArticles : allArticles.filter(a => a.source === source);
         displayNews(filtered);
       });
+
+      const sourceClass = {
+        'Techmeme': 'source-techmeme',
+        'Ars Technica': 'source-arstechnica',
+        'Hacker News': 'source-hackernews',
+        'Product Hunt': 'source-producthunt'
+      }[source];
+
+      if (sourceClass) {
+        btn.classList.add('filter-btn', sourceClass);
+      } else {
+        btn.classList.add('filter-btn');
+      }
     });
   }
 
@@ -183,7 +190,6 @@ function displayNews(articles) {
     });
   }
 
-  // Export Saved Articles
   const exportBtn = document.getElementById('export-saved');
   if (exportBtn) {
     exportBtn.addEventListener('click', () => {
@@ -202,7 +208,6 @@ function displayNews(articles) {
     });
   }
 
-  // Clear Saved Articles
   const clearBtn = document.getElementById('clear-saved');
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
@@ -217,7 +222,6 @@ function displayNews(articles) {
   fetchNews();
   renderSavedArticles();
 
-  // 📈 Track affiliate link clicks
   document.querySelectorAll('a.affiliate-link').forEach(link => {
     link.addEventListener('click', () => {
       gtag('event', 'click', {
