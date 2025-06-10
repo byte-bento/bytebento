@@ -370,17 +370,17 @@ body.dark-mode {
 }
 
 .source-techmeme {
-  background-color: #1f2937;
+  background-color: #4b5563; /* steel gray */
 }
 
 .source-arstechnica {
-  background-color: #ff2700;
+  background-color: #c1121f; /* fire red */
 }
 
 .source-hackernews {
-  background-color: #ff6600;
+  background-color: #f97316; /* vibrant orange */
 }
 
 .source-producthunt {
-  background-color: #da552f;
+  background-color: #3b82f6; /* vibrant blue */
 }
