@@ -421,3 +421,9 @@ body.dark-mode {
   background-color: #3b82f6;
   color: #fff;
 }
+
+/* 🎯 Focus Mode Styling */
+body.focus-mode .source-badge,
+body.focus-mode .save-btn {
+  display: none !important;
+}

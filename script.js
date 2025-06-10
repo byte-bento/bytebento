@@ -168,6 +168,7 @@ window.onload = () => {
 
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
+  // ── Dark Mode toggle ──
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
     if (localStorage.getItem('theme') === 'dark') {
@@ -177,6 +178,19 @@ window.onload = () => {
     themeSwitch.addEventListener('change', () => {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('theme', themeSwitch.checked ? 'dark' : 'light');
+    });
+  }
+
+  // ── Focus Mode toggle ──
+  const focusSwitch = document.getElementById('focus-switch');
+  if (focusSwitch) {
+    if (localStorage.getItem('focus') === 'on') {
+      document.body.classList.add('focus-mode');
+      focusSwitch.checked = true;
+    }
+    focusSwitch.addEventListener('change', () => {
+      document.body.classList.toggle('focus-mode');
+      localStorage.setItem('focus', focusSwitch.checked ? 'on' : 'off');
     });
   }
 
