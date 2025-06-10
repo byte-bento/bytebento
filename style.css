@@ -549,3 +549,16 @@ body.focus-mode .save-btn {
 body.focus-mode .info-source {
   display: block !important;
 }
+
+/* ── Card Layout Consistency ── */
+article {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-footer {
+  margin-top: auto;     /* pushes this section to the bottom of the card */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;             /* small gap between badge, info, and button */
+}
