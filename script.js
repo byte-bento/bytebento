@@ -102,6 +102,8 @@ window.onload = () => {
       saveBtn.setAttribute('data-url', article.url);
       saveBtn.setAttribute('data-title', article.title);
       saveBtn.setAttribute('data-description', '');
+      saveBtn.setAttribute('data-source', article.source);
+      saveBtn.setAttribute('data-date', article.date);
       saveBtn.textContent = '⭐ Read Later';
 
       newsItem.appendChild(title);
@@ -117,10 +119,12 @@ window.onload = () => {
         const url = btn.getAttribute('data-url');
         const title = btn.getAttribute('data-title');
         const description = btn.getAttribute('data-description');
+        const source = btn.getAttribute('data-source');
+        const dateRaw = btn.getAttribute('data-date');
 
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
         if (!saved.some(article => article.url === url)) {
-          saved.push({ title, url, description });
+          saved.push({ title, url, description, source, dateRaw  });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           alert('Article saved to read later!');
           renderSavedArticles();
@@ -156,22 +160,28 @@ window.onload = () => {
     });
   }
 
-  function renderSavedArticles() {
-    const savedContainer = document.getElementById('saved-container');
-    if (!savedContainer) return;
+function renderSavedArticles() {
+  const savedContainer = document.getElementById('saved-container');
+  if (!savedContainer) return;
 
-    const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-    savedContainer.innerHTML = '';
+  const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+  savedContainer.innerHTML = '';
 
-    saved.forEach(article => {
-      const item = document.createElement('article');
-      item.innerHTML = `
-        <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-        <p>${article.description || ''}</p>
-      `;
-      savedContainer.appendChild(item);
-    });
-  }
+  saved.forEach(article => {
+    // Format the raw date string
+    const when = article.dateRaw
+      ? new Date(article.dateRaw).toLocaleString()
+      : '';
+
+    const item = document.createElement('article');
+    item.innerHTML = `
+      <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+      <p><strong>${article.source}</strong> | 🕒 ${when}</p>
+      ${article.description ? `<p>${article.description}</p>` : ''}
+    `;
+    savedContainer.appendChild(item);
+  });
+}
 
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
