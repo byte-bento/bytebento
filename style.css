@@ -488,3 +488,13 @@ body.focus-mode .source-badge,
 body.focus-mode .save-btn {
   display: none !important;
 }
+
+/* ── Hide the source text in regular mode (badge already shows it) ── */
+.info-source {
+  display: none;
+}
+
+/* ── In Focus Mode, reveal the source line ── */
+body.focus-mode .info-source {
+  display: block !important;
+}
