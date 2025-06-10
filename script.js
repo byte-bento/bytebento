@@ -64,40 +64,72 @@ window.onload = () => {
     }
   }
 
-  function displayNews(articles) {
-    newsContainer.innerHTML = '';
-    articles.forEach(article => {
-      const timestamp = article.date ? new Date(article.date).toLocaleString() : '';
-      const source = article.source || 'Unknown';
+function displayNews(articles) {
+  newsContainer.innerHTML = '';
+  articles.forEach(article => {
+    const timestamp = article.date ? new Date(article.date).toLocaleString() : '';
+    const source = article.source || 'Unknown';
 
-      const newsItem = document.createElement('article');
-      newsItem.innerHTML = `
-        <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-        <p><strong>📍 ${source}</strong> | 🕒 ${timestamp}</p>
-        <button class="save-btn" data-url="${article.url}" data-title="${article.title}" data-description="">⭐ Read Later</button>
-      `;
-      newsContainer.appendChild(newsItem);
+    const newsItem = document.createElement('article');
+
+    // Create title
+    const title = document.createElement('h2');
+    title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
+
+    // Create badge
+    const badge = document.createElement('span');
+    badge.classList.add('source-badge');
+    badge.textContent = source;
+
+    // Assign color class based on source
+    const sourceClass = {
+      'Techmeme': 'source-techmeme',
+      'Ars Technica': 'source-arstechnica',
+      'Hacker News': 'source-hackernews',
+      'Product Hunt': 'source-producthunt'
+    }[source];
+
+    if (sourceClass) badge.classList.add(sourceClass);
+
+    // Create info (source + timestamp)
+    const info = document.createElement('p');
+    info.innerHTML = `<strong>📍 ${source}</strong> | 🕒 ${timestamp}`;
+
+    // Create save button
+    const saveBtn = document.createElement('button');
+    saveBtn.classList.add('save-btn');
+    saveBtn.setAttribute('data-url', article.url);
+    saveBtn.setAttribute('data-title', article.title);
+    saveBtn.setAttribute('data-description', '');
+    saveBtn.textContent = '⭐ Read Later';
+
+    // Append all elements
+    newsItem.appendChild(title);
+    newsItem.appendChild(badge);      // ⬅️ Insert badge below title
+    newsItem.appendChild(info);
+    newsItem.appendChild(saveBtn);
+    newsContainer.appendChild(newsItem);
+  });
+
+  const saveButtons = document.querySelectorAll('.save-btn');
+  saveButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.getAttribute('data-url');
+      const title = btn.getAttribute('data-title');
+      const description = btn.getAttribute('data-description');
+
+      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+      if (!saved.some(article => article.url === url)) {
+        saved.push({ title, url, description });
+        localStorage.setItem('savedArticles', JSON.stringify(saved));
+        alert('Article saved to read later!');
+        renderSavedArticles();
+      } else {
+        alert('Already saved!');
+      }
     });
-
-    const saveButtons = document.querySelectorAll('.save-btn');
-    saveButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const url = btn.getAttribute('data-url');
-        const title = btn.getAttribute('data-title');
-        const description = btn.getAttribute('data-description');
-
-        const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-        if (!saved.some(article => article.url === url)) {
-          saved.push({ title, url, description });
-          localStorage.setItem('savedArticles', JSON.stringify(saved));
-          alert('Article saved to read later!');
-          renderSavedArticles();
-        } else {
-          alert('Already saved!');
-        }
-      });
-    });
-  }
+  });
+}
 
   function setupFilterButtons(allArticles) {
     const filterButtons = document.querySelectorAll('#filter-buttons button');
