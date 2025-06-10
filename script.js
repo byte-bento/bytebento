@@ -189,7 +189,9 @@ window.onload = () => {
       focusSwitch.checked = true;
     }
     focusSwitch.addEventListener('change', () => {
+      console.log("🔄 Focus switch changed – before:", document.body.classList.value);
       document.body.classList.toggle('focus-mode');
+      console.log("🔄 Focus switch changed – after:", document.body.classList.value);
       localStorage.setItem('focus', focusSwitch.checked ? 'on' : 'off');
     });
   }
