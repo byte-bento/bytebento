@@ -8,10 +8,14 @@ body {
 }
 
 /* ── Metadata Reset ── */
-/* Ensure info-source & info-time never get a BG except when we explicitly style them */
+/* Ensure info-source & info-time never get a background,
+   and remove default paragraph top‐margin in Focus Mode */
 .info-source,
 .info-time {
   background-color: transparent !important;
+}
+body.focus-mode article p {
+  margin: 0 !important;
 }
 
 header, footer {
@@ -376,7 +380,7 @@ body.dark-mode {
   width: fit-content;
 }
 
-/* Only badges get the badge background */
+/* Only badges themselves get the background */
 .source-badge.source-techmeme {
   background-color: #4b5563;
 }
@@ -395,7 +399,6 @@ body.dark-mode {
   border-color: #4b5563;
   color: #4b5563;
 }
-
 .filter-container button.source-techmeme:hover {
   background-color: #4b5563;
   color: #fff;
@@ -405,8 +408,7 @@ body.dark-mode {
   border-color: #c1121f;
   color: #c1121f;
 }
-
-filter-container button.source-arstechnica:hover {
+.filter-container button.source-arstechnica:hover {
   background-color: #c1121f;
   color: #fff;
 }
@@ -415,8 +417,7 @@ filter-container button.source-arstechnica:hover {
   border-color: #f97316;
   color: #f97316;
 }
-
-filter-container button.source-hackernews:hover {
+.filter-container button.source-hackernews:hover {
   background-color: #f97316;
   color: #fff;
 }
@@ -425,8 +426,7 @@ filter-container button.source-hackernews:hover {
   border-color: #3b82f6;
   color: #3b82f6;
 }
-
-filter-container button.source-producthunt:hover {
+.filter-container button.source-producthunt:hover {
   background-color: #3b82f6;
   color: #fff;
 }
@@ -459,13 +459,13 @@ body.focus-mode h2 a {
 body.focus-mode .info-source {
   display: block !important;
   font-weight: 500 !important;
-  margin: 0 !important;
 }
 
 body.focus-mode .info-time {
   display: block !important;
   font-weight: 300 !important;
   color: #666 !important;
+  background: transparent !important;
   margin: 2px 0 8px !important;
 }
 
