@@ -433,14 +433,13 @@ body.focus-mode article {
   background: transparent !important;
   box-shadow: none !important;
   border-left: none !important;
-  padding: 4px 16px !important;  /* left padding so it’s not flush */
+  padding: 4px 16px !important;
   margin: 0 !important;
 }
 
 body.focus-mode h2 {
   margin: 0 0 4px !important;
   font-size: 1rem !important;
-  display: block !important;
 }
 
 body.focus-mode h2 a {
@@ -449,32 +448,35 @@ body.focus-mode h2 a {
 }
 
 body.focus-mode .info-source {
-  font-weight: 500 !important;
   display: block !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
 }
 
 body.focus-mode .info-time {
+  display: block !important;
   font-weight: 300 !important;
   color: #666 !important;
-  display: block !important;
-  margin-top: 2px !important;
+  background: transparent !important;
+  margin: 2px 0 8px !important;
 }
 
-/* Source-color overrides */
-body.focus-mode p.source-techmeme .info-source { color: #4b5563 !important; }
-body.focus-mode p.source-arstechnica .info-source { color: #c1121f !important; }
-body.focus-mode p.source-hackernews .info-source  { color: #f97316 !important; }
-body.focus-mode p.source-producthunt .info-source { color: #3b82f6 !important; }
+/* Apply source-specific text colors */
+body.focus-mode p.source-techmeme .info-source {
+  color: #4b5563 !important;
+}
+body.focus-mode p.source-arstechnica .info-source {
+  color: #c1121f !important;
+}
+body.focus-mode p.source-hackernews .info-source {
+  color: #f97316 !important;
+}
+body.focus-mode p.source-producthunt .info-source {
+  color: #3b82f6 !important;
+}
 
-/* Hide badges & buttons */
+/* Hide the badges & Read Later buttons */
 body.focus-mode .source-badge,
 body.focus-mode .save-btn {
   display: none !important;
 }
-
-/* ── Fix stray timestamp background ── */
-body.focus-mode .info-time {
-  background-color: transparent !important;
-  color: #666 !important;   /* ensure the gray text color */
-}
-
