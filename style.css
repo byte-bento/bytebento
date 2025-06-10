@@ -384,3 +384,40 @@ body.dark-mode {
 .source-producthunt {
   background-color: #3b82f6; /* vibrant blue */
 }
+
+/* 🎨 Source-specific filter button colors */
+.filter-container button.source-techmeme {
+  border-color: #4b5563;
+  color: #4b5563;
+}
+.filter-container button.source-techmeme:hover {
+  background-color: #4b5563;
+  color: #fff;
+}
+
+.filter-container button.source-arstechnica {
+  border-color: #c1121f;
+  color: #c1121f;
+}
+.filter-container button.source-arstechnica:hover {
+  background-color: #c1121f;
+  color: #fff;
+}
+
+.filter-container button.source-hackernews {
+  border-color: #f97316;
+  color: #f97316;
+}
+.filter-container button.source-hackernews:hover {
+  background-color: #f97316;
+  color: #fff;
+}
+
+.filter-container button.source-producthunt {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+.filter-container button.source-producthunt:hover {
+  background-color: #3b82f6;
+  color: #fff;
+}
