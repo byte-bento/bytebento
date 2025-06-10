@@ -427,3 +427,17 @@ body.focus-mode .source-badge,
 body.focus-mode .save-btn {
   display: none !important;
 }
+
+/* ── Extended Focus Mode ── */
+body.focus-mode #news-container article p,
+body.focus-mode #news-container .source-badge,
+body.focus-mode #news-container .save-btn {
+  display: none !important;
+}
+
+body.focus-mode #news-container article {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-left: none !important;
+  padding: 6px 0 !important;
+}
