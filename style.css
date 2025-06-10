@@ -389,6 +389,34 @@ body.dark-mode {
   transform: translateY(-1px);
 }
 
+/* ── Saved Articles Button Styling ── */
+#clear-saved,
+#export-saved {
+  background-color: var(--card);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-right: 10px; /* space between the two buttons */
+}
+
+#clear-saved:hover,
+#export-saved:hover {
+  background-color: var(--accent);
+  color: var(--card);
+  transform: translateY(-1px);
+}
+
+/* Optionally tighten up the Saved Articles header spacing */
+#saved-articles h2 {
+  margin-bottom: 12px;
+}
+
 /* 🎨 Source Badges */
 .source-badge {
   display: inline-block;
