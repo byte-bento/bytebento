@@ -422,137 +422,52 @@ body.dark-mode {
   color: #fff;
 }
 
-/* 🎯 Focus Mode Styling */
-body.focus-mode .source-badge,
-body.focus-mode .save-btn {
-  display: none !important;
-}
-
-body.focus-mode #news-container article {
-  background: transparent !important;
-  box-shadow: none !important;
-  border-left: none !important;
-  padding: 6px 0 !important;
-}
-
-/* ── Focus Mode: List View (Headline • Source • Timestamp) ── */
-
-/* Make the container a simple vertical flow */
+/* ── Focus Mode: Minimal List with Colored Source ── */
 body.focus-mode main {
   display: block !important;
 }
 
-/* Turn each article into one line */
 body.focus-mode article {
   display: flex !important;
-  align-items: baseline !important;
+  flex-direction: column !important;
   background: transparent !important;
   box-shadow: none !important;
   border-left: none !important;
-  padding: 4px 0 !important;
+  padding: 4px 16px !important;  /* left padding so it’s not flush */
   margin: 0 !important;
 }
 
-/* Headline stays inline */
-body.focus-mode article h2 {
-  display: inline !important;
-  margin: 0 !important;
+body.focus-mode h2 {
+  margin: 0 0 4px !important;
   font-size: 1rem !important;
-}
-
-/* Link styling for headline */
-body.focus-mode article h2 a {
-  text-decoration: none !important;
-  color: var(--accent) !important;
-}
-
-/* Ensure the info line (source + timestamp) is visible and inline */
-body.focus-mode article p {
-  display: inline !important;
-  margin: 0 0 0 8px !important;
-  font-size: 0.9rem !important;
-  color: var(--text) !important;
-}
-
-/* Only hide badges & buttons */
-body.focus-mode .source-badge,
-body.focus-mode .save-btn {
-  display: none !important;
-}
-
-/* ── Focus Mode: Block/List View with Source Below ── */
-body.focus-mode main {
-  display: block !important;     /* Stack articles vertically */
-}
-
-body.focus-mode article {
-  display: flex !important;
-  flex-direction: column !important;   /* Vertical layout */
-  background: transparent !important;
-  box-shadow: none !important;
-  border-left: none !important;
-  padding: 4px 0 !important;
-  margin: 0 !important;
-}
-
-body.focus-mode article h2 {
   display: block !important;
-  margin: 0 0 4px !important;    /* Add a bit of space below headline */
-  font-size: 1rem !important;
 }
 
-body.focus-mode article h2 a {
-  text-decoration: none !important;
+body.focus-mode h2 a {
   color: var(--accent) !important;
-}
-
-/* Keep source/timestamp visible as its own block */
-body.focus-mode article p {
-  display: block !important;
-  margin: 0 0 8px !important;
-  font-size: 0.9rem !important;
-  color: var(--text) !important;
-}
-
-body.focus-mode .source-badge,
-body.focus-mode .save-btn {
-  display: none !important;      /* Only hide badges & buttons */
-}
-
-/* ── Focus Mode Metadata Styling ── */
-body.focus-mode .info-source,
-body.focus-mode .info-time {
-  display: block;         /* each on its own line */
-  margin: 0;             
-  padding: 0;
+  text-decoration: none !important;
 }
 
 body.focus-mode .info-source {
-  font-weight: 500;       /* medium weight */
-  /* match the badge color dynamically: */
+  font-weight: 500 !important;
+  display: block !important;
 }
 
 body.focus-mode .info-time {
-  font-weight: 300;       /* lighter */
-  color: #666;            /* muted gray */
-  margin-top: 4px;        /* small gap under source */
+  font-weight: 300 !important;
+  color: #666 !important;
+  display: block !important;
+  margin-top: 2px !important;
 }
 
-/* ── Focus Mode: source-colored metadata ── */
-body.focus-mode p.source-techmeme .info-source {
-  color: #4b5563 !important;
-}
-body.focus-mode p.source-arstechnica .info-source {
-  color: #c1121f !important;
-}
-body.focus-mode p.source-hackernews .info-source {
-  color: #f97316 !important;
-}
-body.focus-mode p.source-producthunt .info-source {
-  color: #3b82f6 !important;
-}
+/* Source-color overrides */
+body.focus-mode p.source-techmeme .info-source { color: #4b5563 !important; }
+body.focus-mode p.source-arstechnica .info-source { color: #c1121f !important; }
+body.focus-mode p.source-hackernews .info-source  { color: #f97316 !important; }
+body.focus-mode p.source-producthunt .info-source { color: #3b82f6 !important; }
 
-/* Add a bit of left padding so it’s not flush at the edge */
-body.focus-mode article {
-  padding-left: 16px !important;
+/* Hide badges & buttons */
+body.focus-mode .source-badge,
+body.focus-mode .save-btn {
+  display: none !important;
 }
