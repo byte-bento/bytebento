@@ -442,14 +442,15 @@ body.focus-mode #news-container article {
   padding: 6px 0 !important;
 }
 
-/* ── Focus Mode: List View ── */
+/* ── Focus Mode: List View (Headline • Source • Timestamp) ── */
+
+/* Make the container a simple vertical flow */
 body.focus-mode main {
-  /* Kill the grid, go full‐width */
   display: block !important;
 }
 
+/* Turn each article into one line */
 body.focus-mode article {
-  /* Make each article a simple flex row */
   display: flex !important;
   align-items: baseline !important;
   background: transparent !important;
@@ -459,29 +460,29 @@ body.focus-mode article {
   margin: 0 !important;
 }
 
+/* Headline stays inline */
 body.focus-mode article h2 {
-  /* Inline the headline */
   display: inline !important;
   margin: 0 !important;
   font-size: 1rem !important;
 }
 
+/* Link styling for headline */
 body.focus-mode article h2 a {
-  /* Keep it linky */
   text-decoration: none !important;
   color: var(--accent) !important;
 }
 
+/* Ensure the info line (source + timestamp) is visible and inline */
 body.focus-mode article p {
-  /* Inline the “source | timestamp” */
   display: inline !important;
   margin: 0 0 0 8px !important;
   font-size: 0.9rem !important;
   color: var(--text) !important;
 }
 
+/* Only hide badges & buttons */
 body.focus-mode .source-badge,
 body.focus-mode .save-btn {
-  /* Already in place, but to be sure… */
   display: none !important;
 }
