@@ -88,7 +88,10 @@ window.onload = () => {
       if (sourceClass) badge.classList.add(sourceClass);
 
       const info = document.createElement('p');
-      info.innerHTML = `<strong>📍 ${source}</strong> | 🕒 ${timestamp}`;
+      info.innerHTML = `
+        <strong class="info-source">${source}</strong>
+        <span class="info-time">${timestamp}</span>
+      `;
 
       const saveBtn = document.createElement('button');
       saveBtn.classList.add('save-btn');

@@ -518,3 +518,41 @@ body.focus-mode .source-badge,
 body.focus-mode .save-btn {
   display: none !important;      /* Only hide badges & buttons */
 }
+
+/* ── Focus Mode Metadata Styling ── */
+body.focus-mode .info-source,
+body.focus-mode .info-time {
+  display: block;         /* each on its own line */
+  margin: 0;             
+  padding: 0;
+}
+
+body.focus-mode .info-source {
+  font-weight: 500;       /* medium weight */
+  /* match the badge color dynamically: */
+}
+
+body.focus-mode .info-time {
+  font-weight: 300;       /* lighter */
+  color: #666;            /* muted gray */
+  margin-top: 4px;        /* small gap under source */
+}
+
+/* Source‐specific coloring via existing classes */
+body.focus-mode .source-techmeme + .info-source {
+  color: #4b5563;
+}
+body.focus-mode .source-arstechnica + .info-source {
+  color: #c1121f;
+}
+body.focus-mode .source-hackernews + .info-source {
+  color: #f97316;
+}
+body.focus-mode .source-producthunt + .info-source {
+  color: #3b82f6;
+}
+
+/* Add a bit of left padding so it’s not flush at the edge */
+body.focus-mode article {
+  padding-left: 16px !important;
+}
