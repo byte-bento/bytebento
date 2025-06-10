@@ -471,3 +471,10 @@ body.focus-mode .source-badge,
 body.focus-mode .save-btn {
   display: none !important;
 }
+
+/* ── Fix stray timestamp background ── */
+body.focus-mode .info-time {
+  background-color: transparent !important;
+  color: #666 !important;   /* ensure the gray text color */
+}
+
