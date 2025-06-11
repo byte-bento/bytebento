@@ -1,3 +1,4 @@
+
 const SOURCES = [
   { name: "Techmeme", url: "https://bytebento-techmeme-worker.tough-bed6922.workers.dev" },
   { name: "Ars Technica", url: "https://bytebento-ars-worker.tough-bed6922.workers.dev" },
@@ -103,11 +104,11 @@ window.onload = () => {
 
     document.querySelectorAll('.save-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const url = btn.dataset.url;
-        const title = btn.dataset.title;
+        const url         = btn.dataset.url;
+        const title       = btn.dataset.title;
         const description = btn.dataset.description;
-        const source = btn.dataset.source;
-        const dateRaw = btn.dataset.date;
+        const source      = btn.dataset.source;
+        const dateRaw     = btn.dataset.date;
 
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
         if (!saved.some(a => a.url === url)) {
@@ -145,28 +146,32 @@ window.onload = () => {
 
   function renderSavedArticles() {
     const savedContainer = document.getElementById('saved-container');
+    const jumpContainer = document.getElementById('jump-to-saved-container');
     if (!savedContainer) return;
 
     const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
     savedContainer.innerHTML = '';
 
+    if (saved.length === 0) {
+      if (jumpContainer) jumpContainer.style.display = 'none';
+      return;
+    }
+
+    if (jumpContainer) jumpContainer.style.display = 'block';
+
     saved.forEach(article => {
       const when = article.dateRaw
         ? new Date(article.dateRaw).toLocaleString()
         : '';
+      const source = article.source || 'Unknown';
+
       const item = document.createElement('article');
       item.innerHTML = `
         <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-        <p><strong>${article.source}</strong> | 🕒 ${when}</p>
-        ${article.description ? `<p>${article.description}</p>` : ''}
+        <p><strong>${source}</strong> | 🕒 ${when}</p>
       `;
       savedContainer.appendChild(item);
     });
-
-    const jumpContainer = document.getElementById('jump-to-saved-container');
-    if (jumpContainer) {
-      jumpContainer.style.display = saved.length > 0 ? 'block' : 'none';
-    }
   }
 
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
@@ -195,12 +200,40 @@ window.onload = () => {
     });
   }
 
-  const jumpToSaved = document.getElementById('jump-to-saved-btn');
-  if (jumpToSaved) {
-    jumpToSaved.addEventListener('click', () => {
-      const target = document.getElementById('saved-articles');
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
+  const toggleBtn = document.getElementById('toggle-saved');
+  const savedContainer = document.getElementById('saved-container');
+  const toggleIcon = document.getElementById('toggle-icon');
+  if (toggleBtn && savedContainer) {
+    toggleBtn.addEventListener('click', () => {
+      savedContainer.classList.toggle('collapsed');
+      toggleIcon.textContent = savedContainer.classList.contains('collapsed') ? '▼' : '▲';
+    });
+  }
+
+  const exportBtn = document.getElementById('export-saved');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+      if (saved.length === 0) {
+        alert('No saved articles to export.');
+        return;
+      }
+      const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'saved-articles.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  const clearBtn = document.getElementById('clear-saved');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all saved articles?')) {
+        localStorage.removeItem('savedArticles');
+        renderSavedArticles();
       }
     });
   }
@@ -208,4 +241,13 @@ window.onload = () => {
   setInterval(fetchNews, 10 * 60 * 1000);
   fetchNews();
   renderSavedArticles();
+
+  document.querySelectorAll('a.affiliate-link').forEach(link => {
+    link.addEventListener('click', () => {
+      gtag('event', 'click', {
+        event_category: 'Affiliate',
+        event_label: link.href,
+      });
+    });
+  });
 };
