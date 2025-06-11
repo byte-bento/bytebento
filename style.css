@@ -538,7 +538,14 @@ body.focus-mode p.source-producthunt .info-source {
 /* Hide the badges & Read Later buttons */
 body.focus-mode .source-badge,
 body.focus-mode .save-btn {
-  display: none !important;
+  font-size: 0.85rem;
+  padding: 2px 8px;
+  margin-top: 4px;
+  border-radius: 6px;
+  background-color: var(--card);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  cursor: pointer;
 }
 
 /* ── Hide the source text in regular mode (badge already shows it) ── */

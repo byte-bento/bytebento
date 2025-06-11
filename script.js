@@ -57,21 +57,47 @@ window.onload = () => {
     articles.forEach(article => {
       const timestamp = article.date ? new Date(article.date).toLocaleString() : '';
       const source = article.source || 'Unknown';
-
-      const newsItem = document.createElement('article');
-      const title = document.createElement('h2');
-      title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
-
-      const badge = document.createElement('span');
-      badge.classList.add('source-badge');
-      badge.textContent = source;
-
       const sourceClass = {
         'Techmeme': 'source-techmeme',
         'Ars Technica': 'source-arstechnica',
         'Hacker News': 'source-hackernews',
         'Product Hunt': 'source-producthunt'
       }[source];
+
+      const newsItem = document.createElement('article');
+
+      const title = document.createElement('h2');
+      title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
+      newsItem.appendChild(title);
+
+      if (document.body.classList.contains('focus-mode')) {
+        // Focus Mode layout
+        const info = document.createElement('p');
+        info.innerHTML = `
+          <strong class="info-source">${source}</strong>
+          <span class="info-time">${timestamp}</span>
+        `;
+        if (sourceClass) info.classList.add(sourceClass);
+        newsItem.appendChild(info);
+
+        const saveBtn = document.createElement('button');
+        saveBtn.classList.add('save-btn');
+        saveBtn.setAttribute('data-url', article.url);
+        saveBtn.setAttribute('data-title', article.title);
+        saveBtn.setAttribute('data-description', '');
+        saveBtn.setAttribute('data-source', article.source);
+        saveBtn.setAttribute('data-date', article.date);
+        saveBtn.textContent = '⭐';
+
+        newsItem.appendChild(saveBtn);
+        newsContainer.appendChild(newsItem);
+        return;
+      }
+
+      // Normal layout
+      const badge = document.createElement('span');
+      badge.classList.add('source-badge');
+      badge.textContent = source;
       if (sourceClass) badge.classList.add(sourceClass);
 
       const info = document.createElement('p');
@@ -96,7 +122,6 @@ window.onload = () => {
       footer.appendChild(info);
       footer.appendChild(saveBtn);
 
-      newsItem.appendChild(title);
       newsItem.appendChild(footer);
       newsContainer.appendChild(newsItem);
     });
@@ -196,6 +221,7 @@ window.onload = () => {
     focusSwitch.addEventListener('change', () => {
       document.body.classList.toggle('focus-mode');
       localStorage.setItem('focus', focusSwitch.checked ? 'on' : 'off');
+      fetchNews(); // re-render in focus mode
     });
   }
 
@@ -237,12 +263,10 @@ window.onload = () => {
     });
   }
 
-  // 🔁 Auto-refresh every 10 mins
   setInterval(fetchNews, 10 * 60 * 1000);
   fetchNews();
   renderSavedArticles();
 
-  // 📊 Track affiliate link clicks
   document.querySelectorAll('a.affiliate-link').forEach(link => {
     link.addEventListener('click', () => {
       gtag('event', 'click', {
@@ -252,13 +276,12 @@ window.onload = () => {
     });
   });
 
-  // 📌 Jump to Saved scroll behavior
   const jumpToSavedBtn = document.getElementById('jump-to-saved-btn');
   const savedArticlesSection = document.getElementById('saved-articles');
 
   if (jumpToSavedBtn && savedArticlesSection) {
-  jumpToSavedBtn.addEventListener('click', () => {
-    savedArticlesSection.scrollIntoView({ behavior: 'smooth' });
-  });
-}
+    jumpToSavedBtn.addEventListener('click', () => {
+      savedArticlesSection.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
 };
