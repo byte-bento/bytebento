@@ -71,7 +71,6 @@ window.onload = () => {
       newsItem.appendChild(title);
 
       if (document.body.classList.contains('focus-mode')) {
-        // Focus Mode layout
         const info = document.createElement('p');
         info.innerHTML = `
           <strong class="info-source">${source}</strong>
@@ -87,15 +86,13 @@ window.onload = () => {
         saveBtn.setAttribute('data-description', '');
         saveBtn.setAttribute('data-source', article.source);
         saveBtn.setAttribute('data-date', article.date);
-        saveBtn.textContent = document.body.classList.contains('focus-mode') ? '⭐ Save' : '⭐ Read Later';
-
+        saveBtn.textContent = '⭐ Save';
 
         newsItem.appendChild(saveBtn);
         newsContainer.appendChild(newsItem);
         return;
       }
 
-      // Normal layout
       const badge = document.createElement('span');
       badge.classList.add('source-badge');
       badge.textContent = source;
@@ -139,7 +136,7 @@ window.onload = () => {
         if (!saved.some(a => a.url === url)) {
           saved.push({ title, url, description, source, dateRaw });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
-        showToast('✅ Article saved to read later!');
+          showToast('✅ Article saved to read later!');
           renderSavedArticles();
         } else {
           showToast('❌ Already saved!');
@@ -184,7 +181,7 @@ window.onload = () => {
 
     if (jumpContainer) jumpContainer.style.display = 'block';
 
-    saved.forEach(article => {
+    saved.forEach((article, index) => {
       const when = article.dateRaw
         ? new Date(article.dateRaw).toLocaleString()
         : '';
@@ -194,8 +191,20 @@ window.onload = () => {
       item.innerHTML = `
         <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
         <p><strong>${source}</strong> | 🕒 ${when}</p>
+        <button class="remove-btn" data-index="${index}">🗑 Remove</button>
       `;
       savedContainer.appendChild(item);
+    });
+
+    document.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.index);
+        const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+        saved.splice(idx, 1);
+        localStorage.setItem('savedArticles', JSON.stringify(saved));
+        renderSavedArticles();
+        showToast('🗑 Removed from saved articles');
+      });
     });
   }
 
@@ -279,7 +288,6 @@ window.onload = () => {
 
   const jumpToSavedBtn = document.getElementById('jump-to-saved-btn');
   const savedArticlesSection = document.getElementById('saved-articles');
-
   if (jumpToSavedBtn && savedArticlesSection) {
     jumpToSavedBtn.addEventListener('click', () => {
       savedArticlesSection.scrollIntoView({ behavior: 'smooth' });

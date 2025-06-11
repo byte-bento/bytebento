@@ -598,3 +598,20 @@ body.focus-mode .save-btn {
   margin-top: 6px;
   align-self: flex-start;
 }
+
+.remove-btn {
+  background-color: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.remove-btn:hover {
+  background-color: var(--accent);
+  color: var(--card);
+}
