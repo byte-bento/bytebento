@@ -87,7 +87,8 @@ window.onload = () => {
         saveBtn.setAttribute('data-description', '');
         saveBtn.setAttribute('data-source', article.source);
         saveBtn.setAttribute('data-date', article.date);
-        saveBtn.textContent = '⭐';
+        saveBtn.textContent = document.body.classList.contains('focus-mode') ? '⭐ Save' : '⭐ Read Later';
+
 
         newsItem.appendChild(saveBtn);
         newsContainer.appendChild(newsItem);

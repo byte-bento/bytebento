@@ -587,3 +587,14 @@ article {
 #jump-to-saved-btn:hover {
   background-color: #005fa3;
 }
+
+/* Shorter '⭐ Save' style in Focus Mode */
+body.focus-mode .save-btn {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
+  margin-top: 6px;
+  align-self: flex-start;
+}
