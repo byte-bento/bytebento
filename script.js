@@ -65,7 +65,6 @@ window.onload = () => {
       }[source];
 
       const newsItem = document.createElement('article');
-
       const title = document.createElement('h2');
       title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
       newsItem.appendChild(title);
@@ -187,24 +186,32 @@ window.onload = () => {
         : '';
       const source = article.source || 'Unknown';
 
-      const item = document.createElement('article');
-      item.innerHTML = `
-        <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-        <p><strong>${source}</strong> | 🕒 ${when}</p>
-        <button class="remove-btn" data-index="${index}">🗑 Remove</button>
-      `;
-      savedContainer.appendChild(item);
-    });
+      const card = document.createElement('article');
+      card.classList.add('saved-article');
 
-    document.querySelectorAll('.remove-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = parseInt(btn.dataset.index);
+      const title = document.createElement('h3');
+      title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
+
+      const info = document.createElement('p');
+      info.innerHTML = `<strong>${source}</strong> | 🕒 ${when}`;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.classList.add('remove-btn');
+      removeBtn.setAttribute('data-index', index);
+      removeBtn.innerHTML = '🗑 Remove';
+
+      removeBtn.addEventListener('click', () => {
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-        saved.splice(idx, 1);
+        saved.splice(index, 1);
         localStorage.setItem('savedArticles', JSON.stringify(saved));
         renderSavedArticles();
         showToast('🗑 Removed from saved articles');
       });
+
+      card.appendChild(title);
+      card.appendChild(info);
+      card.appendChild(removeBtn);
+      savedContainer.appendChild(card);
     });
   }
 
@@ -231,7 +238,7 @@ window.onload = () => {
     focusSwitch.addEventListener('change', () => {
       document.body.classList.toggle('focus-mode');
       localStorage.setItem('focus', focusSwitch.checked ? 'on' : 'off');
-      fetchNews(); // re-render in focus mode
+      fetchNews();
     });
   }
 
