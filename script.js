@@ -1,4 +1,3 @@
-
 const SOURCES = [
   { name: "Techmeme", url: "https://bytebento-techmeme-worker.tough-bed6922.workers.dev" },
   { name: "Ars Technica", url: "https://bytebento-ars-worker.tough-bed6922.workers.dev" },
@@ -238,10 +237,12 @@ window.onload = () => {
     });
   }
 
+  // 🔁 Auto-refresh every 10 mins
   setInterval(fetchNews, 10 * 60 * 1000);
   fetchNews();
   renderSavedArticles();
 
+  // 📊 Track affiliate link clicks
   document.querySelectorAll('a.affiliate-link').forEach(link => {
     link.addEventListener('click', () => {
       gtag('event', 'click', {
@@ -250,4 +251,13 @@ window.onload = () => {
       });
     });
   });
+
+  // 📌 Jump to Saved scroll behavior
+  const jumpBtn = document.getElementById('jump-to-saved-btn');
+  const savedSection = document.getElementById('saved-articles-section');
+  if (jumpBtn && savedSection) {
+    jumpBtn.addEventListener('click', () => {
+      savedSection.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
 };
