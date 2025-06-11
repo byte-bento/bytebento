@@ -253,11 +253,12 @@ window.onload = () => {
   });
 
   // 📌 Jump to Saved scroll behavior
-  const jumpBtn = document.getElementById('jump-to-saved-btn');
-  const savedSection = document.getElementById('saved-articles-section');
-  if (jumpBtn && savedSection) {
-    jumpBtn.addEventListener('click', () => {
-      savedSection.scrollIntoView({ behavior: 'smooth' });
-    });
-  }
+  const jumpToSavedBtn = document.getElementById('jump-to-saved-btn');
+  const savedArticlesSection = document.getElementById('saved-articles');
+
+  if (jumpToSavedBtn && savedArticlesSection) {
+  jumpToSavedBtn.addEventListener('click', () => {
+    savedArticlesSection.scrollIntoView({ behavior: 'smooth' });
+  });
+}
 };
