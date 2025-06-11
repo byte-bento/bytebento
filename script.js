@@ -58,19 +58,14 @@ window.onload = () => {
       const timestamp = article.date ? new Date(article.date).toLocaleString() : '';
       const source = article.source || 'Unknown';
 
-      // Article card
       const newsItem = document.createElement('article');
-
-      // Title
       const title = document.createElement('h2');
       title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
 
-      // Badge
       const badge = document.createElement('span');
       badge.classList.add('source-badge');
       badge.textContent = source;
 
-      // Source-based color class for badge
       const sourceClass = {
         'Techmeme': 'source-techmeme',
         'Ars Technica': 'source-arstechnica',
@@ -79,7 +74,6 @@ window.onload = () => {
       }[source];
       if (sourceClass) badge.classList.add(sourceClass);
 
-      // Info paragraph (hidden in regular mode, shown in Focus Mode)
       const info = document.createElement('p');
       info.innerHTML = `
         <strong class="info-source">${source}</strong>
@@ -87,7 +81,6 @@ window.onload = () => {
       `;
       if (sourceClass) info.classList.add(sourceClass);
 
-      // Read Later button
       const saveBtn = document.createElement('button');
       saveBtn.classList.add('save-btn');
       saveBtn.setAttribute('data-url', article.url);
@@ -97,27 +90,24 @@ window.onload = () => {
       saveBtn.setAttribute('data-date', article.date);
       saveBtn.textContent = '⭐ Read Later';
 
-      // Build footer and append badge, info, button
       const footer = document.createElement('div');
       footer.classList.add('card-footer');
       footer.appendChild(badge);
       footer.appendChild(info);
       footer.appendChild(saveBtn);
 
-      // Assemble card
       newsItem.appendChild(title);
       newsItem.appendChild(footer);
       newsContainer.appendChild(newsItem);
     });
 
-    // Attach save handlers
     document.querySelectorAll('.save-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const url         = btn.dataset.url;
-        const title       = btn.dataset.title;
+        const url = btn.dataset.url;
+        const title = btn.dataset.title;
         const description = btn.dataset.description;
-        const source      = btn.dataset.source;
-        const dateRaw     = btn.dataset.date;
+        const source = btn.dataset.source;
+        const dateRaw = btn.dataset.date;
 
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
         if (!saved.some(a => a.url === url)) {
@@ -172,11 +162,15 @@ window.onload = () => {
       `;
       savedContainer.appendChild(item);
     });
+
+    const jumpContainer = document.getElementById('jump-to-saved-container');
+    if (jumpContainer) {
+      jumpContainer.style.display = saved.length > 0 ? 'block' : 'none';
+    }
   }
 
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
-  // ── Dark Mode toggle ──
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
     if (localStorage.getItem('theme') === 'dark') {
@@ -189,7 +183,6 @@ window.onload = () => {
     });
   }
 
-  // ── Focus Mode toggle ──
   const focusSwitch = document.getElementById('focus-switch');
   if (focusSwitch) {
     if (localStorage.getItem('focus') === 'on') {
@@ -202,7 +195,15 @@ window.onload = () => {
     });
   }
 
-  // Saved Articles toggle/collapse handlers remain unchanged...
+  const jumpToSaved = document.getElementById('jump-to-saved-btn');
+  if (jumpToSaved) {
+    jumpToSaved.addEventListener('click', () => {
+      const target = document.getElementById('saved-articles');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
 
   setInterval(fetchNews, 10 * 60 * 1000);
   fetchNews();

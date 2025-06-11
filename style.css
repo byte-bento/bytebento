@@ -562,3 +562,20 @@ article {
   flex-direction: column;
   gap: 6px;             /* small gap between badge, info, and button */
 }
+
+#jump-to-saved-btn {
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+#jump-to-saved-btn:hover {
+  background-color: #005fa3;
+}
