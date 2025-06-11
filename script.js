@@ -139,10 +139,10 @@ window.onload = () => {
         if (!saved.some(a => a.url === url)) {
           saved.push({ title, url, description, source, dateRaw });
           localStorage.setItem('savedArticles', JSON.stringify(saved));
-          alert('Article saved to read later!');
+        showToast('✅ Article saved to read later!');
           renderSavedArticles();
         } else {
-          alert('Already saved!');
+          showToast('❌ Already saved!');
         }
       });
     });
