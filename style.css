@@ -114,9 +114,8 @@ article p {
 #saved-articles h2 {
   margin-top: 0;
   font-size: 1.6rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  text-align: center;
+  display: block;
 }
 
 #saved-container article {
