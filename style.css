@@ -616,39 +616,40 @@ body.focus-mode .save-btn {
   color: var(--card);
 }
 
-/* Improve layout for saved article cards */
+/* Ensure saved article cards are styled like regular cards */
 .saved-article {
   background-color: var(--card);
   border-radius: 8px;
   border-left: 4px solid var(--accent);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 12px 16px;
   margin-bottom: 16px;
 }
 
-.saved-article h3 {
-  font-size: 1rem;
-  margin: 0 0 6px;
+/* Reuse existing layout */
+.saved-article .card-footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.saved-article p {
-  font-size: 0.85rem;
-  margin: 0 0 8px;
-}
-
-.saved-article .remove-btn {
-  padding: 6px 12px;
-  font-size: 0.85rem;
-  border: 2px solid var(--accent);
+/* Match remove button to save/clear styles */
+.remove-btn {
   background-color: var(--card);
+  border: 2px solid var(--accent);
   color: var(--accent);
+  padding: 6px 12px;
   border-radius: 8px;
-  cursor: pointer;
+  font-size: 0.9rem;
   font-weight: 500;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-.saved-article .remove-btn:hover {
+.remove-btn:hover {
   background-color: var(--accent);
   color: var(--card);
+  transform: translateY(-1px);
 }
+

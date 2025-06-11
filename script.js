@@ -200,6 +200,15 @@ window.onload = () => {
       removeBtn.setAttribute('data-index', index);
       removeBtn.innerHTML = '🗑 Remove';
 
+      const footer = document.createElement('div');
+      footer.classList.add('card-footer');
+      footer.appendChild(removeBtn);
+
+      card.appendChild(title);
+      card.appendChild(info);
+      card.appendChild(footer);
+      savedContainer.appendChild(card);
+
       removeBtn.addEventListener('click', () => {
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
         saved.splice(index, 1);
@@ -207,11 +216,6 @@ window.onload = () => {
         renderSavedArticles();
         showToast('🗑 Removed from saved articles');
       });
-
-      card.appendChild(title);
-      card.appendChild(info);
-      card.appendChild(removeBtn);
-      savedContainer.appendChild(card);
     });
   }
 
