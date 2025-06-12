@@ -188,7 +188,6 @@ window.onload = () => {
 
       const card = document.createElement('article');
       card.classList.add('saved-article');
-      card.setAttribute('data-source', article.source);
 
       const title = document.createElement('h3');
       title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
