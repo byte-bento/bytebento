@@ -677,29 +677,23 @@ body.focus-mode .save-btn {
   transform: translateY(-1px);
 }
 
-/* ── Saved Articles: Color-coded Source Badges ── */
+/* ── Saved Articles: Text‐only Source Colors ── */
 .saved-article strong {
-  display: inline-block;
-  padding: 0.25em 0.6em;
-  border-radius: 0.25rem;
-  color: #fff;            /* white text */
   font-weight: 600;
-  font-size: 0.9rem;
 }
 
-/* Match each source’s pill color */
 .saved-article[data-source="Ars Technica"] strong {
-  background-color: #E31B23;  /* Ars Technica red */
+  color: #E31B23;  /* red */
 }
 
 .saved-article[data-source="Techmeme"] strong {
-  background-color: #4272A3;  /* Techmeme blue */
+  color: #4272A3;  /* blue */
 }
 
 .saved-article[data-source="Hacker News"] strong {
-  background-color: #FF6600;  /* HN orange */
+  color: #FF6600;  /* orange */
 }
 
 .saved-article[data-source="Product Hunt"] strong {
-  background-color: #DA552F;  /* Product Hunt red */
+  color: #DA552F;  /* red */
 }
