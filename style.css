@@ -630,14 +630,11 @@ body.focus-mode .save-btn {
 .saved-article .card-footer {
   margin-top: 10px;
   display: flex;
-  justify-content: flex-start !important; /* Force left alignment */
-  flex-direction: row !important;
-  padding-left: 0;
+  justify-content: flex-end;
 }
 
 /* Match remove button to save/clear styles */
 .remove-btn {
-  margin-left: 0 !important;
   background-color: var(--card);
   border: 2px solid var(--accent);
   color: var(--accent);
@@ -651,27 +648,6 @@ body.focus-mode .save-btn {
 }
 
 .remove-btn:hover {
-  background-color: var(--accent);
-  color: var(--card);
-  transform: translateY(-1px);
-}
-
-#saved-container .remove-btn {
-  background-color: var(--card);
-  border: 2px solid var(--accent);
-  color: var(--accent);
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  width: fit-content;
-  align-self: flex-end;
-}
-
-#saved-container .remove-btn:hover {
   background-color: var(--accent);
   color: var(--card);
   transform: translateY(-1px);
