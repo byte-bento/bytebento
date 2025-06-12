@@ -165,57 +165,59 @@ window.onload = () => {
     });
   }
 
-function renderSavedArticles() {
-  const savedContainer = document.getElementById('saved-container');
-  const jumpContainer = document.getElementById('jump-to-saved-container');
-  if (!savedContainer) return;
+  function renderSavedArticles() {
+    const savedContainer = document.getElementById('saved-container');
+    const jumpContainer = document.getElementById('jump-to-saved-container');
+    if (!savedContainer) return;
 
-  const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-  savedContainer.innerHTML = '';
+    const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+    savedContainer.innerHTML = '';
 
-  if (saved.length === 0) {
-    if (jumpContainer) jumpContainer.style.display = 'none';
-    return;
-  }
+    if (saved.length === 0) {
+      if (jumpContainer) jumpContainer.style.display = 'none';
+      return;
+    }
 
-  if (jumpContainer) jumpContainer.style.display = 'block';
+    if (jumpContainer) jumpContainer.style.display = 'block';
 
-  saved.forEach((article, index) => {
-    const when = article.dateRaw
-      ? new Date(article.dateRaw).toLocaleString()
-      : '';
-    const source = article.source || 'Unknown';
+    saved.forEach((article, index) => {
+      const when = article.dateRaw
+        ? new Date(article.dateRaw).toLocaleString()
+        : '';
+      const source = article.source || 'Unknown';
 
-    const card = document.createElement('article');
-    card.classList.add('saved-article');
+      const card = document.createElement('article');
+      card.classList.add('saved-article');
 
-    const title = document.createElement('h3');
-    title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
+      const title = document.createElement('h3');
+      title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
 
-    const info = document.createElement('p');
-    info.innerHTML = `<strong>${source}</strong> | 🕒 ${when}`;
+      const info = document.createElement('p');
+      info.innerHTML = `<strong>${source}</strong> | 🕒 ${when}`;
 
-    const removeBtn = document.createElement('button');
-    removeBtn.classList.add('remove-btn');
-    removeBtn.innerHTML = '🗑 Remove';
-    removeBtn.addEventListener('click', () => {
-      const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-      const updated = saved.filter((_, i) => i !== index);
-      localStorage.setItem('savedArticles', JSON.stringify(updated));
-      renderSavedArticles();
-      showToast('🗑 Removed from saved articles');
+      const removeBtn = document.createElement('button');
+      removeBtn.classList.add('remove-btn');
+      removeBtn.setAttribute('data-index', index);
+      removeBtn.innerHTML = '🗑 Remove';
+
+      const footer = document.createElement('div');
+      footer.classList.add('card-footer');
+      footer.appendChild(removeBtn);
+
+      card.appendChild(title);
+      card.appendChild(info);
+      card.appendChild(footer);
+      savedContainer.appendChild(card);
+
+      removeBtn.addEventListener('click', () => {
+        const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
+        saved.splice(index, 1);
+        localStorage.setItem('savedArticles', JSON.stringify(saved));
+        renderSavedArticles();
+        showToast('🗑 Removed from saved articles');
+      });
     });
-
-    const footer = document.createElement('div');
-    footer.classList.add('card-footer');
-    footer.appendChild(removeBtn);
-
-    card.appendChild(title);
-    card.appendChild(info);
-    card.appendChild(footer);
-    savedContainer.appendChild(card);
-  });
-}
+  }
 
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
