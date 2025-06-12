@@ -676,3 +676,31 @@ body.focus-mode .save-btn {
   color: var(--card);
   transform: translateY(-1px);
 }
+
+/* ── Saved Articles: Source Label Styling ── */
+/* Make the <strong> look like your source badges */
+.saved-article strong {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #fff;            /* white text */
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+/* Now give each source its own background color */
+.saved-article[data-source="Ars Technica"] strong {
+  background-color: #E31B23;  /* same red as your Ars Technica cards */
+}
+
+.saved-article[data-source="Techmeme"] strong {
+  background-color: #4272A3;  /* your Techmeme blue */
+}
+
+.saved-article[data-source="Hacker News"] strong {
+  background-color: #FF6600;  /* Hacker News orange */
+}
+
+.saved-article[data-source="Product Hunt"] strong {
+  background-color: #DA552F;  /* Product Hunt red */
+}
