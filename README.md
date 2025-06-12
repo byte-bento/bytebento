@@ -44,11 +44,13 @@
 **Installation**
 
 1. **Clone the repo**
-  ```git clone https://github.com/byte-bento/bytebento.git
-  cd bytebento```
+
+```bash
+git clone https://github.com/byte-bento/bytebento.git
+cd bytebento
 
 2. **Install Wrangler (if not already)**
-  ```npm install -g @cloudflare/wrangler```
+npm install -g @cloudflare/wrangler
 
 **Development**
 > You can preview the site and Workers locally using Wrangler.
