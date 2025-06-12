@@ -7,15 +7,17 @@ body {
   color: var(--text);
 }
 
-/* ── Reset & Utility ── */
-.info-source, .info-time {
+/* ── Metadata Reset ── */
+/* Ensure info-source & info-time never get a background,
+   and remove default paragraph top‐margin in Focus Mode */
+.info-source,
+.info-time {
   background-color: transparent !important;
 }
 body.focus-mode article p {
   margin: 0 !important;
 }
 
-/* Header + Footer */
 header, footer {
   background-color: var(--header-bg);
   color: var(--header-text);
@@ -23,7 +25,6 @@ header, footer {
   padding: 20px;
 }
 
-/* Grid Layout */
 main {
   padding: 20px;
   display: grid;
@@ -39,24 +40,27 @@ article {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  flex-direction: column;
 }
+
 article:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
+
 article h2 {
   font-size: 1.1rem;
   margin-bottom: 6px;
 }
+
 article a {
   text-decoration: none;
   color: var(--accent);
 }
+
 article a:hover {
   text-decoration: underline;
 }
+
 article p {
   font-size: 0.92rem;
   line-height: 1.5;
@@ -64,18 +68,18 @@ article p {
   margin: 8px 0 0;
 }
 
-/* Timestamp */
+/* Timestamp + Refresh Button */
 .timestamp {
   font-size: 0.85em;
   color: #777;
   margin: 10px 0 0;
 }
 
-/* Refresh Button */
 .refresh-container {
   text-align: center;
   margin: 20px 0;
 }
+
 #refresh-btn {
   padding: 10px 18px;
   font-size: 1rem;
@@ -88,12 +92,13 @@ article p {
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
+
 #refresh-btn:hover {
   background-color: #005fa3;
   transform: translateY(-1px);
 }
 
-/* Saved Articles Section */
+/* Saved Articles */
 #saved-articles {
   padding: 24px;
   margin-top: 40px;
@@ -105,34 +110,38 @@ article p {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
+
 #saved-articles h2 {
   margin-top: 0;
-  margin-bottom: 12px;
   font-size: 1.6rem;
   text-align: center;
   display: block;
 }
+
 #saved-container article {
   background-color: var(--card);
   border-radius: 8px;
   border-left: 4px solid var(--accent);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   padding: 12px 16px;
   margin-bottom: 16px;
 }
+
 #saved-container article h3 {
   font-size: 1rem;
   margin: 0 0 6px;
 }
+
 #saved-container article p {
   font-size: 0.85rem;
   margin: 0;
 }
 
-/* Toggle Collapse */
+/* Collapsible logic */
 #saved-container.collapsed {
   display: none;
 }
+
 #toggle-saved {
   background: none;
   border: none;
@@ -142,11 +151,196 @@ article p {
   cursor: pointer;
   margin-left: 12px;
 }
+
 #toggle-saved:hover {
   text-decoration: underline;
 }
 
-/* Filter Buttons */
+/* Featured Tech Picks Section */
+#featured-tech {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 60px auto;
+  background-color: var(--card);
+  border-top: 2px solid #ddd;
+  box-sizing: border-box;
+}
+
+#featured-tech h2 {
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+  padding-left: 6px;
+}
+
+/* Grid Layout */
+.tech-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Tech Product Card */
+.tech-card {
+  background-color: var(--card);
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 5px solid var(--accent);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.tech-card h3 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+.tech-card p {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 10px 0;
+}
+
+.tech-card .rating {
+  font-size: 1rem;
+  color: #f5c518;
+  margin: 6px 0 10px;
+}
+
+.tech-card a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tech-card a:hover {
+  text-decoration: underline;
+}
+
+.variant-links {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.variant-links li a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Icons */
+.icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+/* Ad Placeholder */
+#ad-spot {
+  padding: 24px;
+  background-color: var(--card);
+  text-align: center;
+  margin-top: 40px;
+  border-top: 2px dashed #bbb;
+  font-size: 0.95rem;
+  color: #666;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Light Theme */
+:root {
+  --bg: #f9f9f9;
+  --text: #222;
+  --card: #fff;
+  --accent: #0077cc;
+  --header-bg: #1a1a1a;
+  --header-text: #fff;
+}
+
+/* Dark Theme */
+body.dark-mode {
+  --bg: #1e1e1e;
+  --text: #eee;
+  --card: #2a2a2a;
+  --accent: #4ea1ff;
+  --header-bg: #111;
+  --header-text: #eee;
+}
+
+.theme-toggle {
+  margin-top: 10px;
+}
+
+/* 🧠 Sponsored Section Styling */
+#ad-section {
+  background-color: var(--card);
+  color: var(--text);
+  padding: 24px;
+  margin-top: 40px;
+  border-top: 2px dashed #bbb;
+  text-align: center;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#ad-section h2 {
+  font-size: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+#ad-section .ad-box {
+  font-size: 1rem;
+  color: var(--text);
+}
+
+/* Buy Me a Coffee */
+.bmc-container {
+  margin-top: 10px;
+}
+
+.bmc-container a {
+  background-color: #ffdd00;
+  color: #000;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.bmc-container a:hover {
+  background-color: #f5c400;
+}
+
+.disclaimer {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  margin-top: 40px;
+  padding-bottom: 10px;
+}
+
+/* 🔍 Filter Buttons */
 .filter-container {
   display: flex;
   flex-wrap: wrap;
@@ -154,6 +348,7 @@ article p {
   gap: 10px;
   margin: 20px 0;
 }
+
 .filter-container button {
   background-color: var(--card);
   border: 2px solid var(--accent);
@@ -166,13 +361,14 @@ article p {
   transition: all 0.2s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
+
 .filter-container button:hover {
   background-color: var(--accent);
   color: var(--card);
   transform: translateY(-1px);
 }
 
-/* Read Later Button */
+/* ── Read Later Button Styling ── */
 .save-btn {
   display: inline-block;
   background-color: var(--card);
@@ -185,40 +381,16 @@ article p {
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  margin-top: 8px;
+  margin-top: 8px; /* give it a little breathing room */
 }
+
 .save-btn:hover {
   background-color: var(--accent);
   color: var(--card);
   transform: translateY(-1px);
 }
 
-/* Saved Article Footer & Remove Button */
-.saved-article .card-footer {
-  margin-top: 10px;
-  display: flex;
-  justify-content: flex-end;
-  padding: 0;
-}
-.remove-btn {
-  background-color: var(--card);
-  border: 2px solid var(--accent);
-  color: var(--accent);
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-.remove-btn:hover {
-  background-color: var(--accent);
-  color: var(--card);
-  transform: translateY(-1px);
-}
-
-/* Clear/Export Buttons */
+/* ── Saved Articles Button Styling ── */
 #clear-saved,
 #export-saved {
   background-color: var(--card);
@@ -231,8 +403,9 @@ article p {
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  margin-right: 10px;
+  margin-right: 10px; /* space between the two buttons */
 }
+
 #clear-saved:hover,
 #export-saved:hover {
   background-color: var(--accent);
@@ -240,7 +413,12 @@ article p {
   transform: translateY(-1px);
 }
 
-/* Source Badges */
+/* Optionally tighten up the Saved Articles header spacing */
+#saved-articles h2 {
+  margin-bottom: 12px;
+}
+
+/* 🎨 Source Badges */
 .source-badge {
   display: inline-block;
   padding: 4px 8px;
@@ -252,36 +430,64 @@ article p {
   margin-bottom: 4px;
   width: fit-content;
 }
-.source-badge.source-techmeme    { background-color: #4b5563; }
-.source-badge.source-arstechnica { background-color: #c1121f; }
-.source-badge.source-hackernews  { background-color: #f97316; }
-.source-badge.source-producthunt { background-color: #3b82f6; }
 
-/* Filter Button Colors (by Source) */
-.filter-container button.source-techmeme    { border-color: #4b5563; color: #4b5563; }
-.filter-container button.source-techmeme:hover    { background-color: #4b5563; color: #fff; }
-
-.filter-container button.source-arstechnica { border-color: #c1121f; color: #c1121f; }
-.filter-container button.source-arstechnica:hover { background-color: #c1121f; color: #fff; }
-
-.filter-container button.source-hackernews  { border-color: #f97316; color: #f97316; }
-.filter-container button.source-hackernews:hover  { background-color: #f97316; color: #fff; }
-
-.filter-container button.source-producthunt { border-color: #3b82f6; color: #3b82f6; }
-.filter-container button.source-producthunt:hover { background-color: #3b82f6; color: #fff; }
-
-/* Card Footer */
-.card-footer {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+/* Only badges themselves get the background */
+.source-badge.source-techmeme {
+  background-color: #4b5563;
+}
+.source-badge.source-arstechnica {
+  background-color: #c1121f;
+}
+.source-badge.source-hackernews {
+  background-color: #f97316;
+}
+.source-badge.source-producthunt {
+  background-color: #3b82f6;
 }
 
-/* Focus Mode Minimalist Layout */
+/* 🎨 Source-specific filter button colors */
+.filter-container button.source-techmeme {
+  border-color: #4b5563;
+  color: #4b5563;
+}
+
+.filter-container button.source-techmeme:hover {
+  background-color: #4b5563;
+  color: #fff;
+}
+
+.filter-container button.source-arstechnica {
+  border-color: #c1121f;
+  color: #c1121f;
+}
+.filter-container button.source-arstechnica:hover {
+  background-color: #c1121f;
+  color: #fff;
+}
+
+.filter-container button.source-hackernews {
+  border-color: #f97316;
+  color: #f97316;
+}
+.filter-container button.source-hackernews:hover {
+  background-color: #f97316;
+  color: #fff;
+}
+
+.filter-container button.source-producthunt {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+.filter-container button.source-producthunt:hover {
+  background-color: #3b82f6;
+  color: #fff;
+}
+
+/* ── Focus Mode: Minimal List with Adjusted Spacing ── */
 body.focus-mode main {
   display: block !important;
 }
+
 body.focus-mode article {
   display: flex !important;
   flex-direction: column !important;
@@ -289,66 +495,82 @@ body.focus-mode article {
   box-shadow: none !important;
   border-left: none !important;
   padding: 4px 16px !important;
-  margin: 0 0 16px !important;
+  margin: 0 0 16px !important;    /* 16px below each block */
 }
+
 body.focus-mode h2 {
-  margin: 0 0 2px !important;
+  margin: 0 0 2px !important;      /* 2px below headline */
   font-size: 1rem !important;
 }
+
 body.focus-mode h2 a {
   color: var(--accent) !important;
   text-decoration: none !important;
 }
+
 body.focus-mode .info-source {
   display: block !important;
   font-weight: 500 !important;
-  margin: 0 0 2px !important;
+  margin: 0 0 2px !important;      /* 2px below source */
 }
+
 body.focus-mode .info-time {
   display: block !important;
   font-weight: 300 !important;
   color: #666 !important;
-  margin: 0 !important;
-}
-body.focus-mode .save-btn {
-  font-size: 0.8rem;
-  padding: 4px 10px;
-  width: fit-content;
-  white-space: nowrap;
-  margin-top: 6px;
-  align-self: flex-start;
+  margin: 0 0 0 !important;        /* no extra bottom margin */
 }
 
-/* Hide source text in regular view, show in focus mode */
+/* Apply source-specific text colors */
+body.focus-mode p.source-techmeme .info-source {
+  color: #4b5563 !important;
+}
+body.focus-mode p.source-arstechnica .info-source {
+  color: #c1121f !important;
+}
+body.focus-mode p.source-hackernews .info-source {
+  color: #f97316 !important;
+}
+body.focus-mode p.source-producthunt .info-source {
+  color: #3b82f6 !important;
+}
+
+/* Hide the badges & Read Later buttons */
+body.focus-mode .source-badge,
+body.focus-mode .save-btn {
+  font-size: 0.85rem;
+  padding: 2px 8px;
+  margin-top: 4px;
+  border-radius: 6px;
+  background-color: var(--card);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+/* ── Hide the source text in regular mode (badge already shows it) ── */
 .info-source {
   display: none;
 }
+
+/* ── In Focus Mode, reveal the source line ── */
 body.focus-mode .info-source {
   display: block !important;
 }
 
-/* Light/Dark Theme Colors */
-:root {
-  --bg: #f9f9f9;
-  --text: #222;
-  --card: #fff;
-  --accent: #0077cc;
-  --header-bg: #1a1a1a;
-  --header-text: #fff;
-}
-body.dark-mode {
-  --bg: #1e1e1e;
-  --text: #eee;
-  --card: #2a2a2a;
-  --accent: #4ea1ff;
-  --header-bg: #111;
-  --header-text: #eee;
+/* ── Card Layout Consistency ── */
+article {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Misc */
-.theme-toggle {
-  margin-top: 10px;
+.card-footer {
+  margin-top: auto;     /* pushes this section to the bottom of the card */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;             /* small gap between badge, info, and button */
 }
+
 #jump-to-saved-btn {
   padding: 10px 18px;
   font-size: 0.95rem;
@@ -361,6 +583,73 @@ body.dark-mode {
   transition: background-color 0.3s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
+
 #jump-to-saved-btn:hover {
   background-color: #005fa3;
 }
+
+/* Shorter '⭐ Save' style in Focus Mode */
+body.focus-mode .save-btn {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
+  margin-top: 6px;
+  align-self: flex-start;
+}
+
+.remove-btn {
+  background-color: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.remove-btn:hover {
+  background-color: var(--accent);
+  color: var(--card);
+}
+
+/* Ensure saved article cards are styled like regular cards */
+.saved-article {
+  background-color: var(--card);
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+/* Reuse existing layout */
+.saved-article .card-footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Match remove button to save/clear styles */
+.remove-btn {
+  background-color: var(--card);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.remove-btn:hover {
+  background-color: var(--accent);
+  color: var(--card);
+  transform: translateY(-1px);
+}
+
