@@ -8,7 +8,8 @@ body {
 }
 
 /* ── Metadata Reset ── */
-/* Ensure info-source & info-time never get a background, and remove default paragraph top‐margin in Focus Mode */
+/* Ensure info-source & info-time never get a background,
+   and remove default paragraph top‐margin in Focus Mode */
 .info-source,
 .info-time {
   background-color: transparent !important;
