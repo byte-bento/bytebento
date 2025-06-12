@@ -44,29 +44,34 @@
 **Installation**
 
 1. **Clone the repo**
-
 ```bash
 git clone https://github.com/byte-bento/bytebento.git
 cd bytebento
+```
 
 2. **Install Wrangler (if not already)**
+```bash
 npm install -g @cloudflare/wrangler
+```
 
 **Development**
 > You can preview the site and Workers locally using Wrangler.
 
-```# Log into Cloudflare
+```bash
+# Log into Cloudflare
 wrangler login
-
 # Simulate Workers + static assets locally
-wrangler dev```
+wrangler dev
+```
 
 Open [http://127.0.0.1:8787](http://127.0.0.1:8787) in your browser to see live changes.
 
 **Deployment**
 Once you're happy with changes:
-```# Publish to your Cloudflare account
-wrangler publish```
+```bash
+# Publish to your Cloudflare account
+wrangler publish
+```
 
 ---
 
