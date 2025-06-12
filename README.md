@@ -13,7 +13,7 @@
 
 **A fast, minimalist tech news aggregator powered by Cloudflare Workers.** ByteBento aggregates headlines in real-time from top tech sources, filters them by publisher, and lets users save articles to read later or export in JSON.
 
-## 🌐 Live Site
+**Demo**
 🔗 [https://bytebento.com](https://bytebento.com)
 
 ## ✨ Features
