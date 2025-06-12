@@ -601,7 +601,7 @@ body.focus-mode .save-btn {
 
 .remove-btn {
   background-color: transparent;
-  border: none;
+  border: 1 solid var(--accent);
   color: var(--accent);
   padding: 4px 8px;
   border-radius: 6px;
@@ -616,6 +616,7 @@ body.focus-mode .save-btn {
 .remove-btn:hover {
   background-color: var(--accent);
   color: var(--card);
+  transform: translateY(-1px);
 }
 
 /* Ensure saved article cards are styled like regular cards */
@@ -654,6 +655,7 @@ body.focus-mode .save-btn {
 .remove-btn:hover {
   background-color: var(--accent);
   color: var(--card);
+  transform: translateY(-1px);
 }
 
 #saved-container .remove-btn {
