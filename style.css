@@ -630,9 +630,7 @@ body.focus-mode .save-btn {
 .saved-article .card-footer {
   margin-top: 10px;
   display: flex;
-  justify-content: flex-start !important; /* Force left alignment */
-  flex-direction: row !important;
-  padding-left: 0;
+  justify-content: flex-start;
 }
 
 /* Match remove button to save/clear styles */
