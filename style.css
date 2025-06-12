@@ -635,26 +635,27 @@ body.focus-mode .save-btn {
 
 /* Match remove button to save/clear styles */
 .remove-btn {
-  background-color: var(--card);
-  border: 2px solid var(--accent);
+  margin-left: 0 !important;
+  background-color: transparent;
+  border: none;
   color: var(--accent);
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .remove-btn:hover {
   background-color: var(--accent);
   color: var(--card);
-  transform: translateY(-1px);
 }
 
-/* ── Saved Article Remove Button ── */
-.remove-btn {
+#saved-container .remove-btn {
   background-color: var(--card);
   border: 2px solid var(--accent);
   color: var(--accent);
@@ -665,10 +666,11 @@ body.focus-mode .save-btn {
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  margin-top: 10px;
+  width: fit-content;
+  align-self: flex-end;
 }
 
-.remove-btn:hover {
+#saved-container .remove-btn:hover {
   background-color: var(--accent);
   color: var(--card);
   transform: translateY(-1px);
