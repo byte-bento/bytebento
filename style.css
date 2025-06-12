@@ -7,7 +7,7 @@ body {
   color: var(--text);
 }
 
-/* Metadata Reset */
+/* ── Reset & Utility ── */
 .info-source, .info-time {
   background-color: transparent !important;
 }
@@ -15,6 +15,7 @@ body.focus-mode article p {
   margin: 0 !important;
 }
 
+/* Header + Footer */
 header, footer {
   background-color: var(--header-bg);
   color: var(--header-text);
@@ -22,6 +23,7 @@ header, footer {
   padding: 20px;
 }
 
+/* Grid Layout */
 main {
   padding: 20px;
   display: grid;
@@ -40,26 +42,21 @@ article {
   display: flex;
   flex-direction: column;
 }
-
 article:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
-
 article h2 {
   font-size: 1.1rem;
   margin-bottom: 6px;
 }
-
 article a {
   text-decoration: none;
   color: var(--accent);
 }
-
 article a:hover {
   text-decoration: underline;
 }
-
 article p {
   font-size: 0.92rem;
   line-height: 1.5;
@@ -67,18 +64,18 @@ article p {
   margin: 8px 0 0;
 }
 
-/* Timestamp + Refresh */
+/* Timestamp */
 .timestamp {
   font-size: 0.85em;
   color: #777;
   margin: 10px 0 0;
 }
 
+/* Refresh Button */
 .refresh-container {
   text-align: center;
   margin: 20px 0;
 }
-
 #refresh-btn {
   padding: 10px 18px;
   font-size: 1rem;
@@ -91,7 +88,6 @@ article p {
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
-
 #refresh-btn:hover {
   background-color: #005fa3;
   transform: translateY(-1px);
@@ -109,39 +105,34 @@ article p {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
-
 #saved-articles h2 {
   margin-top: 0;
+  margin-bottom: 12px;
   font-size: 1.6rem;
   text-align: center;
   display: block;
-  margin-bottom: 12px;
 }
-
 #saved-container article {
   background-color: var(--card);
   border-radius: 8px;
   border-left: 4px solid var(--accent);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 12px 16px;
   margin-bottom: 16px;
 }
-
 #saved-container article h3 {
   font-size: 1rem;
   margin: 0 0 6px;
 }
-
 #saved-container article p {
   font-size: 0.85rem;
   margin: 0;
 }
 
-/* Collapsible Saved Section */
+/* Toggle Collapse */
 #saved-container.collapsed {
   display: none;
 }
-
 #toggle-saved {
   background: none;
   border: none;
@@ -151,19 +142,64 @@ article p {
   cursor: pointer;
   margin-left: 12px;
 }
-
 #toggle-saved:hover {
   text-decoration: underline;
 }
 
-/* Saved Article Footer */
+/* Filter Buttons */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+.filter-container button {
+  background-color: var(--card);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.filter-container button:hover {
+  background-color: var(--accent);
+  color: var(--card);
+  transform: translateY(-1px);
+}
+
+/* Read Later Button */
+.save-btn {
+  display: inline-block;
+  background-color: var(--card);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-top: 8px;
+}
+.save-btn:hover {
+  background-color: var(--accent);
+  color: var(--card);
+  transform: translateY(-1px);
+}
+
+/* Saved Article Footer & Remove Button */
 .saved-article .card-footer {
   margin-top: 10px;
   display: flex;
   justify-content: flex-end;
+  padding: 0;
 }
-
-/* Remove Button */
 .remove-btn {
   background-color: var(--card);
   border: 2px solid var(--accent);
@@ -176,14 +212,65 @@ article p {
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
-
 .remove-btn:hover {
   background-color: var(--accent);
   color: var(--card);
   transform: translateY(-1px);
 }
 
-/* Footer for cards */
+/* Clear/Export Buttons */
+#clear-saved,
+#export-saved {
+  background-color: var(--card);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-right: 10px;
+}
+#clear-saved:hover,
+#export-saved:hover {
+  background-color: var(--accent);
+  color: var(--card);
+  transform: translateY(-1px);
+}
+
+/* Source Badges */
+.source-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 6px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  width: fit-content;
+}
+.source-badge.source-techmeme    { background-color: #4b5563; }
+.source-badge.source-arstechnica { background-color: #c1121f; }
+.source-badge.source-hackernews  { background-color: #f97316; }
+.source-badge.source-producthunt { background-color: #3b82f6; }
+
+/* Filter Button Colors (by Source) */
+.filter-container button.source-techmeme    { border-color: #4b5563; color: #4b5563; }
+.filter-container button.source-techmeme:hover    { background-color: #4b5563; color: #fff; }
+
+.filter-container button.source-arstechnica { border-color: #c1121f; color: #c1121f; }
+.filter-container button.source-arstechnica:hover { background-color: #c1121f; color: #fff; }
+
+.filter-container button.source-hackernews  { border-color: #f97316; color: #f97316; }
+.filter-container button.source-hackernews:hover  { background-color: #f97316; color: #fff; }
+
+.filter-container button.source-producthunt { border-color: #3b82f6; color: #3b82f6; }
+.filter-container button.source-producthunt:hover { background-color: #3b82f6; color: #fff; }
+
+/* Card Footer */
 .card-footer {
   margin-top: auto;
   display: flex;
@@ -191,7 +278,56 @@ article p {
   gap: 6px;
 }
 
-/* Light Theme */
+/* Focus Mode Minimalist Layout */
+body.focus-mode main {
+  display: block !important;
+}
+body.focus-mode article {
+  display: flex !important;
+  flex-direction: column !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-left: none !important;
+  padding: 4px 16px !important;
+  margin: 0 0 16px !important;
+}
+body.focus-mode h2 {
+  margin: 0 0 2px !important;
+  font-size: 1rem !important;
+}
+body.focus-mode h2 a {
+  color: var(--accent) !important;
+  text-decoration: none !important;
+}
+body.focus-mode .info-source {
+  display: block !important;
+  font-weight: 500 !important;
+  margin: 0 0 2px !important;
+}
+body.focus-mode .info-time {
+  display: block !important;
+  font-weight: 300 !important;
+  color: #666 !important;
+  margin: 0 !important;
+}
+body.focus-mode .save-btn {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  width: fit-content;
+  white-space: nowrap;
+  margin-top: 6px;
+  align-self: flex-start;
+}
+
+/* Hide source text in regular view, show in focus mode */
+.info-source {
+  display: none;
+}
+body.focus-mode .info-source {
+  display: block !important;
+}
+
+/* Light/Dark Theme Colors */
 :root {
   --bg: #f9f9f9;
   --text: #222;
@@ -200,8 +336,6 @@ article p {
   --header-bg: #1a1a1a;
   --header-text: #fff;
 }
-
-/* Dark Theme */
 body.dark-mode {
   --bg: #1e1e1e;
   --text: #eee;
@@ -209,4 +343,24 @@ body.dark-mode {
   --accent: #4ea1ff;
   --header-bg: #111;
   --header-text: #eee;
+}
+
+/* Misc */
+.theme-toggle {
+  margin-top: 10px;
+}
+#jump-to-saved-btn {
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+#jump-to-saved-btn:hover {
+  background-color: #005fa3;
 }
