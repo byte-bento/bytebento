@@ -73,8 +73,6 @@ Once you're happy with changes:
 wrangler publish
 ```
 
----
-
 ## 🧭 Planned Features
 
 These features are in the works or on the roadmap - tracked over on the [GitHub Issues](https://github.com/johnnyfivepi/bytebento/issues) page:
@@ -82,8 +80,6 @@ These features are in the works or on the roadmap - tracked over on the [GitHub 
 - 🔍 Live search to filter articles by keyword
 - 🧵 Add more tech news sources (including RSS-based ones)
 - 📝 About page or mini changelog to track progress
-
----
 
 ## 🤝 Contributing
 
@@ -103,21 +99,15 @@ Please also:
 
 🪄 Whether it’s code, docs, or just ideas - contributions of all kinds are appreciated, so thank you for helping make ByteBento better!
 
----
-
 ## 📁 Repo Structure
 <pre>/workers → Cloudflare Worker scripts
 /src → Static site content
 /scripts → Utility tools (RSS parsing, filtering, etc.)</pre>
 
----
-
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).  
 Feel free to use, share, and remix—just give credit where it’s due.
-
----
 
 ## 🙏 Acknowledgements
 
