@@ -633,7 +633,7 @@ body.focus-mode .save-btn {
   justify-content: flex-end;
 }
 
-/* Match remove button to save/clear styles */
+/* ── Saved Article Remove Button ── */
 .remove-btn {
   background-color: var(--card);
   border: 2px solid var(--accent);
@@ -645,6 +645,7 @@ body.focus-mode .save-btn {
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-top: 10px;
 }
 
 .remove-btn:hover {
