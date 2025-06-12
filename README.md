@@ -11,77 +11,110 @@
 ![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)
 ![Built With](https://img.shields.io/badge/built%20with-curiosity%20%26%20caffeine-ff69b4)
 
-A real-time tech news dashboard powered by Cloudflare Workers. ByteBento aggregates headlines from top tech sources, filters them by publisher, and lets users save articles to read later — all through a fast, minimalist interface.
+**A fast, minimalist tech news aggregator powered by Cloudflare Workers.** ByteBento aggregates headlines in real-time from top tech sources, filters them by publisher, and lets users save articles to read later or export in JSON.
 
 ## 🌐 Live Site
-[https://bytebento.com](https://bytebento.com)
+🔗 [https://bytebento.com](https://bytebento.com)
 
-## 🔍 Why I Built It
-
-I wanted a fast, distraction-free way to browse tech news - without bouncing between tabs or dealing with ad-ridden feeds. ByteBento started as a learning project to explore Cloudflare Workers and ended up becoming my go-to dashboard for checking tech world news in one place.
-
-It’s lightweight, serverless, and doesn’t use a single framework - just readable code and clean design.
+## ✨ Features
+- 📰 **Real-time headlines** from multiple tech sources (Ars Technica, Hacker News, Product Hunt, etc.)
+- 🎛 **Source filtering** for quick focus
+- 💾 **Read Later** list with **export/download** functionality
+- 🌙 **Dark mode** & **Focus mode** for distraction-free reading
+- 🔁 **Graceful fallbacks** if any source is down
+- ⚡️ **Lightning-fast** serverless architecture
 
 ## 🛠 Tech Stack
 
 🌀 **Hosted entirely via Cloudflare Workers** – combines serverless API logic and static content delivery in a single deployment.
 
-- **Cloudflare Workers** – serverless API fetching, routing, and frontend delivery  
-- **JavaScript (vanilla)** – no frameworks, just focused DOM handling  
-- **HTML/CSS** – custom styles, dark mode support, and flexible layout  
-- **LocalStorage** – save “read later” articles with export functionality  
-- **GitHub** – version control and issue tracking
+- **Platform & Hosting:** Cloudflare Workers (API + static assets)
+- **Language & Frameworks:** Vanilla JavaScript, HTML, CSS
+- **Storage:** Browser LocalStorage
+- **Version Control:** Git & GitHub
+- **No frameworks, no build step** — just clean, readable code!
 
-📌 No frameworks. No build step. Just clean, readable JavaScript and Cloudflare magic.
+## 🏁 Getting Started
 
-## ✨ Features
-- 📰 Pulls real-time tech headlines from multiple trusted sources
-- 🎛 Source filtering so you can zero in on what matters
-- 💾 “Read Later” list with export/download option
-- 🌙 Clean, minimalist layout with dark mode styling
-- 🔁 Graceful fallback handling if a source is down
-- ⚡️ Fast load times thanks to serverless architecture and no frameworks
+**Prerequisites**
+- [Node.js](https://nodejs.org/en) (for local Worker simulation, optional)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/cli-wrangler/) (install instructions and CLI reference)
+- A free [Cloudflare account](https://dash.cloudflare.com/sign-up) with Workers enabled
+
+**Installation**
+
+1. **Clone the repo**
+  ```git clone https://github.com/byte-bento/bytebento.git
+  cd bytebento```
+
+2. **Install Wrangler (if not already)**
+  ```npm install -g @cloudflare/wrangler```
+
+**Development**
+> You can preview the site and Workers locally using Wrangler.
+
+```# Log into Cloudflare
+wrangler login
+
+# Simulate Workers + static assets locally
+wrangler dev```
+
+Open [http://127.0.0.1:8787](http://127.0.0.1:8787) in your browser to see live changes.
+
+**Deployment**
+Once you're happy with changes:
+```# Publish to your Cloudflare account
+wrangler publish```
+
+---
 
 ## 🧭 Planned Features
 
-These features are in the works or on the roadmap - tracked over on the [GitHub Issues page](https://github.com/johnnyfivepi/bytebento/issues):
+These features are in the works or on the roadmap - tracked over on the [GitHub Issues](https://github.com/johnnyfivepi/bytebento/issues) page:
 
 - 🔍 Live search to filter articles by keyword
 - 🧵 Add more tech news sources (including RSS-based ones)
-- 📷 Smarter handling of article images and preview thumbnails
-- 💡 Source-based color tags for visual clarity
-- 🧹 “Clear All” and “Export Saved” buttons for Read Later
-- ⏱ Optional auto-refresh every 10 minutes
 - 📝 About page or mini changelog to track progress
+
+---
 
 ## 🤝 Contributing
 
-Want to improve ByteBento or suggest a new feature? Awesome!
+Want to improve ByteBento or suggest a new feature? Awesome! We welcome all kinds of contributions! To get started:
 
-- Check out [open issues](https://github.com/johnnyfivepi/bytebento/issues) or [start a new one](https://github.com/johnnyfivepi/bytebento/issues/new)
-- Bug reports, UI suggestions, and tech news source ideas are all welcome
-- If you're fixing a bug or adding a feature, feel free to fork the repo and submit a pull request
+1. **Fork** the repository
+2. **Clone** your fork and create a new branch (git checkout -b feature/awesome-new-thing)
+3. **Commit** your changes with descriptive messages
+4. **Push** to your fork (```git push origin feature/awesome-new-thing```)
+5. **Open a Pull Request** against ```main``` with a description of your changes
 
-🪄 Whether it’s code, docs, or just ideas - contributions of all kinds are appreciated!
+Please also:
+
+- Review [existing issues](https://github.com/byte-bento/bytebento/issues) and add your thoughts
+- Label any bugs you find or feature ideas you want to tackle
+- Follow consistent code style (ESLint rules if you introduce new JS)
+
+🪄 Whether it’s code, docs, or just ideas - contributions of all kinds are appreciated, so thank you for helping make ByteBento better!
+
+---
 
 ## 📁 Repo Structure
 <pre>/workers → Cloudflare Worker scripts
 /src → Static site content
 /scripts → Utility tools (RSS parsing, filtering, etc.)</pre>
 
-## 🧠 What I Learned
-- Cloudflare Workers architecture + routing
-- CORS debugging and failover handling
-- Building readable, minimalist interfaces with pure JS
-- Async design and user-friendly save/export patterns
+---
 
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).  
-You're free to use, share, and remix - just give credit where it’s due.
+Feel free to use, share, and remix—just give credit where it’s due.
 
 ---
 
-_Made with caffeine, curiosity, and the Cloudflare edge ☕_
+## 🙏 Acknowledgements
 
-
+- Inspired by the simplicity of serverless dashboards
+- Thanks to Cloudflare Workers for the magic edge compute
+- Hats off to all open-source libraries and contributors
+- Made with ☕, 🧠, and 💻
