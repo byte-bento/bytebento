@@ -638,8 +638,9 @@ body.focus-mode .save-btn {
 /* Match remove button to save/clear styles */
 .remove-btn {
   margin-left: 0 !important;
+  margin-top: 6px;
   background-color: var(--card);
-  border: 2px solid var(--accent);
+  border: 1px solid var(--accent);
   color: var(--accent);
   padding: 6px 12px;
   border-radius: 8px;
