@@ -1,7 +1,7 @@
 # ByteBento 🍱
 
 [![GitHub stars](https://img.shields.io/github/stars/byte-bento/bytebento?style=social)](https://github.com/byte-bento/bytebento/stargazers)
-[![open source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen.svg)](https://opensource.org)
+[![open source](https://img.shields.io/badge/open%20source-Yes-brightgreen.svg)](https://opensource.org)
 ![Project Type](https://img.shields.io/badge/type-project-blue)
 ![Platform](https://img.shields.io/badge/platform-Cloudflare%20Workers-black)
 ![Hosting](https://img.shields.io/badge/hosting-Cloudflare-orange)
