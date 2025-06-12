@@ -655,7 +655,7 @@ body.focus-mode .save-btn {
 .remove-btn:hover {
   background-color: var(--accent);
   color: var(--card);
-}
+} 
 
 #saved-container .remove-btn {
   background-color: var(--card);
