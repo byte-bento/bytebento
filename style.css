@@ -677,3 +677,23 @@ body.focus-mode .save-btn {
   transform: translateY(-1px);
 }
 
+/* ── Saved Articles: Text‐only Source Colors ── */
+.saved-article strong {
+  font-weight: 600;
+}
+
+.saved-article[data-source="Ars Technica"] strong {
+  color: #E31B23;  /* red */
+}
+
+.saved-article[data-source="Techmeme"] strong {
+  color: #4272A3;  /* blue */
+}
+
+.saved-article[data-source="Hacker News"] strong {
+  color: #FF6600;  /* orange */
+}
+
+.saved-article[data-source="Product Hunt"] strong {
+  color: #DA552F;  /* red */
+}
