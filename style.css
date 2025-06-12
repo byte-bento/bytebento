@@ -668,7 +668,7 @@ body.focus-mode .save-btn {
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   width: fit-content;
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 #saved-container .remove-btn:hover {
