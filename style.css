@@ -1,4 +1,4 @@
-/* === Base Styles === */
+/* Base Styles */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   margin: 0;
@@ -7,6 +7,29 @@ body {
   color: var(--text);
 }
 
+/* Metadata Reset */
+.info-source, .info-time {
+  background-color: transparent !important;
+}
+body.focus-mode article p {
+  margin: 0 !important;
+}
+
+header, footer {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  text-align: center;
+  padding: 20px;
+}
+
+main {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Article Cards */
 article {
   background-color: var(--card);
   padding: 20px;
@@ -17,21 +40,26 @@ article {
   display: flex;
   flex-direction: column;
 }
+
 article:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
+
 article h2 {
   font-size: 1.1rem;
   margin-bottom: 6px;
 }
+
 article a {
   text-decoration: none;
   color: var(--accent);
 }
+
 article a:hover {
   text-decoration: underline;
 }
+
 article p {
   font-size: 0.92rem;
   line-height: 1.5;
@@ -39,32 +67,103 @@ article p {
   margin: 8px 0 0;
 }
 
-/* === Card Footer Shared === */
-.card-footer {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+/* Timestamp + Refresh */
+.timestamp {
+  font-size: 0.85em;
+  color: #777;
+  margin: 10px 0 0;
 }
 
-/* === Saved Article Card === */
-.saved-article {
+.refresh-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#refresh-btn {
+  padding: 10px 18px;
+  font-size: 1rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+#refresh-btn:hover {
+  background-color: #005fa3;
+  transform: translateY(-1px);
+}
+
+/* Saved Articles Section */
+#saved-articles {
+  padding: 24px;
+  margin-top: 40px;
+  background-color: var(--card);
+  border-top: 2px solid #ddd;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#saved-articles h2 {
+  margin-top: 0;
+  font-size: 1.6rem;
+  text-align: center;
+  display: block;
+  margin-bottom: 12px;
+}
+
+#saved-container article {
   background-color: var(--card);
   border-radius: 8px;
   border-left: 4px solid var(--accent);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   padding: 12px 16px;
   margin-bottom: 16px;
-  display: flex;
-  flex-direction: column;
 }
+
+#saved-container article h3 {
+  font-size: 1rem;
+  margin: 0 0 6px;
+}
+
+#saved-container article p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Collapsible Saved Section */
+#saved-container.collapsed {
+  display: none;
+}
+
+#toggle-saved {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 12px;
+}
+
+#toggle-saved:hover {
+  text-decoration: underline;
+}
+
+/* Saved Article Footer */
 .saved-article .card-footer {
   margin-top: 10px;
   display: flex;
   justify-content: flex-end;
 }
 
-/* === Remove Button === */
+/* Remove Button */
 .remove-btn {
   background-color: var(--card);
   border: 2px solid var(--accent);
@@ -77,64 +176,37 @@ article p {
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
+
 .remove-btn:hover {
   background-color: var(--accent);
   color: var(--card);
   transform: translateY(-1px);
 }
 
-/* === Save Button === */
-.save-btn {
-  display: inline-block;
-  background-color: var(--card);
-  border: 2px solid var(--accent);
-  color: var(--accent);
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  margin-top: 8px;
-}
-.save-btn:hover {
-  background-color: var(--accent);
-  color: var(--card);
-  transform: translateY(-1px);
+/* Footer for cards */
+.card-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* === Saved Section Container === */
-#saved-articles {
-  padding: 24px;
-  margin-top: 40px;
-  background-color: var(--card);
-  border-top: 2px solid #ddd;
-  max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-#saved-articles h2 {
-  font-size: 1.6rem;
-  text-align: center;
-  margin-bottom: 12px;
-}
-#saved-container.collapsed {
-  display: none;
+/* Light Theme */
+:root {
+  --bg: #f9f9f9;
+  --text: #222;
+  --card: #fff;
+  --accent: #0077cc;
+  --header-bg: #1a1a1a;
+  --header-text: #fff;
 }
 
-/* === Collapse Toggle Button === */
-#toggle-saved {
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-size: 0.95rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-left: 12px;
-}
-#toggle-saved:hover {
-  text-decoration: underline;
+/* Dark Theme */
+body.dark-mode {
+  --bg: #1e1e1e;
+  --text: #eee;
+  --card: #2a2a2a;
+  --accent: #4ea1ff;
+  --header-bg: #111;
+  --header-text: #eee;
 }
