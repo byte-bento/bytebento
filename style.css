@@ -677,28 +677,27 @@ body.focus-mode .save-btn {
   transform: translateY(-1px);
 }
 
-/* ── Saved Articles: Source Label Styling ── */
-/* Make the <strong> look like your source badges */
+/* ── Saved Articles: Color-coded Source Badges ── */
 .saved-article strong {
   display: inline-block;
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: 0.25em 0.6em;
+  border-radius: 0.25rem;
   color: #fff;            /* white text */
   font-weight: 600;
-  font-size: 0.9em;
+  font-size: 0.9rem;
 }
 
-/* Now give each source its own background color */
+/* Match each source’s pill color */
 .saved-article[data-source="Ars Technica"] strong {
-  background-color: #E31B23;  /* same red as your Ars Technica cards */
+  background-color: #E31B23;  /* Ars Technica red */
 }
 
 .saved-article[data-source="Techmeme"] strong {
-  background-color: #4272A3;  /* your Techmeme blue */
+  background-color: #4272A3;  /* Techmeme blue */
 }
 
 .saved-article[data-source="Hacker News"] strong {
-  background-color: #FF6600;  /* Hacker News orange */
+  background-color: #FF6600;  /* HN orange */
 }
 
 .saved-article[data-source="Product Hunt"] strong {
