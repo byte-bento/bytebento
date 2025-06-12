@@ -85,13 +85,13 @@ These features are in the works or on the roadmap - tracked over on the [GitHub 
 
 Want to improve ByteBento or suggest a new feature? Awesome! We welcome all kinds of contributions! To get started:
 
-1. **Fork** the repository
-2. **Clone** your fork and create a new branch (git checkout -b feature/awesome-new-thing)
-3. **Commit** your changes with descriptive messages
-4. **Push** to your fork (```git push origin feature/awesome-new-thing```)
-5. **Open a Pull Request** against ```main``` with a description of your changes
+1. Fork the repo
+2. Create a branch (`git checkout -b feature/awesome-thing`)
+3. Make your changes & commit with clear messages
+4. Push to your fork (`git push origin feature/awesome-thing`)
+5. Open a Pull Request against `main`
 
-Please also:
+Be sure to:
 
 - Review [existing issues](https://github.com/byte-bento/bytebento/issues) and add your thoughts
 - Label any bugs you find or feature ideas you want to tackle
