@@ -13,6 +13,8 @@
 ![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)
 ![Built With](https://img.shields.io/badge/built%20with-curiosity%20%26%20caffeine-ff69b4)
 
+[![ByteBento Banner](./og-image.png)](https://bytebento.com)
+
 **A fast, minimalist tech news aggregator powered by Cloudflare Workers.** ByteBento aggregates headlines in real-time from top tech sources, filters them by publisher, and lets users save articles to read later or export in JSON.
 
 **Demo**
