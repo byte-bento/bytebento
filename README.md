@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://bytebento.com">
-    <img src="./og-image.png" alt="ByteBento Banner" width="500" />
+    <img src="./og-image.png" alt="ByteBento Banner" width="600" />
   </a>
 </p>
 
