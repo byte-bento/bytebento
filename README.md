@@ -47,7 +47,7 @@
 ## Demo
 
 ### Screenshot
-<p align="center">
+<p align="left">
   <img 
     src="./demo.png" 
     alt="ByteBento live site screenshot" 
@@ -57,11 +57,11 @@
 </p>
 
 ### GIF
-<p align="center">
+<p align="left">
   <img 
     src="./demo.gif" 
     alt="ByteBento quick demo" 
-    width="700" 
+    width="400" 
   />
 </p>
 
