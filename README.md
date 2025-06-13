@@ -8,7 +8,6 @@
 ![Focus](https://img.shields.io/badge/focus-tech%20news-9cf)
 ![Interface](https://img.shields.io/badge/interface-frontend--only-lightgrey)
 ![Architecture](https://img.shields.io/badge/architecture-serverless-yellow)
-![Difficulty](https://img.shields.io/badge/difficulty-self--taught-success)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)
 ![Built With](https://img.shields.io/badge/built%20with-curiosity%20%26%20caffeine-ff69b4)
@@ -30,6 +29,8 @@
 ## 📋 Table of Contents
 
 - 🌐 [Demo](#demo)
+  - [Screenshot](#screenshot)
+  - [GIF](#gif)
 - ✨ [Features](#features)
 - 💻 [Tech Stack](#tech-stack)
 - 🏁 [Getting Started](#getting-started)
@@ -45,7 +46,7 @@
 
 ## Demo
 
-**Screenshot:**
+### Screenshot
 <p align="center">
   <img 
     src="./demo.png" 
@@ -55,7 +56,7 @@
   />
 </p>
 
-**GIF:**
+### GIF
 <p align="center">
   <img 
     src="./demo.gif" 
