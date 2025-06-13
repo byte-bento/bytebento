@@ -45,12 +45,22 @@
 
 ## Demo
 
+**Screenshot:**
 <p align="center">
   <img 
     src="./demo.png" 
     alt="ByteBento live site screenshot" 
     width="700" 
     style="border:1px solid #ddd; border-radius:4px;" 
+  />
+</p>
+
+**GIF:**
+<p align="center">
+  <img 
+    src="./demo.gif" 
+    alt="ByteBento quick demo" 
+    width="700" 
   />
 </p>
 
