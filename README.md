@@ -24,6 +24,8 @@
 **Live**
 🔗 [https://bytebento.com](https://bytebento.com)
 
+<a href='https://ko-fi.com/O4O81GA31F' target='_blank'><img height='30' style='border:0px;height:30px;' src='https://storage.ko-fi.com/cdn/kofi3.png?v=6' border='0' alt='Buy me a coffee at ko-fi.com' /></a>
+
 ## ✨ Features
 - 📰 **Real-time headlines** from multiple tech sources (Ars Technica, Hacker News, Product Hunt, etc.)
 - 🎛 **Source filtering** for quick focus
