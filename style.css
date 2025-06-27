@@ -709,3 +709,14 @@ body.focus-mode .save-btn {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
 }
+
+.header-link {
+  color: #00bcd4;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.header-link:hover {
+  text-decoration: underline;
+}
