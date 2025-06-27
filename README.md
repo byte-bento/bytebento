@@ -8,17 +8,65 @@
 ![Focus](https://img.shields.io/badge/focus-tech%20news-9cf)
 ![Interface](https://img.shields.io/badge/interface-frontend--only-lightgrey)
 ![Architecture](https://img.shields.io/badge/architecture-serverless-yellow)
-![Difficulty](https://img.shields.io/badge/difficulty-self--taught-success)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)
 ![Built With](https://img.shields.io/badge/built%20with-curiosity%20%26%20caffeine-ff69b4)
 
+<p align="center">
+  <a href="https://bytebento.com">
+    <img src="./og-image.png" alt="ByteBento Banner" width="600" />
+  </a>
+</p>
+
 **A fast, minimalist tech news aggregator powered by Cloudflare Workers.** ByteBento aggregates headlines in real-time from top tech sources, filters them by publisher, and lets users save articles to read later or export in JSON.
 
-**Demo**
-🔗 [https://bytebento.com](https://bytebento.com)
+**🔗 Visit the live site:**<br>
+[https://bytebento.com](https://bytebento.com)
 
-## ✨ Features
+**☕ If you find ByteBento useful:**<br>
+<a href='https://ko-fi.com/O4O81GA31F' target='_blank'>Buy me a coffee at ko-fi.com</a> to help me keep the lights on!
+
+## 📋 Table of Contents
+
+- 🌐 [Demo](#demo)
+  - [Screenshot](#screenshot)
+  - [GIF](#gif)
+- ✨ [Features](#features)
+- 💻 [Tech Stack](#tech-stack)
+- 🏁 [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Development](#development)
+  - [Deployment](#deployment)
+- 🗺️ [Roadmap](#roadmap)
+- 🤝 [Contributing](#contributing)
+- 📁 [Repo Structure](#repo-structure)
+- 📄 [License](#license)
+- 🙏 [Acknowledgements](#acknowledgements)
+
+## Demo
+
+### Screenshot
+<p align="left">
+  <img 
+    src="./demo.png" 
+    alt="ByteBento live site screenshot" 
+    width="700" 
+    style="border:1px solid #ddd; border-radius:4px;" 
+  />
+</p>
+
+### GIF
+<p align="left">
+  <img 
+    src="./demo.gif" 
+    alt="ByteBento quick demo" 
+    width="400" 
+  />
+</p>
+
+## Features
+
 - 📰 **Real-time headlines** from multiple tech sources (Ars Technica, Hacker News, Product Hunt, etc.)
 - 🎛 **Source filtering** for quick focus
 - 💾 **Read Later** list with **export/download** functionality
@@ -26,7 +74,7 @@
 - 🔁 **Graceful fallbacks** if any source is down
 - ⚡️ **Lightning-fast** serverless architecture
 
-## 🛠 Tech Stack
+## Tech Stack
 
 🌀 **Hosted entirely via Cloudflare Workers** – combines serverless API logic and static content delivery in a single deployment.
 
@@ -36,14 +84,14 @@
 - **Version Control:** Git & GitHub
 - **No frameworks, no build step** — just clean, readable code!
 
-## 🏁 Getting Started
+## Getting Started
 
-**Prerequisites**
+### Prerequisites
 - [Node.js](https://nodejs.org/en) (for local Worker simulation, optional)
 - [Wrangler CLI](https://developers.cloudflare.com/workers/cli-wrangler/) (install instructions and CLI reference)
 - A free [Cloudflare account](https://dash.cloudflare.com/sign-up) with Workers enabled
 
-**Installation**
+### Installation
 
 1. **Clone the repo**
 ```bash
@@ -56,7 +104,7 @@ cd bytebento
 npm install -g @cloudflare/wrangler
 ```
 
-**Development**
+### Development
 > You can preview the site and Workers locally using Wrangler.
 
 ```bash
@@ -68,14 +116,14 @@ wrangler dev
 
 Open [http://127.0.0.1:8787](http://127.0.0.1:8787) in your browser to see live changes.
 
-**Deployment**
+### Deployment
 Once you're happy with changes:
 ```bash
 # Publish to your Cloudflare account
 wrangler publish
 ```
 
-## 🧭 Planned Features
+## Roadmap
 
 These features are in the works or on the roadmap - tracked over on the [GitHub Issues](https://github.com/johnnyfivepi/bytebento/issues) page:
 
@@ -83,7 +131,7 @@ These features are in the works or on the roadmap - tracked over on the [GitHub 
 - 🧵 Add more tech news sources (including RSS-based ones)
 - 📝 About page or mini changelog to track progress
 
-## 🤝 Contributing
+## Contributing
 
 Want to improve ByteBento or suggest a new feature? Awesome! We welcome all kinds of contributions! To get started:
 
@@ -101,17 +149,18 @@ Be sure to:
 
 🪄 Whether it’s code, docs, or just ideas - contributions of all kinds are appreciated, so thank you for helping make ByteBento better!
 
-## 📁 Repo Structure
+## Repo Structure
+
 <pre>/workers → Cloudflare Worker scripts
 /src → Static site content
 /scripts → Utility tools (RSS parsing, filtering, etc.)</pre>
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).  
 Feel free to use, share, and remix—just give credit where it’s due.
 
-## 🙏 Acknowledgements
+## Acknowledgements
 
 - Inspired by the simplicity of serverless dashboards
 - Thanks to Cloudflare Workers for the magic edge compute
