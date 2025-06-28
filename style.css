@@ -889,32 +889,32 @@ body.dark-mode #tag-filter-bar .tag {
 }
 
 #clear-tag-filter {
-  background-color: transparent;
-  border: 2px solid var(--accent);
+  background: none;
+  border: none;
+  font-size: 1rem;
   color: var(--accent);
-  padding: 6px 14px;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  border-radius: 999px;
-  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  align-self: center; /* important for vertical alignment */
+  padding: 2px 6px;
+  line-height: 1;
+  font-weight: bold;
 }
 
 #clear-tag-filter:hover {
-  background-color: var(--accent);
-  color: #fff;
+  color: #ff4d4d;
 }
 
 #active-tag-label {
   text-align: center;
-  margin: 10px auto 20px;
+  margin: 12px auto 24px;
   font-size: 1rem;
+  font-style: italic;
   font-weight: 500;
   color: #444;
   max-width: 960px;
-  font-style: italic;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
 .tag-bar-inner {

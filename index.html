@@ -79,12 +79,14 @@
   <div id="tag-filter-bar">
     <div class="tag-bar-inner">
       <div id="tag-list" class="tags"></div>
-      <button id="clear-tag-filter">Clear</button>
     </div>
   </div>
 
   <!-- 🏷️ Active Tag Notice -->
-  <div id="active-tag-label"></div>
+  <div id="active-tag-label" style="display: none;">
+    <span id="filter-text"></span>
+    <button id="clear-tag-filter" title="Clear filter">✖</button>
+  </div>
 
   <main id="news-container">
     <!-- News articles will be injected here -->

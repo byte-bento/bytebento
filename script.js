@@ -23,9 +23,15 @@ function highlightActiveTag(tag) {
     el.classList.toggle('active-tag', el.textContent === tag);
   });
 
-  const label = document.getElementById('active-tag-label');
-  if (label) {
-    label.textContent = tag ? `Filtering by: ${tag}` : '';
+  const labelWrapper = document.getElementById('active-tag-label');
+  const labelText = document.getElementById('filter-text');
+
+  if (tag) {
+    labelText.textContent = `Filtering by: ${tag}`;
+    labelWrapper.style.display = 'flex';
+  } else {
+    labelText.textContent = '';
+    labelWrapper.style.display = 'none';
   }
 }
 
