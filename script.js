@@ -6,7 +6,7 @@ const SOURCES = [
 ];
 
 function filterByTag(tag) {
-  const allArticles = document.querySelectorAll('#news-container article');
+  const allArticles = document.querySelectorAll('#news-container article, #saved-container article');
   allArticles.forEach(article => {
     const tagSpans = article.querySelectorAll('.tag');
     const tagTexts = [...tagSpans].map(span => span.textContent);
@@ -60,6 +60,34 @@ window.onload = () => {
     }
   }
 
+  function getTagsForArticle(article) {
+    const tagList = [];
+    const title = article.title.toLowerCase();
+    const source = article.source || '';
+
+    if (source === "Hacker News") tagList.push("Dev", "Open Source");
+    if (source === "Product Hunt") tagList.push("Startups");
+    if (title.includes("ai") || title.includes("openai")) tagList.push("AI");
+    if (title.includes("security") || title.includes("cyber")) tagList.push("Security");
+    if (title.includes("github") || title.includes("code")) tagList.push("Code");
+
+    return tagList;
+  }
+
+  function createTagSpans(tagList) {
+    const tagContainer = document.createElement('div');
+    tagContainer.classList.add('tags');
+    tagList.forEach(tag => {
+      const span = document.createElement('span');
+      span.classList.add('tag');
+      span.textContent = tag;
+      span.dataset.tag = tag;
+      span.addEventListener('click', () => filterByTag(tag));
+      tagContainer.appendChild(span);
+    });
+    return tagContainer;
+  }
+
   function displayNews(articles) {
     newsContainer.innerHTML = '';
 
@@ -74,53 +102,12 @@ window.onload = () => {
       }[source];
 
       const newsItem = document.createElement('article');
-      const tags = document.createElement('div');
-      tags.classList.add('tags');
-
-      const tagList = [];
-      if (source === "Hacker News") tagList.push("Dev", "Open Source");
-      if (source === "Product Hunt") tagList.push("Startups");
-      if (article.title.toLowerCase().includes("ai")) tagList.push("AI");
-
-      tagList.forEach(t => {
-        const span = document.createElement("span");
-        span.classList.add("tag");
-        span.textContent = t;
-        span.dataset.tag = t;
-        span.addEventListener("click", () => filterByTag(t));
-        tags.appendChild(span);
-      });
-
-      if (tagList.length) newsItem.appendChild(tags);
+      const tagList = getTagsForArticle(article);
+      if (tagList.length) newsItem.appendChild(createTagSpans(tagList));
 
       const title = document.createElement('h2');
       title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
       newsItem.appendChild(title);
-
-      if (document.body.classList.contains('focus-mode')) {
-        const info = document.createElement('p');
-        info.innerHTML = `<strong class="info-source">${source}</strong><span class="info-time">${timestamp}</span>`;
-        if (sourceClass) info.classList.add(sourceClass);
-        newsItem.appendChild(info);
-
-        const saveBtn = document.createElement('button');
-        saveBtn.classList.add('save-btn');
-        saveBtn.setAttribute('data-url', article.url);
-        saveBtn.setAttribute('data-title', article.title);
-        saveBtn.setAttribute('data-description', '');
-        saveBtn.setAttribute('data-source', article.source);
-        saveBtn.setAttribute('data-date', article.date);
-        saveBtn.textContent = '⭐ Save';
-
-        newsItem.appendChild(saveBtn);
-        newsContainer.appendChild(newsItem);
-        return;
-      }
-
-      const badge = document.createElement('span');
-      badge.classList.add('source-badge');
-      badge.textContent = source;
-      if (sourceClass) badge.classList.add(sourceClass);
 
       const info = document.createElement('p');
       info.innerHTML = `<strong class="info-source">${source}</strong><span class="info-time">${timestamp}</span>`;
@@ -135,6 +122,11 @@ window.onload = () => {
       saveBtn.setAttribute('data-date', article.date);
       saveBtn.textContent = '⭐ Read Later';
 
+      const badge = document.createElement('span');
+      badge.classList.add('source-badge');
+      badge.textContent = source;
+      if (sourceClass) badge.classList.add(sourceClass);
+
       const footer = document.createElement('div');
       footer.classList.add('card-footer');
       footer.appendChild(badge);
@@ -147,15 +139,16 @@ window.onload = () => {
 
     document.querySelectorAll('.save-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const url = btn.dataset.url;
-        const title = btn.dataset.title;
-        const description = btn.dataset.description;
-        const source = btn.dataset.source;
-        const dateRaw = btn.dataset.date;
-
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-        if (!saved.some(a => a.url === url)) {
-          saved.push({ title, url, description, source, dateRaw });
+        const article = {
+          url: btn.dataset.url,
+          title: btn.dataset.title,
+          description: btn.dataset.description,
+          source: btn.dataset.source,
+          dateRaw: btn.dataset.date
+        };
+        if (!saved.some(a => a.url === article.url)) {
+          saved.push(article);
           localStorage.setItem('savedArticles', JSON.stringify(saved));
           showToast('✅ Article saved to read later!');
           renderSavedArticles();
@@ -212,6 +205,9 @@ window.onload = () => {
       card.classList.add('saved-article');
       card.setAttribute('data-source', article.source);
 
+      const tagList = getTagsForArticle(article);
+      if (tagList.length) card.appendChild(createTagSpans(tagList));
+
       const title = document.createElement('h3');
       title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
 
@@ -245,12 +241,12 @@ window.onload = () => {
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
 
   document.getElementById('show-all-tags')?.addEventListener('click', () => {
-    const allArticles = document.querySelectorAll('#news-container article');
-    allArticles.forEach(article => {
+    document.querySelectorAll('#news-container article, #saved-container article').forEach(article => {
       article.style.display = '';
     });
   });
 
+  // Theme + Focus Mode
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {
     if (localStorage.getItem('theme') === 'dark') {
@@ -290,10 +286,7 @@ window.onload = () => {
   if (exportBtn) {
     exportBtn.addEventListener('click', () => {
       const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
-      if (saved.length === 0) {
-        alert('No saved articles to export.');
-        return;
-      }
+      if (saved.length === 0) return alert('No saved articles to export.');
       const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
