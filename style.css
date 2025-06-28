@@ -865,7 +865,6 @@ body.dark-mode #saved-container .tag {
   border-radius: 0;
 }
 
-/* Restore spacing between tags */
 #tag-filter-bar .tag {
   cursor: pointer;
   background-color: #eee;
@@ -883,14 +882,12 @@ body.dark-mode #tag-filter-bar .tag {
   color: #ddd;
 }
 
-/* Highlighted tag when filtering */
 #tag-filter-bar .active-tag {
   background-color: var(--accent);
   color: #fff;
   border: 2px solid var(--accent);
 }
 
-/* “Show All” button styles */
 #clear-tag-filter {
   background-color: transparent;
   border: 2px solid var(--accent);
