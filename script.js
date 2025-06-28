@@ -79,11 +79,14 @@ window.onload = () => {
   function getTagsForArticle(article) {
     const tags = [];
     const title = article.title?.toLowerCase() || '';
+
     if (title.includes('ai')) tags.push('AI');
     if (title.includes('startup')) tags.push('Startup');
     if (title.includes('privacy')) tags.push('Privacy');
-    if (article.source === 'Hacker News') tags.push('HN');
+
+    // "Launch" tag is still helpful and relevant
     if (article.source === 'Product Hunt') tags.push('Launch');
+
     return tags;
   }
 

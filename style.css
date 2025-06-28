@@ -850,7 +850,7 @@ body.dark-mode #saved-container .tag {
   color: #ddd;
 }
 
-/* 🔖 Tag Filter Bar (for filtering all articles by tag) */
+/* Tag Filter Bar */
 #tag-filter-bar {
   display: flex;
   flex-wrap: wrap;
@@ -858,29 +858,48 @@ body.dark-mode #saved-container .tag {
   justify-content: center;
   gap: 10px;
   margin: 30px auto 20px;
-  padding: 10px;
+  padding: 12px 16px;
   max-width: 960px;
   background-color: var(--card);
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-#tag-filter-bar .tag {
+/* Tags (Minimal Style) */
+#tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#tag-list .tag {
   cursor: pointer;
-  background-color: var(--accent);
-  color: #fff;
-  padding: 6px 12px;
+  background-color: #eee;
+  color: #444;
+  padding: 5px 12px;
   font-size: 0.8rem;
   border-radius: 999px;
   text-transform: uppercase;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
-#tag-filter-bar .tag:hover {
-  background-color: #005fa3;
+body.dark-mode #tag-list .tag {
+  background-color: #222;
+  color: #ccc;
 }
 
+#tag-list .tag:hover {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+#tag-list .tag.active-tag {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* Show All Button */
 #clear-tag-filter {
   background-color: transparent;
   border: 2px solid var(--accent);
@@ -891,6 +910,7 @@ body.dark-mode #saved-container .tag {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  align-self: center;
 }
 
 #clear-tag-filter:hover {
