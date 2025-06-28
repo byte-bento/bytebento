@@ -19,9 +19,14 @@ function filterByTag(tag) {
 }
 
 function highlightActiveTag(tag) {
-  document.querySelectorAll('#tag-list .tag').forEach(el => {
+  document.querySelectorAll('.tag').forEach(el => {
     el.classList.toggle('active-tag', el.textContent === tag);
   });
+
+  const label = document.getElementById('active-tag-label');
+  if (label) {
+    label.textContent = tag ? `Filtering by: ${tag}` : '';
+  }
 }
 
 window.onload = () => {
