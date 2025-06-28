@@ -5,6 +5,15 @@ const SOURCES = [
   { name: "Product Hunt", url: "https://bytebento-ph-worker.tough-bed6922.workers.dev" },
 ];
 
+function filterByTag(tag) {
+  const allArticles = document.querySelectorAll('#news-container article');
+  allArticles.forEach(article => {
+    const tagSpans = article.querySelectorAll('.tag');
+    const tagTexts = [...tagSpans].map(span => span.textContent);
+    article.style.display = tagTexts.includes(tag) ? '' : 'none';
+  });
+}
+
 window.onload = () => {
   const newsContainer = document.getElementById('news-container');
 
@@ -65,16 +74,32 @@ window.onload = () => {
       }[source];
 
       const newsItem = document.createElement('article');
+      const tags = document.createElement('div');
+      tags.classList.add('tags');
+
+      const tagList = [];
+      if (source === "Hacker News") tagList.push("Dev", "Open Source");
+      if (source === "Product Hunt") tagList.push("Startups");
+      if (article.title.toLowerCase().includes("ai")) tagList.push("AI");
+
+      tagList.forEach(t => {
+        const span = document.createElement("span");
+        span.classList.add("tag");
+        span.textContent = t;
+        span.dataset.tag = t;
+        span.addEventListener("click", () => filterByTag(t));
+        tags.appendChild(span);
+      });
+
+      if (tagList.length) newsItem.appendChild(tags);
+
       const title = document.createElement('h2');
       title.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
       newsItem.appendChild(title);
 
       if (document.body.classList.contains('focus-mode')) {
         const info = document.createElement('p');
-        info.innerHTML = `
-          <strong class="info-source">${source}</strong>
-          <span class="info-time">${timestamp}</span>
-        `;
+        info.innerHTML = `<strong class="info-source">${source}</strong><span class="info-time">${timestamp}</span>`;
         if (sourceClass) info.classList.add(sourceClass);
         newsItem.appendChild(info);
 
@@ -98,10 +123,7 @@ window.onload = () => {
       if (sourceClass) badge.classList.add(sourceClass);
 
       const info = document.createElement('p');
-      info.innerHTML = `
-        <strong class="info-source">${source}</strong>
-        <span class="info-time">${timestamp}</span>
-      `;
+      info.innerHTML = `<strong class="info-source">${source}</strong><span class="info-time">${timestamp}</span>`;
       if (sourceClass) info.classList.add(sourceClass);
 
       const saveBtn = document.createElement('button');
@@ -125,11 +147,11 @@ window.onload = () => {
 
     document.querySelectorAll('.save-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const url         = btn.dataset.url;
-        const title       = btn.dataset.title;
+        const url = btn.dataset.url;
+        const title = btn.dataset.title;
         const description = btn.dataset.description;
-        const source      = btn.dataset.source;
-        const dateRaw     = btn.dataset.date;
+        const source = btn.dataset.source;
+        const dateRaw = btn.dataset.date;
 
         const saved = JSON.parse(localStorage.getItem('savedArticles') || '[]');
         if (!saved.some(a => a.url === url)) {
@@ -221,6 +243,13 @@ window.onload = () => {
   }
 
   document.getElementById('refresh-btn')?.addEventListener('click', fetchNews);
+
+  document.getElementById('show-all-tags')?.addEventListener('click', () => {
+    const allArticles = document.querySelectorAll('#news-container article');
+    allArticles.forEach(article => {
+      article.style.display = '';
+    });
+  });
 
   const themeSwitch = document.getElementById('theme-switch');
   if (themeSwitch) {

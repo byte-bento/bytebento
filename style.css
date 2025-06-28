@@ -790,3 +790,24 @@ footer {
   padding: 2rem 0;
   font-size: 0.9rem;
 }
+
+.tags {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  background-color: #eee;
+  color: #333;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.dark-mode .tag {
+  background-color: #222;
+  color: #ddd;
+}
