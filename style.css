@@ -856,13 +856,9 @@ body.dark-mode #saved-container .tag {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin: 20px auto 30px;
+  gap: 12px;
+  margin: 20px auto 12px;
   max-width: 960px;
-  padding: 0;
-  background: none;
-  box-shadow: none;
-  border-radius: 0;
 }
 
 #tag-filter-bar .tag {
@@ -896,12 +892,14 @@ body.dark-mode #tag-filter-bar .tag {
   background-color: transparent;
   border: 2px solid var(--accent);
   color: var(--accent);
-  padding: 6px 12px;
+  padding: 6px 14px;
   font-size: 0.85rem;
+  line-height: 1.4;
   border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  align-self: center; /* important for vertical alignment */
 }
 
 #clear-tag-filter:hover {
@@ -911,12 +909,12 @@ body.dark-mode #tag-filter-bar .tag {
 
 #active-tag-label {
   text-align: center;
-  margin: 20px auto 10px;
-  font-size: 0.85rem;
+  margin: 10px auto 20px;
+  font-size: 1rem;
+  font-weight: 500;
   color: #444;
-  font-style: italic;
   max-width: 960px;
-  padding-left: 8px;
+  font-style: italic;
 }
 
 .tag-bar-inner {
