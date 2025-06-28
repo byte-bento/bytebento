@@ -850,7 +850,7 @@ body.dark-mode #saved-container .tag {
   color: #ddd;
 }
 
-/* 🔖 Tag Filter Bar – Clean, Minimal Layout */
+/* 🔖 Tag Filter Bar – Final Alignment Fix */
 #tag-filter-bar {
   display: flex;
   flex-wrap: wrap;
@@ -886,6 +886,10 @@ body.dark-mode #tag-filter-bar .tag {
   background-color: var(--accent);
   color: #fff;
   border: 2px solid var(--accent);
+}
+
+.tag-clear-wrapper {
+  display: flex;
 }
 
 #clear-tag-filter {
