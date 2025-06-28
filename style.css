@@ -811,3 +811,9 @@ footer {
   background-color: #222;
   color: #ddd;
 }
+
+.tag.active-tag {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
