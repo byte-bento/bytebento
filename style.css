@@ -848,7 +848,7 @@ footer {
 body.dark-mode #saved-container .tag {
   background-color: #222;
   color: #ddd;
-}
+} 
 
 /* 🔖 Tag Filter Bar – Final Alignment Fix */
 #tag-filter-bar {
@@ -907,4 +907,22 @@ body.dark-mode #tag-filter-bar .tag {
 #clear-tag-filter:hover {
   background-color: var(--accent);
   color: #fff;
+}
+
+#active-tag-label {
+  text-align: center;
+  margin: 20px auto 10px;
+  font-size: 0.85rem;
+  color: #444;
+  font-style: italic;
+  max-width: 960px;
+  padding-left: 8px;
+}
+
+.tag-bar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
